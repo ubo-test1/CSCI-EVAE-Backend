@@ -1,0 +1,78 @@
+name: csi-evae-backend workflow
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/app-workflow.yaml'
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/app-workflow.yaml'
+
+jobs:
+  project-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v2
+      with:
+        java-version: '21'
+        distribution: 'temurin' 
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build -Pwar -x test
+
+   # - name: Run tests
+   #   run: ./gradlew test
+
+  docker-build:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    needs: [project-build] # Ensure this matches the name of the job that builds your project
+  
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin' # or use another distribution of JDK 21
+  
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle
+  
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+  
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+  
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+  
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: dockerfile # Replace with your Dockerfile's name
+          push: true
+          tags: hsaad11/test1-backend:latest # Replace with your Docker Hub username and repository
