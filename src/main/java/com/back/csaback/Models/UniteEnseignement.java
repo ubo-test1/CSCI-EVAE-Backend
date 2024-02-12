@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "unite_enseignement", schema = "csa_db")
+@Table(name = "unite_enseignement")
 public class UniteEnseignement {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

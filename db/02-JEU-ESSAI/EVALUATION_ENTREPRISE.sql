@@ -1,0 +1,18 @@
+-- INSERTING into EVALUATION_ENTREPRISE
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','06816q06pf3',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','07is8800515',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','1492057895k',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','1492092540t',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','1493003704n',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','1493010305n',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") 
+values ('2005-2006','1496024035g',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") values ('2005-2006','1499067588s',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") values ('2005-2006','1499110659h',to_date('2006-10-03','yyyy-mm-dd'),'EC');
+Insert into "EVALUATION_ENTREPRISE" ("ANNEE_PRO","NO_ETUDIANT_NAT","DATE_MAJ","ETAT") values ('2005-2006','1893029650z',to_date('2006-10-03','yyyy-mm-dd'),'EC');

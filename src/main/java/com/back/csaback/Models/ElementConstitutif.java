@@ -7,12 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "element_constitutif", schema = "csa_db")
+@Table(name = "element_constitutif")
 public class ElementConstitutif {
     @EmbeddedId
     private ElementConstitutifId id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("codeUe") // This tells JPA to use the codeUe part of the composite ID for mapping.
+    @JoinColumn(name = "CODE_UE", referencedColumnName = "CODE_UE", nullable = false)
     private UniteEnseignement uniteEnseignement;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

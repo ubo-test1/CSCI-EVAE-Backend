@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "question", schema = "csa_db")
+@Table(name = "question")
 public class Question {
     @Id
     @Column(name = "ID_QUESTION", nullable = false)
@@ -24,7 +24,7 @@ public class Question {
     @JoinColumn(name = "ID_QUALIFICATIF", nullable = false)
     private Qualificatif idQualificatif;
 
-    @Column(name = "`INTITULֹ`", nullable = false, length = 64)
-    private String intitulֹ;
+    @Column(name = "`INTITULE", nullable = false, length = 64)
+    private String intitule;
 
 }

@@ -1,0 +1,1 @@
+Insert into QUESTION (ID_QUESTION,TYPE,NO_ENSEIGNANT,ID_QUALIFICATIF,INTITULE) values ('1','QUS','1','1','Question test');

@@ -9,7 +9,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "poste_entreprise", schema = "csa_db")
+@Table(name = "poste_entreprise")
 public class PosteEntreprise {
     @EmbeddedId
     private PosteEntrepriseId id;

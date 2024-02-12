@@ -1,0 +1,8 @@
+version: '3'
+
+services: 
+  oracle-db:
+    image: sofislab/oracle-12c:latest
+    ports:
+      - 1521:1521
+      - 5500:5500

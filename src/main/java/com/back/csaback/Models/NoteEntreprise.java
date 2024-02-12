@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "note_entreprise", schema = "csa_db")
+@Table(name = "note_entreprise")
 public class NoteEntreprise {
     @EmbeddedId
     private NoteEntrepriseId id;

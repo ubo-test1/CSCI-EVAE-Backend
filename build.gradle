@@ -26,7 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	// Changed from MySQL to Oracle JDBC dependency
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8:19.3.0.0'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -34,7 +35,7 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.1'
+	// Removed duplicate dependency entry for spring-boot-starter-validation
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.1'
 }
 
@@ -43,11 +44,11 @@ tasks.named('test') {
 }
 
 war {
-    archiveFileName = 'app.war'
+	archiveFileName = 'app.war'
 	manifest {
-        attributes(
-                'Main-Class': 'com.back.csaback.CsaBackApplication.class'
-        )
-    }
-	//fsdfsdfsd
+		attributes(
+				'Main-Class': 'com.back.csaback.CsaBackApplication.class'
+		)
+	}
+	// Additional comments or configurations can be added here
 }

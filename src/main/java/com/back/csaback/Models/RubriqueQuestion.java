@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "rubrique_question", schema = "csa_db")
+@Table(name = "rubrique_question")
 public class RubriqueQuestion {
     @EmbeddedId
     private RubriqueQuestionId id;

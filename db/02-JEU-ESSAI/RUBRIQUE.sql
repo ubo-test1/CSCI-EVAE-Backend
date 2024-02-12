@@ -1,0 +1,1 @@
+Insert into RUBRIQUE (ID_RUBRIQUE,TYPE,DESIGNATION,ORDRE,NO_ENSEIGNANT) values ('1','RBP','Designation1','1','1');
