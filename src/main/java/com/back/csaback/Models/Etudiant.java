@@ -9,7 +9,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "etudiant", schema = "csa_db")
+@Table(name = "etudiant")
 public class Etudiant {
     @Id
     @Column(name = "NO_ETUDIANT_NAT", nullable = false, length = 50)

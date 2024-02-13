@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -16,7 +17,7 @@ import java.util.Objects;
 public class ContactStageId implements Serializable {
     private static final long serialVersionUID = -7616561277802095396L;
     @Column(name = "DATE_CONTACT", nullable = false)
-    private Instant dateContact;
+    private Date dateContact;
 
     @Column(name = "ANNEE_PRO", nullable = false, length = 10)
     private String anneePro;

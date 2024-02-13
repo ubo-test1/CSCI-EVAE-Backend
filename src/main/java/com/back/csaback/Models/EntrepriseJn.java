@@ -10,7 +10,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "entreprise_jn", schema = "csa_db")
+@Table(name = "entreprise_jn")
 public class EntrepriseJn {
 
     @Column(name = "JN_OPERATION", nullable = false, length = 3)

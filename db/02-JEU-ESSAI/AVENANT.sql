@@ -1,0 +1,5 @@
+-- INSERTING into AVENANT
+Insert into "AVENANT" ("NO_AVENANT","ANNEE_PRO","NO_ETUDIANT_NAT","ETAT_AVENANT","NUM_ARTICLE","DATE_SIGNATURE_AVE","MODIF_APPORTEE","COMMENTAIRE") 
+values (1,'2005-2006','07is8800515','ELA',1,null,'Modification de la date de fin de stage au 30-08-2006',null);
+Insert into "AVENANT" ("NO_AVENANT","ANNEE_PRO","NO_ETUDIANT_NAT","ETAT_AVENANT","NUM_ARTICLE","DATE_SIGNATURE_AVE","MODIF_APPORTEE","COMMENTAIRE") 
+values (2,'2005-2006','07is8800515','ELA',1,null,'Modification de la date de fin de stage au 30-09-2006',null);

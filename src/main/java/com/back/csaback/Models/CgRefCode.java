@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "cg_ref_codes", schema = "csa_db")
+@Table(name = "cg_ref_codes")
 public class CgRefCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

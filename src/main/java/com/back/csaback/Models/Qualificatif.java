@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "qualificatif", schema = "csa_db")
+@Table(name = "qualificatif")
 public class Qualificatif {
     @Id
     @Column(name = "ID_QUALIFICATIF", nullable = false)

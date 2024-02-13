@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "droit", schema = "csa_db")
+@Table(name = "droit")
 public class Droit {
     @EmbeddedId
     private DroitId id;

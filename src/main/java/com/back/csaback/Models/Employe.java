@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "employe", schema = "csa_db")
+@Table(name = "employe")
 public class Employe {
     @Id
     @Column(name = "NO_CONTACT_ILI", nullable = false)

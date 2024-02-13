@@ -1,1241 +1,3900 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Hôte : 127.0.0.1
--- Généré le : jeu. 01 fév. 2024 à 16:09
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.0.28
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données : `csa_db`
---
-
--- --------------------------------------------------------
-
---
--- Structure de la table `avenant`
---
-
-CREATE TABLE `avenant` (
-  `no_avenant` int(11) NOT NULL,
-  `commentaire` varchar(255) DEFAULT NULL,
-  `date_signature_ave` datetime(6) DEFAULT NULL,
-  `etat_avenant` varchar(255) NOT NULL,
-  `modif_apportee` varchar(255) NOT NULL,
-  `num_article` int(11) NOT NULL,
-  `annee_pro` varchar(255) NOT NULL,
-  `no_etudiant_nat` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `candidat`
---
-
-CREATE TABLE `candidat` (
-  `no_etudiant_nat` varchar(50) NOT NULL,
-  `actu_adresse` varchar(255) DEFAULT NULL,
-  `actu_cp` varchar(10) DEFAULT NULL,
-  `actu_pays` varchar(255) DEFAULT NULL,
-  `actu_ville` varchar(255) DEFAULT NULL,
-  `date_naissance` datetime(6) NOT NULL,
-  `date_reponse_can` datetime(6) DEFAULT NULL,
-  `date_reponse_ili` datetime(6) DEFAULT NULL,
-  `dernier_diplome` varchar(255) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `lieu_naissance` varchar(255) NOT NULL,
-  `nationalite` varchar(50) NOT NULL,
-  `no_ordre` double DEFAULT NULL,
-  `nom` varchar(50) NOT NULL,
-  `perm_adresse` varchar(255) NOT NULL,
-  `perm_cp` varchar(10) NOT NULL,
-  `perm_pays` varchar(255) NOT NULL,
-  `perm_ville` varchar(255) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `reponse_can` varchar(3) DEFAULT NULL,
-  `reponse_ili` char(1) NOT NULL,
-  `selection_courante` varchar(2) NOT NULL,
-  `selection_origine` varchar(2) NOT NULL,
-  `sexe` char(1) NOT NULL,
-  `situation` varchar(3) NOT NULL,
-  `tel_fixe` varchar(20) DEFAULT NULL,
-  `tel_port` varchar(20) DEFAULT NULL,
-  `universite` varchar(255) NOT NULL,
-  `annee_pro` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `cg_ref_codes`
---
-
-CREATE TABLE `cg_ref_codes` (
-  `id` int(11) NOT NULL,
-  `rv_abbreviation` varchar(240) DEFAULT NULL,
-  `rv_domain` varchar(100) NOT NULL,
-  `rv_high_value` varchar(240) DEFAULT NULL,
-  `rv_low_value` varchar(240) NOT NULL,
-  `rv_meaning` varchar(240) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `code_notation`
---
-
-CREATE TABLE `code_notation` (
-  `codn_id` double NOT NULL,
-  `code_note` varchar(3) NOT NULL,
-  `descriptif` tinytext DEFAULT NULL,
-  `designation` varchar(50) NOT NULL,
-  `valeur_note` double NOT NULL,
-  `no_bareme` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `contact_stage`
---
-
-CREATE TABLE `contact_stage` (
-  `annee_pro` varchar(10) NOT NULL,
-  `date_contact` datetime(6) NOT NULL,
-  `duree` varchar(20) DEFAULT NULL,
-  `heure_contact` varchar(20) DEFAULT NULL,
-  `interlocuteur` varchar(3) DEFAULT NULL,
-  `objet` varchar(255) NOT NULL,
-  `resume` tinytext DEFAULT NULL,
-  `type_contact` varchar(3) NOT NULL,
-  `no_contact_ili` double DEFAULT NULL,
-  `NO_ETUDIANT_NAT` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `critere_entreprise`
---
-
-CREATE TABLE `critere_entreprise` (
-  `crite_id` double NOT NULL,
-  `descriptif` tinytext DEFAULT NULL,
-  `designation` varchar(200) NOT NULL,
-  `ordre` double NOT NULL,
-  `poids` double NOT NULL,
-  `no_evaluation` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `diplome`
---
-
-CREATE TABLE `diplome` (
-  `no_etudiant_nat` varchar(50) NOT NULL,
-  `adresse` varchar(100) DEFAULT NULL,
-  `autorisation_annuaire` char(1) NOT NULL,
-  `cp` varchar(10) DEFAULT NULL,
-  `email_perso` varchar(100) DEFAULT NULL,
-  `mail_pro` varchar(100) DEFAULT NULL,
-  `nom` varchar(50) NOT NULL,
-  `portable` varchar(20) DEFAULT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `tel_perso` varchar(20) DEFAULT NULL,
-  `tel_pro` varchar(20) DEFAULT NULL,
-  `type_emploi` varchar(3) DEFAULT NULL,
-  `ville` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `droit`
---
-
-CREATE TABLE `droit` (
-  `consultation` char(1) NOT NULL,
-  `duplication` char(1) NOT NULL,
-  `ID_EVALUATION` bigint(20) NOT NULL,
-  `NO_ENSEIGNANT` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `element_constitutif`
---
-
-CREATE TABLE `element_constitutif` (
-  `code_ec` varchar(8) NOT NULL,
-  `code_formation` varchar(8) NOT NULL,
-  `code_ue` varchar(8) NOT NULL,
-  `description` varchar(240) NOT NULL,
-  `designation` varchar(64) NOT NULL,
-  `nbh_cm` tinyint(4) DEFAULT NULL,
-  `nbh_td` tinyint(4) DEFAULT NULL,
-  `nbh_tp` tinyint(4) DEFAULT NULL,
-  `no_enseignant` int(11) NOT NULL,
-  `unite_enseignement_code_ue` varchar(8) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `employe`
---
-
-CREATE TABLE `employe` (
-  `no_contact_ili` double NOT NULL,
-  `fonction` varchar(5) DEFAULT NULL,
-  `mail_pro` varchar(100) DEFAULT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `tel_pro` varchar(20) DEFAULT NULL,
-  `no_entreprise` double NOT NULL,
-  `no_etudiant_nat` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `enseignant`
---
-
-CREATE TABLE `enseignant` (
-  `no_enseignant` int(11) NOT NULL,
-  `adresse` varchar(255) NOT NULL,
-  `cp` varchar(10) NOT NULL,
-  `enc_perso_email` varchar(255) DEFAULT NULL,
-  `enc_perso_tel` varchar(20) DEFAULT NULL,
-  `enc_ubo_email` varchar(255) DEFAULT NULL,
-  `enc_ubo_tel` varchar(20) DEFAULT NULL,
-  `int_fonction` varchar(50) DEFAULT NULL,
-  `int_no_insee` varchar(50) DEFAULT NULL,
-  `int_prof_email` varchar(255) DEFAULT NULL,
-  `int_prof_tel` varchar(20) DEFAULT NULL,
-  `int_soc_adresse` varchar(255) DEFAULT NULL,
-  `int_soc_cp` varchar(10) DEFAULT NULL,
-  `int_soc_nom` varchar(50) DEFAULT NULL,
-  `int_soc_pays` varchar(255) DEFAULT NULL,
-  `int_soc_ville` varchar(255) DEFAULT NULL,
-  `nom` varchar(50) NOT NULL,
-  `pays` varchar(255) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `sexe` varchar(1) NOT NULL,
-  `tel_port` varchar(20) DEFAULT NULL,
-  `type` varchar(10) NOT NULL,
-  `ville` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `entreprise`
---
-
-CREATE TABLE `entreprise` (
-  `no_entreprise` double NOT NULL,
-  `adresse` varchar(255) NOT NULL,
-  `cp` varchar(10) NOT NULL,
-  `date_crea` datetime(6) NOT NULL,
-  `date_maj` datetime(6) DEFAULT NULL,
-  `date_referencement` datetime(6) DEFAULT NULL,
-  `domaine_activite` varchar(5) NOT NULL,
-  `login_crea` varchar(8) DEFAULT NULL,
-  `login_maj` varchar(8) DEFAULT NULL,
-  `nom` varchar(100) NOT NULL,
-  `nom_representant` varchar(50) DEFAULT NULL,
-  `offre_stage` char(1) DEFAULT NULL,
-  `pays` varchar(100) NOT NULL,
-  `prenom_representant` varchar(50) DEFAULT NULL,
-  `referencee` char(1) DEFAULT NULL,
-  `siege_social` varchar(100) NOT NULL,
-  `site_internet` varchar(150) DEFAULT NULL,
-  `tel` varchar(20) NOT NULL,
-  `ville` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `entreprise_jn`
---
-
-CREATE TABLE `entreprise_jn` (
-  `login_maj` varchar(8) NOT NULL,
-  `adresse` varchar(255) DEFAULT NULL,
-  `cp` varchar(10) DEFAULT NULL,
-  `date_crea` datetime(6) DEFAULT NULL,
-  `date_maj` datetime(6) DEFAULT NULL,
-  `date_referencement` datetime(6) DEFAULT NULL,
-  `domaine_activite` varchar(5) DEFAULT NULL,
-  `jn_appln` varchar(35) DEFAULT NULL,
-  `jn_datetime` datetime(6) NOT NULL,
-  `jn_notes` varchar(240) DEFAULT NULL,
-  `jn_operation` varchar(3) NOT NULL,
-  `jn_oracle_user` varchar(30) NOT NULL,
-  `jn_session` decimal(38,0) DEFAULT NULL,
-  `login_crea` varchar(8) DEFAULT NULL,
-  `no_entreprise` double NOT NULL,
-  `nom` varchar(100) DEFAULT NULL,
-  `nom_representant` varchar(50) DEFAULT NULL,
-  `offre_stage` char(1) DEFAULT NULL,
-  `pays` varchar(100) DEFAULT NULL,
-  `prenom_representant` varchar(50) DEFAULT NULL,
-  `referencee` char(1) DEFAULT NULL,
-  `siege_social` varchar(100) DEFAULT NULL,
-  `site_internet` varchar(150) DEFAULT NULL,
-  `tel` varchar(20) DEFAULT NULL,
-  `ville` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `etudiant`
---
-
-CREATE TABLE `etudiant` (
-  `no_etudiant_nat` varchar(50) NOT NULL,
-  `abandon_date` datetime(6) DEFAULT NULL,
-  `abandon_motif` varchar(255) DEFAULT NULL,
-  `actu_adresse` varchar(255) DEFAULT NULL,
-  `actu_cp` varchar(10) DEFAULT NULL,
-  `actu_pays` varchar(255) DEFAULT NULL,
-  `actu_ville` varchar(255) DEFAULT NULL,
-  `code_com` varchar(10) DEFAULT NULL,
-  `compte_cri` varchar(10) NOT NULL,
-  `date_naissance` datetime(6) NOT NULL,
-  `dernier_diplome` varchar(255) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `est_diplome` char(1) DEFAULT NULL,
-  `grpe_anglais` tinyint(4) DEFAULT NULL,
-  `lieu_naissance` varchar(255) NOT NULL,
-  `nationalite` varchar(50) NOT NULL,
-  `no_etudiant_ubo` varchar(20) DEFAULT NULL,
-  `nom` varchar(50) NOT NULL,
-  `perm_adresse` varchar(255) NOT NULL,
-  `perm_cp` varchar(10) NOT NULL,
-  `perm_pays` varchar(255) NOT NULL,
-  `perm_ville` varchar(255) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `sexe` varchar(1) NOT NULL,
-  `sigle_etu` varchar(3) NOT NULL,
-  `situation` varchar(3) NOT NULL,
-  `tel_fixe` varchar(20) DEFAULT NULL,
-  `tel_port` varchar(20) DEFAULT NULL,
-  `ubo_email` varchar(255) DEFAULT NULL,
-  `universite` varchar(255) NOT NULL,
-  `annee_pro` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `evaluation`
---
-
-CREATE TABLE `evaluation` (
-  `id_evaluation` bigint(20) NOT NULL,
-  `debut_reponse` datetime(6) NOT NULL,
-  `etat` varchar(3) NOT NULL,
-  `fin_reponse` datetime(6) NOT NULL,
-  `no_evaluation` tinyint(4) NOT NULL,
-  `periode` varchar(64) DEFAULT NULL,
-  `annee_pro` varchar(10) NOT NULL,
-  `code_ec` varchar(8) NOT NULL,
-  `code_formation` varchar(8) NOT NULL,
-  `code_ue` varchar(8) NOT NULL,
-  `no_enseignant` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `evaluation_entreprise`
---
-
-CREATE TABLE `evaluation_entreprise` (
-  `annee_pro` varchar(255) NOT NULL,
-  `no_etudiant_nat` varchar(255) NOT NULL,
-  `date_maj` datetime(6) NOT NULL,
-  `etat` varchar(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `formation`
---
-
-CREATE TABLE `formation` (
-  `code_formation` varchar(8) NOT NULL,
-  `debut_habilitation` datetime(6) DEFAULT NULL,
-  `diplome` varchar(3) NOT NULL,
-  `double_diplome` char(1) NOT NULL,
-  `fin_habilitation` datetime(6) DEFAULT NULL,
-  `n0_annee` tinyint(4) NOT NULL,
-  `nom_formation` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `notation_stage`
---
-
-CREATE TABLE `notation_stage` (
-  `no_bareme` double NOT NULL,
-  `coeff_ent` double NOT NULL,
-  `coeff_rapport` double NOT NULL,
-  `coeff_soutenance` double NOT NULL,
-  `date_creation` datetime(6) NOT NULL,
-  `etat_bareme` varchar(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `note_entreprise`
---
-
-CREATE TABLE `note_entreprise` (
-  `annee_pro` varchar(10) NOT NULL,
-  `no_etudiant_nat` varchar(50) NOT NULL,
-  `commentaire` tinytext DEFAULT NULL,
-  `codn_id` double NOT NULL,
-  `CRITE_ID` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `offre_stage`
---
-
-CREATE TABLE `offre_stage` (
-  `no_offre` double NOT NULL,
-  `date_creation` datetime(6) NOT NULL,
-  `description` varchar(4000) DEFAULT NULL,
-  `duree` varchar(30) NOT NULL,
-  `etat_offre` varchar(3) NOT NULL,
-  `intitule` varchar(100) NOT NULL,
-  `lieu` varchar(80) NOT NULL,
-  `mail_responsable` varchar(100) DEFAULT NULL,
-  `niveau_requis` varchar(5) NOT NULL,
-  `no_offre_entreprise` varchar(20) DEFAULT NULL,
-  `nom_responsable` varchar(50) NOT NULL,
-  `periode` varchar(50) NOT NULL,
-  `prenom_responsable` varchar(50) NOT NULL,
-  `remuneration` varchar(20) DEFAULT NULL,
-  `sujet` varchar(255) NOT NULL,
-  `tel_responsable` varchar(20) DEFAULT NULL,
-  `annee_pro` varchar(10) NOT NULL,
-  `no_entreprise` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `poste_entreprise`
---
-
-CREATE TABLE `poste_entreprise` (
-  `brut_annuel` int(11) DEFAULT NULL,
-  `date_embauche` datetime(6) NOT NULL,
-  `fonction` varchar(5) NOT NULL,
-  `moyen_obtention` varchar(3) NOT NULL,
-  `service` varchar(5) DEFAULT NULL,
-  `NO_ENTREPRISE` double NOT NULL,
-  `NO_ETUDIANT_NAT` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `promotion`
---
-
-CREATE TABLE `promotion` (
-  `annee_pro` varchar(10) NOT NULL,
-  `commentaire` varchar(255) DEFAULT NULL,
-  `date_rentree` datetime(6) DEFAULT NULL,
-  `date_reponse_lalp` datetime(6) DEFAULT NULL,
-  `date_reponse_lp` datetime(6) DEFAULT NULL,
-  `etat_preselection` varchar(3) NOT NULL,
-  `lieu_rentree` varchar(255) DEFAULT NULL,
-  `nb_etu_souhaite` smallint(6) NOT NULL,
-  `processus_stage` varchar(5) DEFAULT NULL,
-  `sigle_pro` varchar(5) NOT NULL,
-  `code_formation` varchar(8) DEFAULT NULL,
-  `no_bareme` double DEFAULT NULL,
-  `no_enseignant` int(11) DEFAULT NULL,
-  `no_evaluation` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `qualificatif`
---
-
-CREATE TABLE `qualificatif` (
-  `id_qualificatif` bigint(20) NOT NULL,
-  `maximal` varchar(16) NOT NULL,
-  `minimal` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `question`
---
-
-CREATE TABLE `question` (
-  `id_question` bigint(20) NOT NULL,
-  `intitulֹ` varchar(64) NOT NULL,
-  `type` varchar(10) NOT NULL,
-  `id_qualificatif` bigint(20) NOT NULL,
-  `no_enseignant` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `question_evaluation`
---
-
-CREATE TABLE `question_evaluation` (
-  `id_question_evaluation` bigint(20) NOT NULL,
-  `intitule` varchar(64) DEFAULT NULL,
-  `ordre` tinyint(4) NOT NULL,
-  `id_qualificatif` bigint(20) DEFAULT NULL,
-  `id_question` bigint(20) DEFAULT NULL,
-  `id_rubrique_evaluation` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `reponse_evaluation`
---
-
-CREATE TABLE `reponse_evaluation` (
-  `id_reponse_evaluation` bigint(20) NOT NULL,
-  `commentaire` varchar(512) DEFAULT NULL,
-  `nom` varchar(32) DEFAULT NULL,
-  `prenom` varchar(32) DEFAULT NULL,
-  `id_evaluation` bigint(20) NOT NULL,
-  `no_etudiant_nat` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `reponse_question`
---
-
-CREATE TABLE `reponse_question` (
-  `positionnement` decimal(38,0) DEFAULT NULL,
-  `ID_QUESTION_EVALUATION` bigint(20) NOT NULL,
-  `ID_REPONSE_QUESTION` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `roles`
---
-
-CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
-  `name` enum('ROLE_USER','ROLE_MODERATOR','ROLE_ADMIN') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `rubrique`
---
-
-CREATE TABLE `rubrique` (
-  `id_rubrique` bigint(20) NOT NULL,
-  `designation` varchar(32) NOT NULL,
-  `ordre` double DEFAULT NULL,
-  `type` varchar(10) NOT NULL,
-  `no_enseignant` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `rubrique_evaluation`
---
-
-CREATE TABLE `rubrique_evaluation` (
-  `id_rubrique_evaluation` bigint(20) NOT NULL,
-  `designation` varchar(64) DEFAULT NULL,
-  `ordre` tinyint(4) NOT NULL,
-  `id_evaluation` bigint(20) NOT NULL,
-  `id_rubrique` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `rubrique_question`
---
-
-CREATE TABLE `rubrique_question` (
-  `ordre` decimal(38,0) NOT NULL,
-  `ID_QUESTION` bigint(20) NOT NULL,
-  `ID_RUBRIQUE` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `soutenance`
---
-
-CREATE TABLE `soutenance` (
-  `no_session` double NOT NULL,
-  `date_soutenance` datetime(6) NOT NULL,
-  `plage_horaire` varchar(50) NOT NULL,
-  `salle` varchar(12) NOT NULL,
-  `ANNEE_PRO` varchar(255) NOT NULL,
-  `no_enseignant_assesseur` int(11) NOT NULL,
-  `no_enseignant_responsable` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `stage`
---
-
-CREATE TABLE `stage` (
-  `commentaire_tuteur` varchar(255) DEFAULT NULL,
-  `date_deb` datetime(6) NOT NULL,
-  `date_fin` datetime(6) NOT NULL,
-  `date_reception_rapport` datetime(6) DEFAULT NULL,
-  `date_signature_conv` datetime(6) DEFAULT NULL,
-  `description` varchar(4000) DEFAULT NULL,
-  `etat_convention` varchar(3) DEFAULT NULL,
-  `etat_stage` varchar(3) NOT NULL,
-  `intitule` varchar(200) NOT NULL,
-  `lieu` varchar(50) NOT NULL,
-  `note_entreprise` double DEFAULT NULL,
-  `note_rapport` double DEFAULT NULL,
-  `note_soutenance` double DEFAULT NULL,
-  `sujet` varchar(200) NOT NULL,
-  `ANNEE_PRO` varchar(255) NOT NULL,
-  `no_contact_ili` double NOT NULL,
-  `no_enseignant` int(11) DEFAULT NULL,
-  `no_entreprise` double NOT NULL,
-  `NO_ETUDIANT_NAT` varchar(255) NOT NULL,
-  `no_offre` double DEFAULT NULL,
-  `no_session` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `structure_evaluation`
---
-
-CREATE TABLE `structure_evaluation` (
-  `no_evaluation` double NOT NULL,
-  `date_creation` datetime(6) NOT NULL,
-  `etat` varchar(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `unite_enseignement`
---
-
-CREATE TABLE `unite_enseignement` (
-  `code_ue` varchar(8) NOT NULL,
-  `description` varchar(256) DEFAULT NULL,
-  `designation` varchar(64) NOT NULL,
-  `nbh_cm` decimal(38,0) DEFAULT NULL,
-  `nbh_td` tinyint(4) DEFAULT NULL,
-  `nbh_tp` tinyint(4) DEFAULT NULL,
-  `semestre` varchar(3) NOT NULL,
-  `code_formation` varchar(8) NOT NULL,
-  `no_enseignant` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `user_roles`
---
-
-CREATE TABLE `user_roles` (
-  `user_id` bigint(20) NOT NULL,
-  `role_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `visite_stage`
---
-
-CREATE TABLE `visite_stage` (
-  `annee_pro` varchar(255) NOT NULL,
-  `no_etudiant_nat` varchar(255) NOT NULL,
-  `commentaire_tuteur_ubo` tinytext DEFAULT NULL,
-  `date_effective` datetime(6) DEFAULT NULL,
-  `date_previsionnelle` datetime(6) NOT NULL,
-  `duree` varchar(20) DEFAULT NULL,
-  `heure_effective` varchar(20) DEFAULT NULL,
-  `heure_previsionnelle` varchar(20) DEFAULT NULL,
-  `type_contact` varchar(3) NOT NULL,
-  `no_contact_ili` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `avenant`
---
-ALTER TABLE `avenant`
-  ADD PRIMARY KEY (`no_avenant`),
-  ADD KEY `FKk5l2r5og9n2jfudl4n92tkyer` (`annee_pro`,`no_etudiant_nat`);
-
---
--- Index pour la table `candidat`
---
-ALTER TABLE `candidat`
-  ADD PRIMARY KEY (`no_etudiant_nat`),
-  ADD KEY `FKt8livm25aoqk7bx7xw90yflij` (`annee_pro`);
-
---
--- Index pour la table `cg_ref_codes`
---
-ALTER TABLE `cg_ref_codes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `code_notation`
---
-ALTER TABLE `code_notation`
-  ADD PRIMARY KEY (`codn_id`),
-  ADD KEY `FKh03dyj8t5fgmn6m4bvwumxwsy` (`no_bareme`);
-
---
--- Index pour la table `contact_stage`
---
-ALTER TABLE `contact_stage`
-  ADD PRIMARY KEY (`annee_pro`,`date_contact`,`NO_ETUDIANT_NAT`),
-  ADD KEY `FKdf6iuu8auls4drf25ydunsfjk` (`no_contact_ili`),
-  ADD KEY `FKcnpftf44vfhpw1f4qfynxkauv` (`NO_ETUDIANT_NAT`);
-
---
--- Index pour la table `critere_entreprise`
---
-ALTER TABLE `critere_entreprise`
-  ADD PRIMARY KEY (`crite_id`),
-  ADD KEY `FKn377vi3glpcqjjcp63wutwk3y` (`no_evaluation`);
-
---
--- Index pour la table `diplome`
---
-ALTER TABLE `diplome`
-  ADD PRIMARY KEY (`no_etudiant_nat`);
-
---
--- Index pour la table `droit`
---
-ALTER TABLE `droit`
-  ADD PRIMARY KEY (`ID_EVALUATION`,`NO_ENSEIGNANT`),
-  ADD KEY `FKcterw8cqj8v15xj36qb3ivyx4` (`NO_ENSEIGNANT`);
-
---
--- Index pour la table `element_constitutif`
---
-ALTER TABLE `element_constitutif`
-  ADD PRIMARY KEY (`code_ec`,`code_formation`,`code_ue`),
-  ADD KEY `FK6v81wmehjl6qsa8vvo8ml7eq2` (`no_enseignant`),
-  ADD KEY `FK7ko6kndoseuvunnqvyl5gqt0i` (`unite_enseignement_code_ue`);
-
---
--- Index pour la table `employe`
---
-ALTER TABLE `employe`
-  ADD PRIMARY KEY (`no_contact_ili`),
-  ADD KEY `FKayksfjovgowjxp7q4u5w40yvy` (`no_entreprise`),
-  ADD KEY `FKdwvhoxwld6og3pwve57dje7uv` (`no_etudiant_nat`);
-
---
--- Index pour la table `enseignant`
---
-ALTER TABLE `enseignant`
-  ADD PRIMARY KEY (`no_enseignant`);
-
---
--- Index pour la table `entreprise`
---
-ALTER TABLE `entreprise`
-  ADD PRIMARY KEY (`no_entreprise`);
-
---
--- Index pour la table `entreprise_jn`
---
-ALTER TABLE `entreprise_jn`
-  ADD PRIMARY KEY (`login_maj`);
-
---
--- Index pour la table `etudiant`
---
-ALTER TABLE `etudiant`
-  ADD PRIMARY KEY (`no_etudiant_nat`),
-  ADD KEY `FKru5hakekuhbjw90gml6lqq9jb` (`annee_pro`);
-
---
--- Index pour la table `evaluation`
---
-ALTER TABLE `evaluation`
-  ADD PRIMARY KEY (`id_evaluation`),
-  ADD KEY `FKqkyyu36otfgith83oaf6ahchl` (`annee_pro`),
-  ADD KEY `FKqnc7bmp3jrano3238wdyo51d7` (`code_ec`,`code_formation`,`code_ue`),
-  ADD KEY `FKemryn3bkip9kone6srol8wwlk` (`no_enseignant`);
-
---
--- Index pour la table `evaluation_entreprise`
---
-ALTER TABLE `evaluation_entreprise`
-  ADD PRIMARY KEY (`annee_pro`,`no_etudiant_nat`);
-
---
--- Index pour la table `formation`
---
-ALTER TABLE `formation`
-  ADD PRIMARY KEY (`code_formation`);
-
---
--- Index pour la table `notation_stage`
---
-ALTER TABLE `notation_stage`
-  ADD PRIMARY KEY (`no_bareme`);
-
---
--- Index pour la table `note_entreprise`
---
-ALTER TABLE `note_entreprise`
-  ADD PRIMARY KEY (`annee_pro`,`CRITE_ID`,`no_etudiant_nat`),
-  ADD KEY `FKti764ha93twb0qbld3ywjs2ba` (`codn_id`),
-  ADD KEY `FKtrwd7r5pba7wq94rof3gryfua` (`CRITE_ID`),
-  ADD KEY `FK8mqm2at84yb7095w3uvdvk8lm` (`annee_pro`,`no_etudiant_nat`);
-
---
--- Index pour la table `offre_stage`
---
-ALTER TABLE `offre_stage`
-  ADD PRIMARY KEY (`no_offre`),
-  ADD KEY `FKr0uojmcjhfintwd8xu4061vsn` (`annee_pro`),
-  ADD KEY `FK6rqppjmo5ddsaec29vw51t8ws` (`no_entreprise`);
-
---
--- Index pour la table `poste_entreprise`
---
-ALTER TABLE `poste_entreprise`
-  ADD PRIMARY KEY (`NO_ENTREPRISE`,`NO_ETUDIANT_NAT`),
-  ADD KEY `FKguvv2ir362cisan3ts3pd5h1k` (`NO_ETUDIANT_NAT`);
-
---
--- Index pour la table `promotion`
---
-ALTER TABLE `promotion`
-  ADD PRIMARY KEY (`annee_pro`),
-  ADD KEY `FKbem6u73c3epx5s1fdt97uf13g` (`code_formation`),
-  ADD KEY `FKq0ewfgdlid4t8qjjln5u0r80u` (`no_bareme`),
-  ADD KEY `FKlcylu9f2sqrl7hrvvnko8la0t` (`no_enseignant`),
-  ADD KEY `FKcryp2cgc4is7ky41koxgr9uc0` (`no_evaluation`);
-
---
--- Index pour la table `qualificatif`
---
-ALTER TABLE `qualificatif`
-  ADD PRIMARY KEY (`id_qualificatif`);
-
---
--- Index pour la table `question`
---
-ALTER TABLE `question`
-  ADD PRIMARY KEY (`id_question`),
-  ADD KEY `FKl4ler5t8k2w31e88uwr9hiam3` (`id_qualificatif`),
-  ADD KEY `FKenuqmo8ato75nwtmnhvqn8of` (`no_enseignant`);
-
---
--- Index pour la table `question_evaluation`
---
-ALTER TABLE `question_evaluation`
-  ADD PRIMARY KEY (`id_question_evaluation`),
-  ADD KEY `FK7bvyyl9mow6stqpk9un8qnw2n` (`id_qualificatif`),
-  ADD KEY `FKh584khu4508arn65wv9khiikv` (`id_question`),
-  ADD KEY `FK95saw6ruhtpgwidv4n48qtr8l` (`id_rubrique_evaluation`);
-
---
--- Index pour la table `reponse_evaluation`
---
-ALTER TABLE `reponse_evaluation`
-  ADD PRIMARY KEY (`id_reponse_evaluation`),
-  ADD KEY `FKlrbksy6fsgb03iak3dk0w42oo` (`id_evaluation`),
-  ADD KEY `FKlk5perpahqbwartij4fmiwl05` (`no_etudiant_nat`);
-
---
--- Index pour la table `reponse_question`
---
-ALTER TABLE `reponse_question`
-  ADD PRIMARY KEY (`ID_QUESTION_EVALUATION`,`ID_REPONSE_QUESTION`),
-  ADD KEY `FKeaf555xyssr4derke8cbchp3o` (`ID_REPONSE_QUESTION`);
-
---
--- Index pour la table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `rubrique`
---
-ALTER TABLE `rubrique`
-  ADD PRIMARY KEY (`id_rubrique`),
-  ADD KEY `FKq2uic5c6upre2u11c867e5pli` (`no_enseignant`);
-
---
--- Index pour la table `rubrique_evaluation`
---
-ALTER TABLE `rubrique_evaluation`
-  ADD PRIMARY KEY (`id_rubrique_evaluation`),
-  ADD KEY `FKlu5sx4yfycfa11noogcn0kacm` (`id_evaluation`),
-  ADD KEY `FK20jvujg1dvmy0s0tg6cd0u0j9` (`id_rubrique`);
-
---
--- Index pour la table `rubrique_question`
---
-ALTER TABLE `rubrique_question`
-  ADD PRIMARY KEY (`ID_QUESTION`,`ID_RUBRIQUE`),
-  ADD KEY `FKbi4l32ekwlji8t9juvdqvae20` (`ID_RUBRIQUE`);
-
---
--- Index pour la table `soutenance`
---
-ALTER TABLE `soutenance`
-  ADD PRIMARY KEY (`ANNEE_PRO`,`no_session`),
-  ADD KEY `FKb7hd46taw70hcf5c6je99j4vf` (`no_enseignant_assesseur`),
-  ADD KEY `FKj4qf1or5n1muqb2rhcs7jwjvd` (`no_enseignant_responsable`);
-
---
--- Index pour la table `stage`
---
-ALTER TABLE `stage`
-  ADD PRIMARY KEY (`ANNEE_PRO`,`NO_ETUDIANT_NAT`),
-  ADD KEY `FKtnphgp84js5r3ipcwfg0ra36c` (`no_contact_ili`),
-  ADD KEY `FKhtsrcl55dukmhir4gb9vapdrd` (`no_enseignant`),
-  ADD KEY `FKkkxcii2nk50bvw9n3aglcywlp` (`no_entreprise`),
-  ADD KEY `FKtjd3nhk1h6kvwhikbrgysgimv` (`NO_ETUDIANT_NAT`),
-  ADD KEY `FKq732upmlkef2ysamrigd7f9dt` (`no_offre`),
-  ADD KEY `FK3vsuu65gnm3xxuosuj83qk8dr` (`ANNEE_PRO`,`no_session`);
-
---
--- Index pour la table `structure_evaluation`
---
-ALTER TABLE `structure_evaluation`
-  ADD PRIMARY KEY (`no_evaluation`);
-
---
--- Index pour la table `unite_enseignement`
---
-ALTER TABLE `unite_enseignement`
-  ADD PRIMARY KEY (`code_ue`),
-  ADD KEY `FKtncs5cp8xgnt0p078xa1oijlp` (`code_formation`),
-  ADD KEY `FK144kbyvq4xmg673abyy35ee50` (`no_enseignant`);
-
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UKr43af9ap4edm43mmtq01oddj6` (`username`),
-  ADD UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`);
-
---
--- Index pour la table `user_roles`
---
-ALTER TABLE `user_roles`
-  ADD PRIMARY KEY (`user_id`,`role_id`),
-  ADD KEY `FKh8ciramu9cc9q3qcqiv4ue8a6` (`role_id`);
-
---
--- Index pour la table `visite_stage`
---
-ALTER TABLE `visite_stage`
-  ADD PRIMARY KEY (`annee_pro`,`no_etudiant_nat`),
-  ADD KEY `FK2r8f9hr6p678t3jo1bm6dbavv` (`no_contact_ili`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `cg_ref_codes`
---
-ALTER TABLE `cg_ref_codes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `avenant`
---
-ALTER TABLE `avenant`
-  ADD CONSTRAINT `FKk5l2r5og9n2jfudl4n92tkyer` FOREIGN KEY (`annee_pro`,`no_etudiant_nat`) REFERENCES `stage` (`ANNEE_PRO`, `NO_ETUDIANT_NAT`);
-
---
--- Contraintes pour la table `candidat`
---
-ALTER TABLE `candidat`
-  ADD CONSTRAINT `FKt8livm25aoqk7bx7xw90yflij` FOREIGN KEY (`annee_pro`) REFERENCES `promotion` (`annee_pro`);
-
---
--- Contraintes pour la table `code_notation`
---
-ALTER TABLE `code_notation`
-  ADD CONSTRAINT `FKh03dyj8t5fgmn6m4bvwumxwsy` FOREIGN KEY (`no_bareme`) REFERENCES `notation_stage` (`no_bareme`);
-
---
--- Contraintes pour la table `contact_stage`
---
-ALTER TABLE `contact_stage`
-  ADD CONSTRAINT `FKcnpftf44vfhpw1f4qfynxkauv` FOREIGN KEY (`NO_ETUDIANT_NAT`) REFERENCES `etudiant` (`no_etudiant_nat`),
-  ADD CONSTRAINT `FKdf6iuu8auls4drf25ydunsfjk` FOREIGN KEY (`no_contact_ili`) REFERENCES `employe` (`no_contact_ili`);
-
---
--- Contraintes pour la table `critere_entreprise`
---
-ALTER TABLE `critere_entreprise`
-  ADD CONSTRAINT `FKn377vi3glpcqjjcp63wutwk3y` FOREIGN KEY (`no_evaluation`) REFERENCES `structure_evaluation` (`no_evaluation`);
-
---
--- Contraintes pour la table `diplome`
---
-ALTER TABLE `diplome`
-  ADD CONSTRAINT `FKdjxggoidji7e18lfh61xsnu9b` FOREIGN KEY (`no_etudiant_nat`) REFERENCES `etudiant` (`no_etudiant_nat`);
-
---
--- Contraintes pour la table `droit`
---
-ALTER TABLE `droit`
-  ADD CONSTRAINT `FKcterw8cqj8v15xj36qb3ivyx4` FOREIGN KEY (`NO_ENSEIGNANT`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKldyrfcjwtks3wi6cc4v0rdas3` FOREIGN KEY (`ID_EVALUATION`) REFERENCES `evaluation` (`id_evaluation`);
-
---
--- Contraintes pour la table `element_constitutif`
---
-ALTER TABLE `element_constitutif`
-  ADD CONSTRAINT `FK6v81wmehjl6qsa8vvo8ml7eq2` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FK7ko6kndoseuvunnqvyl5gqt0i` FOREIGN KEY (`unite_enseignement_code_ue`) REFERENCES `unite_enseignement` (`code_ue`);
-
---
--- Contraintes pour la table `employe`
---
-ALTER TABLE `employe`
-  ADD CONSTRAINT `FKayksfjovgowjxp7q4u5w40yvy` FOREIGN KEY (`no_entreprise`) REFERENCES `entreprise` (`no_entreprise`),
-  ADD CONSTRAINT `FKdwvhoxwld6og3pwve57dje7uv` FOREIGN KEY (`no_etudiant_nat`) REFERENCES `diplome` (`no_etudiant_nat`);
-
---
--- Contraintes pour la table `etudiant`
---
-ALTER TABLE `etudiant`
-  ADD CONSTRAINT `FKru5hakekuhbjw90gml6lqq9jb` FOREIGN KEY (`annee_pro`) REFERENCES `promotion` (`annee_pro`);
-
---
--- Contraintes pour la table `evaluation`
---
-ALTER TABLE `evaluation`
-  ADD CONSTRAINT `FKemryn3bkip9kone6srol8wwlk` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKqkyyu36otfgith83oaf6ahchl` FOREIGN KEY (`annee_pro`) REFERENCES `promotion` (`annee_pro`),
-  ADD CONSTRAINT `FKqnc7bmp3jrano3238wdyo51d7` FOREIGN KEY (`code_ec`,`code_formation`,`code_ue`) REFERENCES `element_constitutif` (`code_ec`, `code_formation`, `code_ue`);
-
---
--- Contraintes pour la table `evaluation_entreprise`
---
-ALTER TABLE `evaluation_entreprise`
-  ADD CONSTRAINT `FK22cshsblam949v2darcanv5m8` FOREIGN KEY (`annee_pro`,`no_etudiant_nat`) REFERENCES `stage` (`ANNEE_PRO`, `NO_ETUDIANT_NAT`);
-
---
--- Contraintes pour la table `note_entreprise`
---
-ALTER TABLE `note_entreprise`
-  ADD CONSTRAINT `FK8mqm2at84yb7095w3uvdvk8lm` FOREIGN KEY (`annee_pro`,`no_etudiant_nat`) REFERENCES `evaluation_entreprise` (`annee_pro`, `no_etudiant_nat`),
-  ADD CONSTRAINT `FKti764ha93twb0qbld3ywjs2ba` FOREIGN KEY (`codn_id`) REFERENCES `code_notation` (`codn_id`),
-  ADD CONSTRAINT `FKtrwd7r5pba7wq94rof3gryfua` FOREIGN KEY (`CRITE_ID`) REFERENCES `critere_entreprise` (`crite_id`);
-
---
--- Contraintes pour la table `offre_stage`
---
-ALTER TABLE `offre_stage`
-  ADD CONSTRAINT `FK6rqppjmo5ddsaec29vw51t8ws` FOREIGN KEY (`no_entreprise`) REFERENCES `entreprise` (`no_entreprise`),
-  ADD CONSTRAINT `FKr0uojmcjhfintwd8xu4061vsn` FOREIGN KEY (`annee_pro`) REFERENCES `promotion` (`annee_pro`);
-
---
--- Contraintes pour la table `poste_entreprise`
---
-ALTER TABLE `poste_entreprise`
-  ADD CONSTRAINT `FKguvv2ir362cisan3ts3pd5h1k` FOREIGN KEY (`NO_ETUDIANT_NAT`) REFERENCES `diplome` (`no_etudiant_nat`),
-  ADD CONSTRAINT `FKtr7mrosr5r1632vsmay6het6p` FOREIGN KEY (`NO_ENTREPRISE`) REFERENCES `entreprise` (`no_entreprise`);
-
---
--- Contraintes pour la table `promotion`
---
-ALTER TABLE `promotion`
-  ADD CONSTRAINT `FKbem6u73c3epx5s1fdt97uf13g` FOREIGN KEY (`code_formation`) REFERENCES `formation` (`code_formation`),
-  ADD CONSTRAINT `FKcryp2cgc4is7ky41koxgr9uc0` FOREIGN KEY (`no_evaluation`) REFERENCES `structure_evaluation` (`no_evaluation`),
-  ADD CONSTRAINT `FKlcylu9f2sqrl7hrvvnko8la0t` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKq0ewfgdlid4t8qjjln5u0r80u` FOREIGN KEY (`no_bareme`) REFERENCES `notation_stage` (`no_bareme`);
-
---
--- Contraintes pour la table `question`
---
-ALTER TABLE `question`
-  ADD CONSTRAINT `FKenuqmo8ato75nwtmnhvqn8of` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKl4ler5t8k2w31e88uwr9hiam3` FOREIGN KEY (`id_qualificatif`) REFERENCES `qualificatif` (`id_qualificatif`);
-
---
--- Contraintes pour la table `question_evaluation`
---
-ALTER TABLE `question_evaluation`
-  ADD CONSTRAINT `FK7bvyyl9mow6stqpk9un8qnw2n` FOREIGN KEY (`id_qualificatif`) REFERENCES `qualificatif` (`id_qualificatif`),
-  ADD CONSTRAINT `FK95saw6ruhtpgwidv4n48qtr8l` FOREIGN KEY (`id_rubrique_evaluation`) REFERENCES `rubrique_evaluation` (`id_rubrique_evaluation`),
-  ADD CONSTRAINT `FKh584khu4508arn65wv9khiikv` FOREIGN KEY (`id_question`) REFERENCES `question` (`id_question`);
-
---
--- Contraintes pour la table `reponse_evaluation`
---
-ALTER TABLE `reponse_evaluation`
-  ADD CONSTRAINT `FKlk5perpahqbwartij4fmiwl05` FOREIGN KEY (`no_etudiant_nat`) REFERENCES `etudiant` (`no_etudiant_nat`),
-  ADD CONSTRAINT `FKlrbksy6fsgb03iak3dk0w42oo` FOREIGN KEY (`id_evaluation`) REFERENCES `evaluation` (`id_evaluation`);
-
---
--- Contraintes pour la table `reponse_question`
---
-ALTER TABLE `reponse_question`
-  ADD CONSTRAINT `FK9h3ucdpex2fiy0jmnjnii64y8` FOREIGN KEY (`ID_QUESTION_EVALUATION`) REFERENCES `question_evaluation` (`id_question_evaluation`),
-  ADD CONSTRAINT `FKeaf555xyssr4derke8cbchp3o` FOREIGN KEY (`ID_REPONSE_QUESTION`) REFERENCES `reponse_evaluation` (`id_reponse_evaluation`);
-
---
--- Contraintes pour la table `rubrique`
---
-ALTER TABLE `rubrique`
-  ADD CONSTRAINT `FKq2uic5c6upre2u11c867e5pli` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`);
-
---
--- Contraintes pour la table `rubrique_evaluation`
---
-ALTER TABLE `rubrique_evaluation`
-  ADD CONSTRAINT `FK20jvujg1dvmy0s0tg6cd0u0j9` FOREIGN KEY (`id_rubrique`) REFERENCES `rubrique` (`id_rubrique`),
-  ADD CONSTRAINT `FKlu5sx4yfycfa11noogcn0kacm` FOREIGN KEY (`id_evaluation`) REFERENCES `evaluation` (`id_evaluation`);
-
---
--- Contraintes pour la table `rubrique_question`
---
-ALTER TABLE `rubrique_question`
-  ADD CONSTRAINT `FK3hu52bbx0ayvbcsdmqt7k2uh5` FOREIGN KEY (`ID_QUESTION`) REFERENCES `question` (`id_question`),
-  ADD CONSTRAINT `FKbi4l32ekwlji8t9juvdqvae20` FOREIGN KEY (`ID_RUBRIQUE`) REFERENCES `rubrique` (`id_rubrique`);
-
---
--- Contraintes pour la table `soutenance`
---
-ALTER TABLE `soutenance`
-  ADD CONSTRAINT `FKb7hd46taw70hcf5c6je99j4vf` FOREIGN KEY (`no_enseignant_assesseur`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKj4qf1or5n1muqb2rhcs7jwjvd` FOREIGN KEY (`no_enseignant_responsable`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKmr2tpq77iyktqgo0hu8jy0bo3` FOREIGN KEY (`ANNEE_PRO`) REFERENCES `promotion` (`annee_pro`);
-
---
--- Contraintes pour la table `stage`
---
-ALTER TABLE `stage`
-  ADD CONSTRAINT `FK3vsuu65gnm3xxuosuj83qk8dr` FOREIGN KEY (`ANNEE_PRO`,`no_session`) REFERENCES `soutenance` (`ANNEE_PRO`, `no_session`),
-  ADD CONSTRAINT `FKa2atq8gbvbp6mlvlg1phwao8g` FOREIGN KEY (`ANNEE_PRO`) REFERENCES `promotion` (`annee_pro`),
-  ADD CONSTRAINT `FKhtsrcl55dukmhir4gb9vapdrd` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKkkxcii2nk50bvw9n3aglcywlp` FOREIGN KEY (`no_entreprise`) REFERENCES `entreprise` (`no_entreprise`),
-  ADD CONSTRAINT `FKq732upmlkef2ysamrigd7f9dt` FOREIGN KEY (`no_offre`) REFERENCES `offre_stage` (`no_offre`),
-  ADD CONSTRAINT `FKtjd3nhk1h6kvwhikbrgysgimv` FOREIGN KEY (`NO_ETUDIANT_NAT`) REFERENCES `etudiant` (`no_etudiant_nat`),
-  ADD CONSTRAINT `FKtnphgp84js5r3ipcwfg0ra36c` FOREIGN KEY (`no_contact_ili`) REFERENCES `employe` (`no_contact_ili`);
-
---
--- Contraintes pour la table `unite_enseignement`
---
-ALTER TABLE `unite_enseignement`
-  ADD CONSTRAINT `FK144kbyvq4xmg673abyy35ee50` FOREIGN KEY (`no_enseignant`) REFERENCES `enseignant` (`no_enseignant`),
-  ADD CONSTRAINT `FKtncs5cp8xgnt0p078xa1oijlp` FOREIGN KEY (`code_formation`) REFERENCES `formation` (`code_formation`);
-
---
--- Contraintes pour la table `user_roles`
---
-ALTER TABLE `user_roles`
-  ADD CONSTRAINT `FKh8ciramu9cc9q3qcqiv4ue8a6` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
-  ADD CONSTRAINT `FKhfh9dx7w3ubf1co1vdev94g3f` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Contraintes pour la table `visite_stage`
---
-ALTER TABLE `visite_stage`
-  ADD CONSTRAINT `FK2r8f9hr6p678t3jo1bm6dbavv` FOREIGN KEY (`no_contact_ili`) REFERENCES `employe` (`no_contact_ili`),
-  ADD CONSTRAINT `FKak1vadpjievcxhj8sd0ljy2j8` FOREIGN KEY (`annee_pro`,`no_etudiant_nat`) REFERENCES `stage` (`ANNEE_PRO`, `NO_ETUDIANT_NAT`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--------------------------------------------------------
+--  File created - Monday-February-12-2024   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Sequence AVE_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."AVE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence CODN_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."CODN_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence EVE_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."EVE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence EMP_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."EMP_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence DRT_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."DRT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence ENT_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."ENT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence CRITE_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."CRITE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence NOTS_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."NOTS_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence QUE_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."QUE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence OFF_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."OFF_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence QEV_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."QEV_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence QUA_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."QUA_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence REV_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."REV_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence RPE_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."RPE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence RUB_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."RUB_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence SOUT_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."SOUT_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Sequence STRE_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SYSTEM"."STRE_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE   ;
+--------------------------------------------------------
+--  DDL for Table CRITERE_ENTREPRISE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."CRITERE_ENTREPRISE" 
+   (	"CRITE_ID" FLOAT(53), 
+	"NO_EVALUATION" FLOAT(53), 
+	"ORDRE" FLOAT(53), 
+	"DESIGNATION" VARCHAR2(200 BYTE), 
+	"POIDS" FLOAT(53), 
+	"DESCRIPTIF" CLOB
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("DESCRIPTIF") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+--------------------------------------------------------
+--  DDL for Table CANDIDAT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."CANDIDAT" 
+   (	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"SEXE" CHAR(1 BYTE), 
+	"NOM" VARCHAR2(50 BYTE), 
+	"PRENOM" VARCHAR2(50 BYTE), 
+	"DATE_NAISSANCE" TIMESTAMP (6) WITH TIME ZONE, 
+	"LIEU_NAISSANCE" VARCHAR2(255 BYTE), 
+	"SITUATION" VARCHAR2(3 BYTE), 
+	"NATIONALITE" VARCHAR2(50 BYTE) DEFAULT 'Fran�aise', 
+	"TEL_FIXE" VARCHAR2(20 BYTE), 
+	"TEL_PORT" VARCHAR2(20 BYTE), 
+	"EMAIL" VARCHAR2(255 BYTE), 
+	"ACTU_ADRESSE" VARCHAR2(255 BYTE), 
+	"ACTU_CP" VARCHAR2(10 BYTE), 
+	"ACTU_VILLE" VARCHAR2(255 BYTE), 
+	"ACTU_PAYS" VARCHAR2(255 BYTE), 
+	"PERM_ADRESSE" VARCHAR2(255 BYTE), 
+	"PERM_CP" VARCHAR2(10 BYTE), 
+	"PERM_VILLE" VARCHAR2(255 BYTE), 
+	"PERM_PAYS" VARCHAR2(255 BYTE), 
+	"DERNIER_DIPLOME" VARCHAR2(255 BYTE), 
+	"UNIVERSITE" VARCHAR2(255 BYTE), 
+	"SELECTION_ORIGINE" VARCHAR2(2 BYTE), 
+	"SELECTION_COURANTE" VARCHAR2(2 BYTE), 
+	"REPONSE_ILI" CHAR(1 BYTE) DEFAULT 'N', 
+	"DATE_REPONSE_ILI" TIMESTAMP (6) WITH TIME ZONE, 
+	"REPONSE_CAN" VARCHAR2(3 BYTE) DEFAULT 'NRE', 
+	"DATE_REPONSE_CAN" TIMESTAMP (6) WITH TIME ZONE, 
+	"NO_ORDRE" FLOAT(53)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."NO_ETUDIANT_NAT" IS 'num�ro national de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."SEXE" IS 'Repr�sente le sexe des personnes';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."NOM" IS 'nom de famille du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."PRENOM" IS 'Pr�nom du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."DATE_NAISSANCE" IS 'date de naissance du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."LIEU_NAISSANCE" IS 'lieu de naissance du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."SITUATION" IS 'Repr�sente la situation de famille d''un �tudiant';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."NATIONALITE" IS 'Nationalit� du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."TEL_FIXE" IS 'Num�ro de t�l�phone fixe du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."TEL_PORT" IS 'Num�ro de t�l�phone du portable du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."EMAIL" IS 'Adresse email du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."ACTU_ADRESSE" IS 'Rue du candidat pendant l''annee scolaire';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."ACTU_CP" IS 'Code Postel du candidat pendant l''annee scolaire';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."ACTU_VILLE" IS 'Ville du candidat pendant l''annee scolaire';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."ACTU_PAYS" IS 'Pays du candidat pendant l''annee scolaire';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."PERM_ADRESSE" IS 'Rue du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."PERM_CP" IS 'Code postal du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."PERM_VILLE" IS 'Ville du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."PERM_PAYS" IS 'Pays du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."DERNIER_DIPLOME" IS 'Dernier dipl�me obtenu par le candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."UNIVERSITE" IS 'Derni�re universit� du candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."SELECTION_ORIGINE" IS 'Repr�sente la liste de selection d''un candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."SELECTION_COURANTE" IS 'Repr�sente la liste de selection d''un candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."REPONSE_ILI" IS 'Repr�senet une valeur bool�en Oui ou Non';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."DATE_REPONSE_ILI" IS 'Date � laquelle la r�ponse (accept�, attente, refus � la formation) a �t� envoy� au candidat';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."REPONSE_CAN" IS 'Repr�sente la r�ponse d''un candidat au sujet de sa candidature';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."DATE_REPONSE_CAN" IS 'Date � laquelle le candidat a r�pondu (confirm� ou annul� sa participation � la formation)';
+   COMMENT ON COLUMN "SYSTEM"."CANDIDAT"."NO_ORDRE" IS 'Classement du candidat sur la liste d''attente';
+--------------------------------------------------------
+--  DDL for Table STAGE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."STAGE" 
+   (	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"NO_ENTREPRISE" FLOAT(53), 
+	"NO_OFFRE" FLOAT(53), 
+	"NO_CONTACT_ILI" FLOAT(53), 
+	"INTITULE" VARCHAR2(200 BYTE), 
+	"SUJET" VARCHAR2(200 BYTE), 
+	"DATE_DEB" TIMESTAMP (6) WITH TIME ZONE, 
+	"DATE_FIN" TIMESTAMP (6) WITH TIME ZONE, 
+	"LIEU" VARCHAR2(50 BYTE), 
+	"ETAT_STAGE" VARCHAR2(3 BYTE) DEFAULT 'ELA', 
+	"DESCRIPTION" VARCHAR2(4000 BYTE), 
+	"ETAT_CONVENTION" VARCHAR2(3 BYTE) DEFAULT 'ELA', 
+	"DATE_SIGNATURE_CONV" TIMESTAMP (6) WITH TIME ZONE, 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"COMMENTAIRE_TUTEUR" VARCHAR2(255 BYTE), 
+	"DATE_RECEPTION_RAPPORT" TIMESTAMP (6) WITH TIME ZONE, 
+	"NOTE_ENTREPRISE" FLOAT(53), 
+	"NOTE_RAPPORT" FLOAT(53), 
+	"NO_SESSION" FLOAT(53), 
+	"NOTE_SOUTENANCE" FLOAT(53)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."ETAT_STAGE" IS 'Repr�sente l''�tat du stage';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."ETAT_CONVENTION" IS 'Repr�sente l''�tat de la convention de stage';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."DATE_SIGNATURE_CONV" IS 'Date de signature de la convention';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."NO_ENSEIGNANT" IS 'Num�ro unique de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."NOTE_ENTREPRISE" IS 'Champ calcul�';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."NOTE_RAPPORT" IS 'Nombre avec 2 d�cimales max.';
+   COMMENT ON COLUMN "SYSTEM"."STAGE"."NOTE_SOUTENANCE" IS 'Nombre avec 2 d�cimales max.';
+--------------------------------------------------------
+--  DDL for Table AVENANT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."AVENANT" 
+   (	"NO_AVENANT" NUMBER, 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"ETAT_AVENANT" VARCHAR2(3 BYTE) DEFAULT 'ELA', 
+	"NUM_ARTICLE" NUMBER, 
+	"DATE_SIGNATURE_AVE" TIMESTAMP (6) WITH TIME ZONE, 
+	"MODIF_APPORTEE" LONG, 
+	"COMMENTAIRE" VARCHAR2(255 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."AVENANT"."NO_AVENANT" IS 'Num�ro automatique d''avenant';
+   COMMENT ON COLUMN "SYSTEM"."AVENANT"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."AVENANT"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."AVENANT"."ETAT_AVENANT" IS 'Repr�sente l''�tat de la convention de stage';
+--------------------------------------------------------
+--  DDL for Table PROMOTION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."PROMOTION" 
+   (	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"CODE_FORMATION" VARCHAR2(8 BYTE), 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"SIGLE_PRO" VARCHAR2(5 BYTE), 
+	"NB_ETU_SOUHAITE" NUMBER(3,0), 
+	"ETAT_PRESELECTION" VARCHAR2(3 BYTE), 
+	"DATE_RENTREE" TIMESTAMP (6) WITH TIME ZONE, 
+	"LIEU_RENTREE" VARCHAR2(255 BYTE), 
+	"DATE_REPONSE_LP" TIMESTAMP (6) WITH TIME ZONE, 
+	"COMMENTAIRE" VARCHAR2(255 BYTE), 
+	"DATE_REPONSE_LALP" TIMESTAMP (6) WITH TIME ZONE, 
+	"PROCESSUS_STAGE" VARCHAR2(5 BYTE) DEFAULT 'RECH', 
+	"NO_EVALUATION" FLOAT(53), 
+	"NO_BAREME" FLOAT(53)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."SIGLE_PRO" IS 'Sigle de la promotion (ILI3)';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."NB_ETU_SOUHAITE" IS 'Nombre d''�tudiant que peut contenir au maximum la promotion';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."ETAT_PRESELECTION" IS 'Repr�sente l''�tat de la pr�s�lection des candidats d''une promotion';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."DATE_RENTREE" IS 'Date � laquelle les �tudiants font leur rentr�e';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."LIEU_RENTREE" IS 'Lieu o� vont �tre accueilli les �tudiants';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."DATE_REPONSE_LP" IS 'Date (au plus tard) � laquelle les candidats sur liste principale doivent donn�e leur r�ponse';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."COMMENTAIRE" IS 'commentaire sur la promotion';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."DATE_REPONSE_LALP" IS 'Date (au plus tard) � laquelle les candidats pass�s de la liste d''attente � la liste principale doivent donn�e leur r�ponse';
+   COMMENT ON COLUMN "SYSTEM"."PROMOTION"."PROCESSUS_STAGE" IS 'Repr�sente la consultabilit� de donn�es';
+--------------------------------------------------------
+--  DDL for Table QUESTION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."QUESTION" 
+   (	"ID_QUESTION" NUMBER(10,0), 
+	"TYPE" VARCHAR2(10 BYTE), 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"ID_QUALIFICATIF" NUMBER(10,0), 
+	"INTITULE" VARCHAR2(64 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."QUESTION"."NO_ENSEIGNANT" IS 'Num�ro unique de l''enseignant';
+--------------------------------------------------------
+--  DDL for Table VISITE_STAGE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."VISITE_STAGE" 
+   (	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"NO_CONTACT_ILI" FLOAT(53), 
+	"TYPE_CONTACT" VARCHAR2(3 BYTE), 
+	"DATE_PREVISIONNELLE" TIMESTAMP (6) WITH TIME ZONE, 
+	"HEURE_PREVISIONNELLE" VARCHAR2(20 BYTE), 
+	"DATE_EFFECTIVE" TIMESTAMP (6) WITH TIME ZONE, 
+	"HEURE_EFFECTIVE" VARCHAR2(20 BYTE), 
+	"DUREE" VARCHAR2(20 BYTE), 
+	"COMMENTAIRE_TUTEUR_UBO" CLOB
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("COMMENTAIRE_TUTEUR_UBO") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."TYPE_CONTACT" IS 'Repr�sente le type de contact';
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."DATE_PREVISIONNELLE" IS 'Date et heure pr�visionnelle du contact';
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."DATE_EFFECTIVE" IS 'Date et heure effective du contact';
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."DUREE" IS 'dur�e du contact en heures';
+   COMMENT ON COLUMN "SYSTEM"."VISITE_STAGE"."COMMENTAIRE_TUTEUR_UBO" IS 'commentaire confidentiel du tuteur UBO';
+--------------------------------------------------------
+--  DDL for Table ELEMENT_CONSTITUTIF
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" 
+   (	"CODE_FORMATION" VARCHAR2(8 BYTE), 
+	"CODE_UE" VARCHAR2(8 BYTE), 
+	"CODE_EC" VARCHAR2(8 BYTE), 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"DESIGNATION" VARCHAR2(64 BYTE), 
+	"DESCRIPTION" VARCHAR2(240 BYTE), 
+	"NBH_CM" NUMBER(2,0), 
+	"NBH_TD" NUMBER(2,0), 
+	"NBH_TP" NUMBER(2,0), 
+	"UNITE_ENSEIGNEMENT_CODE_UE" VARCHAR2(8 CHAR)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."CODE_FORMATION" IS 'Code de la formation (Ex. : M2DOSI)';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."CODE_UE" IS 'Code de l''Unit� d''Enseignement (Ex. : PSI)';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."CODE_EC" IS 'Code de l''El�ment Constitutif (Ex. : SD pour Serveur de Donn�es dans l''UE PSI';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."NO_ENSEIGNANT" IS 'N� de l''enseignant responsable de l''EC';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."DESIGNATION" IS 'D�signation de l''EC';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."NBH_CM" IS 'Nb d''heures de CM pr�vues dans l''EC';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."NBH_TD" IS 'Nb d''heures de TD pr�vues dans l''EC';
+   COMMENT ON COLUMN "SYSTEM"."ELEMENT_CONSTITUTIF"."NBH_TP" IS 'Nb d''heures de TP pr�vues dans l''EC';
+   COMMENT ON TABLE "SYSTEM"."ELEMENT_CONSTITUTIF"  IS 'Element Constitutif';
+--------------------------------------------------------
+--  DDL for Table EVALUATION_ENTREPRISE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."EVALUATION_ENTREPRISE" 
+   (	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"DATE_MAJ" TIMESTAMP (6) WITH TIME ZONE DEFAULT SYSDATE, 
+	"ETAT" VARCHAR2(3 BYTE) DEFAULT 'EC'
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION_ENTREPRISE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION_ENTREPRISE"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION_ENTREPRISE"."ETAT" IS 'Repr�sente l''�tat actuel de l''�valuation d''entrepise';
+--------------------------------------------------------
+--  DDL for Table ENTREPRISE_JN
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ENTREPRISE_JN" 
+   (	"JN_OPERATION" VARCHAR2(3 CHAR), 
+	"JN_ORACLE_USER" VARCHAR2(30 BYTE), 
+	"JN_DATETIME" TIMESTAMP (6) WITH TIME ZONE, 
+	"JN_NOTES" VARCHAR2(240 BYTE), 
+	"JN_APPLN" VARCHAR2(35 BYTE), 
+	"JN_SESSION" NUMBER(38,0), 
+	"NO_ENTREPRISE" FLOAT(53), 
+	"REFERENCEE" CHAR(1 BYTE), 
+	"DATE_REFERENCEMENT" TIMESTAMP (6) WITH TIME ZONE, 
+	"LOGIN_CREA" VARCHAR2(8 BYTE), 
+	"DATE_CREA" TIMESTAMP (6) WITH TIME ZONE, 
+	"NOM" VARCHAR2(100 BYTE), 
+	"SIEGE_SOCIAL" VARCHAR2(100 BYTE), 
+	"DOMAINE_ACTIVITE" VARCHAR2(5 BYTE), 
+	"ADRESSE" VARCHAR2(255 BYTE), 
+	"CP" VARCHAR2(10 BYTE), 
+	"VILLE" VARCHAR2(100 BYTE), 
+	"PAYS" VARCHAR2(100 BYTE), 
+	"TEL" VARCHAR2(20 BYTE), 
+	"SITE_INTERNET" VARCHAR2(150 BYTE), 
+	"NOM_REPRESENTANT" VARCHAR2(50 BYTE), 
+	"PRENOM_REPRESENTANT" VARCHAR2(50 BYTE), 
+	"LOGIN_MAJ" VARCHAR2(8 BYTE), 
+	"DATE_MAJ" TIMESTAMP (6) WITH TIME ZONE, 
+	"OFFRE_STAGE" CHAR(1 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON TABLE "SYSTEM"."ENTREPRISE_JN"  IS 'Created by Oracle Designer Server Generator';
+--------------------------------------------------------
+--  DDL for Table EMPLOYE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."EMPLOYE" 
+   (	"NO_CONTACT_ILI" FLOAT(53), 
+	"NO_ENTREPRISE" FLOAT(53), 
+	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"NOM" VARCHAR2(50 BYTE), 
+	"PRENOM" VARCHAR2(50 BYTE), 
+	"MAIL_PRO" VARCHAR2(100 BYTE), 
+	"TEL_PRO" VARCHAR2(20 BYTE), 
+	"FONCTION" VARCHAR2(5 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."EMPLOYE"."FONCTION" IS 'Repr�sente le poste occup� au sein d''une entreprise';
+--------------------------------------------------------
+--  DDL for Table QUALIFICATIF
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."QUALIFICATIF" 
+   (	"ID_QUALIFICATIF" NUMBER(10,0), 
+	"MAXIMAL" VARCHAR2(16 BYTE), 
+	"MINIMAL" VARCHAR2(16 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table RUBRIQUE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."RUBRIQUE" 
+   (	"ID_RUBRIQUE" NUMBER(10,0), 
+	"TYPE" VARCHAR2(10 BYTE), 
+	"DESIGNATION" VARCHAR2(32 BYTE), 
+	"ORDRE" FLOAT(53), 
+	"NO_ENSEIGNANT" NUMBER(5,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."RUBRIQUE"."NO_ENSEIGNANT" IS 'Num�ro unique de l''enseignant';
+--------------------------------------------------------
+--  DDL for Table CODE_NOTATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."CODE_NOTATION" 
+   (	"CODN_ID" FLOAT(53), 
+	"NO_BAREME" FLOAT(53), 
+	"CODE_NOTE" VARCHAR2(3 BYTE), 
+	"DESIGNATION" VARCHAR2(50 BYTE), 
+	"VALEUR_NOTE" FLOAT(53), 
+	"DESCRIPTIF" CLOB
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("DESCRIPTIF") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+
+   COMMENT ON COLUMN "SYSTEM"."CODE_NOTATION"."NO_BAREME" IS 'Repr�sente le type de notation';
+   COMMENT ON COLUMN "SYSTEM"."CODE_NOTATION"."CODE_NOTE" IS 'Repr�sente le code de notation';
+   COMMENT ON COLUMN "SYSTEM"."CODE_NOTATION"."VALEUR_NOTE" IS 'R�el � 2 d�cimales.';
+--------------------------------------------------------
+--  DDL for Table QUESTION_EVALUATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."QUESTION_EVALUATION" 
+   (	"ID_QUESTION_EVALUATION" NUMBER(10,0), 
+	"ID_RUBRIQUE_EVALUATION" NUMBER(10,0), 
+	"ID_QUESTION" NUMBER(10,0), 
+	"ID_QUALIFICATIF" NUMBER(10,0), 
+	"ORDRE" NUMBER(2,0), 
+	"INTITULE" VARCHAR2(64 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table CG_REF_CODES
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."CG_REF_CODES" 
+   (	"RV_DOMAIN" VARCHAR2(100 BYTE), 
+	"RV_LOW_VALUE" VARCHAR2(240 BYTE), 
+	"RV_HIGH_VALUE" VARCHAR2(240 BYTE), 
+	"RV_ABBREVIATION" VARCHAR2(240 BYTE), 
+	"RV_MEANING" VARCHAR2(240 BYTE), 
+	"ID" NUMBER(10,0) GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE 
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table SOUTENANCE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."SOUTENANCE" 
+   (	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"NO_SESSION" FLOAT(53), 
+	"NO_ENSEIGNANT_RESPONSABLE" NUMBER(5,0), 
+	"NO_ENSEIGNANT_ASSESSEUR" NUMBER(5,0), 
+	"DATE_SOUTENANCE" TIMESTAMP (6) WITH TIME ZONE, 
+	"PLAGE_HORAIRE" VARCHAR2(50 BYTE), 
+	"SALLE" VARCHAR2(12 BYTE) DEFAULT 'LC117A'
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."SOUTENANCE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."SOUTENANCE"."NO_ENSEIGNANT_RESPONSABLE" IS 'Num�ro unique de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."SOUTENANCE"."NO_ENSEIGNANT_ASSESSEUR" IS 'Num�ro unique de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."SOUTENANCE"."SALLE" IS 'Repr�sente les salles de l''UBO';
+--------------------------------------------------------
+--  DDL for Table EVALUATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."EVALUATION" 
+   (	"ID_EVALUATION" NUMBER(10,0), 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"CODE_FORMATION" VARCHAR2(8 BYTE), 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"CODE_UE" VARCHAR2(8 BYTE), 
+	"CODE_EC" VARCHAR2(8 BYTE), 
+	"NO_EVALUATION" NUMBER(2,0), 
+	"ETAT" VARCHAR2(3 CHAR) DEFAULT 'ELA', 
+	"PERIODE" VARCHAR2(64 BYTE), 
+	"DEBUT_REPONSE" TIMESTAMP (6) WITH TIME ZONE, 
+	"FIN_REPONSE" TIMESTAMP (6) WITH TIME ZONE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION"."NO_ENSEIGNANT" IS 'Num�ro unique de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION"."CODE_FORMATION" IS 'Code de la formation (Ex. : M2DOSI)';
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION"."CODE_UE" IS 'Code de l''Unit� d''Enseignement (Ex. : PSI)';
+   COMMENT ON COLUMN "SYSTEM"."EVALUATION"."CODE_EC" IS 'Code de l''El�ment Constitutif (Ex. : SD pour Serveur de Donn�es dans l''UE PSI';
+--------------------------------------------------------
+--  DDL for Table OFFRE_STAGE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."OFFRE_STAGE" 
+   (	"NO_OFFRE" FLOAT(53), 
+	"NO_ENTREPRISE" FLOAT(53), 
+	"NO_OFFRE_ENTREPRISE" VARCHAR2(20 BYTE), 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"INTITULE" VARCHAR2(100 BYTE), 
+	"SUJET" VARCHAR2(255 BYTE), 
+	"DATE_CREATION" TIMESTAMP (6) WITH TIME ZONE DEFAULT SYSDATE, 
+	"DESCRIPTION" VARCHAR2(4000 BYTE), 
+	"DUREE" VARCHAR2(30 BYTE), 
+	"ETAT_OFFRE" VARCHAR2(3 BYTE) DEFAULT 'ELA', 
+	"LIEU" VARCHAR2(80 BYTE), 
+	"NIVEAU_REQUIS" VARCHAR2(5 BYTE), 
+	"PERIODE" VARCHAR2(50 BYTE), 
+	"NOM_RESPONSABLE" VARCHAR2(50 BYTE), 
+	"PRENOM_RESPONSABLE" VARCHAR2(50 BYTE), 
+	"TEL_RESPONSABLE" VARCHAR2(20 BYTE), 
+	"MAIL_RESPONSABLE" VARCHAR2(100 BYTE), 
+	"REMUNERATION" VARCHAR2(20 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."OFFRE_STAGE"."NO_OFFRE" IS 'Num�ro automatique pour identifier une offre de stage';
+   COMMENT ON COLUMN "SYSTEM"."OFFRE_STAGE"."NO_OFFRE_ENTREPRISE" IS 'R�f�rence du stage au sein de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."OFFRE_STAGE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."OFFRE_STAGE"."ETAT_OFFRE" IS 'Repr�sente l''�tat d''une convention de stage';
+   COMMENT ON COLUMN "SYSTEM"."OFFRE_STAGE"."NIVEAU_REQUIS" IS 'Repr�sente le niveau requis pour une offre de stage';
+--------------------------------------------------------
+--  DDL for Table UNITE_ENSEIGNEMENT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" 
+   (	"CODE_FORMATION" VARCHAR2(8 BYTE), 
+	"CODE_UE" VARCHAR2(8 BYTE), 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"DESIGNATION" VARCHAR2(64 BYTE), 
+	"SEMESTRE" VARCHAR2(3 CHAR), 
+	"DESCRIPTION" VARCHAR2(256 BYTE), 
+	"NBH_CM" NUMBER(*,0), 
+	"NBH_TD" NUMBER(2,0), 
+	"NBH_TP" NUMBER(2,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."CODE_FORMATION" IS 'Code de la formation (Ex. : M2DOSI)';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."CODE_UE" IS 'Code de l''Unit� d''Enseignement (Ex. : PSI)';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."NO_ENSEIGNANT" IS 'N� de l''enseignant responsable de l''UC';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."DESIGNATION" IS 'D�signation de l''UE';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."SEMESTRE" IS 'N� de semestre dans lequel l''UE doit �tre dispens�';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."DESCRIPTION" IS 'Description de l''UE';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."NBH_CM" IS 'Nb d''heures de CM pr�vues dans l''UE';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."NBH_TD" IS 'Nb d''heures de TD pr�vuesdans l''UE';
+   COMMENT ON COLUMN "SYSTEM"."UNITE_ENSEIGNEMENT"."NBH_TP" IS 'Nb d''heures de TP pr�vues dans l''UE';
+   COMMENT ON TABLE "SYSTEM"."UNITE_ENSEIGNEMENT"  IS 'Unit� d''Enseignement';
+--------------------------------------------------------
+--  DDL for Table STRUCTURE_EVALUATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."STRUCTURE_EVALUATION" 
+   (	"NO_EVALUATION" FLOAT(53), 
+	"DATE_CREATION" TIMESTAMP (6) WITH TIME ZONE, 
+	"ETAT" VARCHAR2(3 CHAR)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."STRUCTURE_EVALUATION"."ETAT" IS 'Repr�sente l''�tat de l''�valuation.';
+--------------------------------------------------------
+--  DDL for Table RUBRIQUE_QUESTION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."RUBRIQUE_QUESTION" 
+   (	"ID_RUBRIQUE" NUMBER(10,0), 
+	"ID_QUESTION" NUMBER(10,0), 
+	"ORDRE" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table NOTE_ENTREPRISE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."NOTE_ENTREPRISE" 
+   (	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"CRITE_ID" FLOAT(53), 
+	"CODN_ID" FLOAT(53), 
+	"COMMENTAIRE" CLOB
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("COMMENTAIRE") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+
+   COMMENT ON COLUMN "SYSTEM"."NOTE_ENTREPRISE"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."NOTE_ENTREPRISE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+--------------------------------------------------------
+--  DDL for Table POSTE_ENTREPRISE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."POSTE_ENTREPRISE" 
+   (	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"NO_ENTREPRISE" FLOAT(53), 
+	"FONCTION" VARCHAR2(5 BYTE), 
+	"DATE_EMBAUCHE" TIMESTAMP (6) WITH TIME ZONE, 
+	"MOYEN_OBTENTION" VARCHAR2(3 BYTE), 
+	"SERVICE" VARCHAR2(5 BYTE), 
+	"BRUT_ANNUEL" NUMBER(7,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."POSTE_ENTREPRISE"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."POSTE_ENTREPRISE"."FONCTION" IS 'Fonction du dipl�m� dans l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."POSTE_ENTREPRISE"."DATE_EMBAUCHE" IS 'Date � laquelle le dipl�m� a �t� embauch� dans l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."POSTE_ENTREPRISE"."MOYEN_OBTENTION" IS 'Moyen d''obtention de l''emploi (suite � un stage, candidature spontann�e...)';
+   COMMENT ON COLUMN "SYSTEM"."POSTE_ENTREPRISE"."SERVICE" IS 'Service ou d�partement dans l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."POSTE_ENTREPRISE"."BRUT_ANNUEL" IS 'Salaire brut annuel du dipl�m�';
+--------------------------------------------------------
+--  DDL for Table DIPLOME
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."DIPLOME" 
+   (	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"NOM" VARCHAR2(50 BYTE), 
+	"PRENOM" VARCHAR2(50 BYTE), 
+	"AUTORISATION_ANNUAIRE" CHAR(1 BYTE) DEFAULT 'N', 
+	"TYPE_EMPLOI" VARCHAR2(3 BYTE), 
+	"MAIL_PRO" VARCHAR2(100 BYTE), 
+	"TEL_PRO" VARCHAR2(20 BYTE), 
+	"ADRESSE" VARCHAR2(100 BYTE), 
+	"CP" VARCHAR2(10 BYTE), 
+	"VILLE" VARCHAR2(50 BYTE), 
+	"EMAIL_PERSO" VARCHAR2(100 BYTE), 
+	"TEL_PERSO" VARCHAR2(20 BYTE), 
+	"PORTABLE" VARCHAR2(20 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."AUTORISATION_ANNUAIRE" IS 'Repr�sente une valeur bool�en Oui ou Non';
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."TYPE_EMPLOI" IS 'Situation actuelle du dipl�m�';
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."ADRESSE" IS 'Adresse du dipl�m�';
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."CP" IS 'Code postal';
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."VILLE" IS 'Ville de r�sidence du dipl�m�';
+   COMMENT ON COLUMN "SYSTEM"."DIPLOME"."EMAIL_PERSO" IS 'Second adresse mail du dipl�m�.';
+--------------------------------------------------------
+--  DDL for Table ENTREPRISE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ENTREPRISE" 
+   (	"NO_ENTREPRISE" FLOAT(53), 
+	"REFERENCEE" CHAR(1 BYTE) DEFAULT 'N', 
+	"DATE_REFERENCEMENT" TIMESTAMP (6) WITH TIME ZONE, 
+	"LOGIN_CREA" VARCHAR2(8 BYTE), 
+	"DATE_CREA" TIMESTAMP (6) WITH TIME ZONE DEFAULT SYSDATE, 
+	"NOM" VARCHAR2(100 BYTE), 
+	"SIEGE_SOCIAL" VARCHAR2(100 BYTE), 
+	"DOMAINE_ACTIVITE" VARCHAR2(5 BYTE), 
+	"ADRESSE" VARCHAR2(255 BYTE), 
+	"CP" VARCHAR2(10 BYTE), 
+	"VILLE" VARCHAR2(100 BYTE), 
+	"PAYS" VARCHAR2(100 BYTE) DEFAULT 'FRANCE', 
+	"TEL" VARCHAR2(20 BYTE), 
+	"SITE_INTERNET" VARCHAR2(150 BYTE), 
+	"NOM_REPRESENTANT" VARCHAR2(50 BYTE), 
+	"PRENOM_REPRESENTANT" VARCHAR2(50 BYTE), 
+	"LOGIN_MAJ" VARCHAR2(8 BYTE), 
+	"DATE_MAJ" TIMESTAMP (6) WITH TIME ZONE DEFAULT SYSDATE, 
+	"OFFRE_STAGE" CHAR(1 BYTE) DEFAULT 'N'
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."DATE_REFERENCEMENT" IS 'Date de r�f�rencement de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."LOGIN_CREA" IS 'NE PAS UTILISER = RESIDU SIGILI';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."DATE_CREA" IS 'Date de cr�ation de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."NOM" IS 'Nom de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."SIEGE_SOCIAL" IS 'Si�ge social de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."DOMAINE_ACTIVITE" IS 'Domaine d''activit� de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."ADRESSE" IS 'Adresse de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."CP" IS 'Code postal de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."VILLE" IS 'Ville de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."PAYS" IS 'Pays de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."TEL" IS 'T�l�phone de l''entreprise, peut contenir l''indicatif et des s�parateurs';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."SITE_INTERNET" IS 'Adresse web su site de l''entreprise';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."NOM_REPRESENTANT" IS 'Nom du repr�sentant';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."PRENOM_REPRESENTANT" IS 'Pr�nom du repr�sentant';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."LOGIN_MAJ" IS 'NE PAS UTILISER = RESIDU SIGILI';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."DATE_MAJ" IS 'Date de mise � jour des donn�es';
+   COMMENT ON COLUMN "SYSTEM"."ENTREPRISE"."OFFRE_STAGE" IS 'Repr�sente une valeur bool�en Oui ou Non';
+--------------------------------------------------------
+--  DDL for Table ENSEIGNANT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ENSEIGNANT" 
+   (	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"TYPE" VARCHAR2(10 BYTE), 
+	"SEXE" VARCHAR2(1 BYTE), 
+	"NOM" VARCHAR2(50 BYTE), 
+	"PRENOM" VARCHAR2(50 BYTE), 
+	"ADRESSE" VARCHAR2(255 BYTE), 
+	"CP" VARCHAR2(10 BYTE), 
+	"VILLE" VARCHAR2(255 BYTE), 
+	"PAYS" VARCHAR2(255 BYTE), 
+	"TEL_PORT" VARCHAR2(20 BYTE), 
+	"ENC_PERSO_TEL" VARCHAR2(20 BYTE), 
+	"ENC_UBO_TEL" VARCHAR2(20 BYTE), 
+	"ENC_PERSO_EMAIL" VARCHAR2(255 BYTE), 
+	"ENC_UBO_EMAIL" VARCHAR2(255 BYTE), 
+	"INT_NO_INSEE" VARCHAR2(50 BYTE), 
+	"INT_SOC_NOM" VARCHAR2(50 BYTE), 
+	"INT_SOC_ADRESSE" VARCHAR2(255 BYTE), 
+	"INT_SOC_CP" VARCHAR2(10 BYTE), 
+	"INT_SOC_VILLE" VARCHAR2(255 BYTE), 
+	"INT_SOC_PAYS" VARCHAR2(255 BYTE), 
+	"INT_FONCTION" VARCHAR2(50 BYTE), 
+	"INT_PROF_EMAIL" VARCHAR2(255 BYTE), 
+	"INT_PROF_TEL" VARCHAR2(20 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."NO_ENSEIGNANT" IS 'Num�ro unique de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."SEXE" IS 'Repr�sente le sexe des personnes';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."NOM" IS 'Nom de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."PRENOM" IS 'Pr�nom de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."ADRESSE" IS 'Rue de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."CP" IS 'Code Postal de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."VILLE" IS 'Ville de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."PAYS" IS 'Pays de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."TEL_PORT" IS 'Num�ro de t�l�phone de l''enseignant';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."ENC_PERSO_TEL" IS 'Num�ro de t�l�phone personnel de l''enseignant chercheur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."ENC_UBO_TEL" IS 'Num�ro de t�l�phone de l''UBO de l''enseignant chercheur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."ENC_PERSO_EMAIL" IS 'Adresse email personnel de l''enseignant chercheur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."ENC_UBO_EMAIL" IS 'Adresse email de l''UBO de l''enseignant chercheur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_NO_INSEE" IS 'Num�ro INSEE de la soci�t� de l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_SOC_NOM" IS 'Nom de la soci�t� de  l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_SOC_ADRESSE" IS 'Rue de la soci�t� de  l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_SOC_CP" IS 'Code postal de la soci�t� de  l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_SOC_VILLE" IS 'Ville de la soci�t� de  l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_SOC_PAYS" IS 'Pays de la soci�t� de  l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_FONCTION" IS 'Fonction d el ''intervenant ext�rieur dans la soci�t�';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_PROF_EMAIL" IS 'Adresse Email professionnel de l''intervenant ext�rieur';
+   COMMENT ON COLUMN "SYSTEM"."ENSEIGNANT"."INT_PROF_TEL" IS 'Num�ro de t�l�phone professionnel de l''intervenat ext�rieur';
+--------------------------------------------------------
+--  DDL for Table NOTATION_STAGE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."NOTATION_STAGE" 
+   (	"NO_BAREME" FLOAT(53), 
+	"COEFF_ENT" FLOAT(53), 
+	"COEFF_RAPPORT" FLOAT(53), 
+	"COEFF_SOUTENANCE" FLOAT(53), 
+	"DATE_CREATION" TIMESTAMP (6) WITH TIME ZONE, 
+	"ETAT_BAREME" VARCHAR2(3 CHAR)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."NOTATION_STAGE"."NO_BAREME" IS 'Repr�sente le type de notation';
+   COMMENT ON COLUMN "SYSTEM"."NOTATION_STAGE"."COEFF_ENT" IS 'Pourcentage � 2 chiffres apr�s la virgule';
+   COMMENT ON COLUMN "SYSTEM"."NOTATION_STAGE"."COEFF_RAPPORT" IS 'Pourcentage � 2 chiffres apr�s la virgule';
+   COMMENT ON COLUMN "SYSTEM"."NOTATION_STAGE"."COEFF_SOUTENANCE" IS 'Pourcentage � 2 chiffres apr�s la virgule';
+   COMMENT ON COLUMN "SYSTEM"."NOTATION_STAGE"."ETAT_BAREME" IS 'Repr�sente l''�tat de l''�valuation.';
+--------------------------------------------------------
+--  DDL for Table CONTACT_STAGE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."CONTACT_STAGE" 
+   (	"DATE_CONTACT" DATE, 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"TYPE_CONTACT" VARCHAR2(3 BYTE), 
+	"INTERLOCUTEUR" VARCHAR2(3 BYTE), 
+	"OBJET" VARCHAR2(255 BYTE), 
+	"DUREE" VARCHAR2(20 BYTE), 
+	"RESUME" CLOB, 
+	"NO_CONTACT_ILI" FLOAT(53), 
+	"HEURE_CONTACT" VARCHAR2(20 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("RESUME") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+
+   COMMENT ON COLUMN "SYSTEM"."CONTACT_STAGE"."ANNEE_PRO" IS 'ann�e scolaire de la promotion (2004-2005)';
+   COMMENT ON COLUMN "SYSTEM"."CONTACT_STAGE"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."CONTACT_STAGE"."TYPE_CONTACT" IS 'Repr�sente le type de la prise de contact';
+   COMMENT ON COLUMN "SYSTEM"."CONTACT_STAGE"."INTERLOCUTEUR" IS 'Type d''interlocuteur';
+   COMMENT ON COLUMN "SYSTEM"."CONTACT_STAGE"."OBJET" IS 'Objet du contact';
+   COMMENT ON COLUMN "SYSTEM"."CONTACT_STAGE"."DUREE" IS 'Dur�e du contact';
+--------------------------------------------------------
+--  DDL for Table REPONSE_QUESTION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."REPONSE_QUESTION" 
+   (	"ID_REPONSE_QUESTION" NUMBER(10,0), 
+	"ID_QUESTION_EVALUATION" NUMBER(10,0), 
+	"POSITIONNEMENT" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table FORMATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."FORMATION" 
+   (	"CODE_FORMATION" VARCHAR2(8 BYTE), 
+	"DIPLOME" VARCHAR2(3 BYTE), 
+	"N0_ANNEE" NUMBER(1,0) DEFAULT 1, 
+	"NOM_FORMATION" VARCHAR2(64 BYTE), 
+	"DOUBLE_DIPLOME" CHAR(1 BYTE), 
+	"DEBUT_HABILITATION" TIMESTAMP (6) WITH TIME ZONE, 
+	"FIN_HABILITATION" TIMESTAMP (6) WITH TIME ZONE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."CODE_FORMATION" IS 'Code de la formation (Ex. : M2DOSI)';
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."DIPLOME" IS 'Dipl�me pr�par� : Licence, Master ou Doctorat.';
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."N0_ANNEE" IS 'Ann�e de formation (Ex.: 2 pour Licence 2)';
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."NOM_FORMATION" IS 'Nom officielle de la formation';
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."DOUBLE_DIPLOME" IS 'Indique s''il s''agit d''un double dip�me ou non';
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."DEBUT_HABILITATION" IS 'Date de d�but de l''habilitation courante';
+   COMMENT ON COLUMN "SYSTEM"."FORMATION"."FIN_HABILITATION" IS 'Date de fin de l''habilitation courante';
+--------------------------------------------------------
+--  DDL for Table REPONSE_EVALUATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."REPONSE_EVALUATION" 
+   (	"ID_REPONSE_EVALUATION" NUMBER(10,0), 
+	"ID_EVALUATION" NUMBER(10,0), 
+	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"COMMENTAIRE" VARCHAR2(512 BYTE), 
+	"NOM" VARCHAR2(32 BYTE), 
+	"PRENOM" VARCHAR2(32 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."REPONSE_EVALUATION"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+--------------------------------------------------------
+--  DDL for Table RUBRIQUE_EVALUATION
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."RUBRIQUE_EVALUATION" 
+   (	"ID_RUBRIQUE_EVALUATION" NUMBER(10,0), 
+	"ID_EVALUATION" NUMBER(10,0), 
+	"ID_RUBRIQUE" NUMBER(10,0), 
+	"ORDRE" NUMBER(2,0), 
+	"DESIGNATION" VARCHAR2(64 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ETUDIANT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ETUDIANT" 
+   (	"NO_ETUDIANT_NAT" VARCHAR2(50 BYTE), 
+	"ANNEE_PRO" VARCHAR2(10 BYTE), 
+	"CODE_COM" VARCHAR2(10 BYTE), 
+	"NO_ETUDIANT_UBO" VARCHAR2(20 BYTE), 
+	"SEXE" VARCHAR2(1 BYTE), 
+	"NOM" VARCHAR2(50 BYTE), 
+	"PRENOM" VARCHAR2(50 BYTE), 
+	"DATE_NAISSANCE" TIMESTAMP (6) WITH TIME ZONE, 
+	"LIEU_NAISSANCE" VARCHAR2(255 BYTE), 
+	"SITUATION" VARCHAR2(3 BYTE), 
+	"NATIONALITE" VARCHAR2(50 BYTE) DEFAULT 'Fran�aise', 
+	"TEL_PORT" VARCHAR2(20 BYTE), 
+	"TEL_FIXE" VARCHAR2(20 BYTE), 
+	"EMAIL" VARCHAR2(255 BYTE), 
+	"ACTU_ADRESSE" VARCHAR2(255 BYTE), 
+	"ACTU_CP" VARCHAR2(10 BYTE), 
+	"ACTU_VILLE" VARCHAR2(255 BYTE), 
+	"ACTU_PAYS" VARCHAR2(255 BYTE), 
+	"PERM_ADRESSE" VARCHAR2(255 BYTE), 
+	"PERM_CP" VARCHAR2(10 BYTE), 
+	"PERM_VILLE" VARCHAR2(255 BYTE), 
+	"PERM_PAYS" VARCHAR2(255 BYTE), 
+	"DERNIER_DIPLOME" VARCHAR2(255 BYTE), 
+	"UNIVERSITE" VARCHAR2(255 BYTE), 
+	"SIGLE_ETU" VARCHAR2(3 BYTE), 
+	"COMPTE_CRI" VARCHAR2(10 BYTE), 
+	"UBO_EMAIL" VARCHAR2(255 BYTE), 
+	"GRPE_ANGLAIS" NUMBER(1,0), 
+	"ABANDON_MOTIF" VARCHAR2(255 BYTE), 
+	"ABANDON_DATE" TIMESTAMP (6) WITH TIME ZONE, 
+	"EST_DIPLOME" CHAR(1 BYTE) DEFAULT 'N'
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."NO_ETUDIANT_NAT" IS 'Num�ro National de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."CODE_COM" IS 'NE PAS UTILISER = RESIDU SIGILI';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."NO_ETUDIANT_UBO" IS 'Num�ro UBO de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."SEXE" IS 'Repr�sente le sexe des personnes';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."NOM" IS 'Nom de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."PRENOM" IS 'Pr�nom de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."DATE_NAISSANCE" IS 'Date de naiisance de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."LIEU_NAISSANCE" IS 'Lieu de naissance de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."SITUATION" IS 'Repr�sente la situation de famille d''un �tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."NATIONALITE" IS 'Nationalit� de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."TEL_PORT" IS 'Num�ro de portable de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."TEL_FIXE" IS 'Num�ro de t�l�phone fixe de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."EMAIL" IS 'Adresse email de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."ACTU_ADRESSE" IS 'Rue de l''�tudiant pendant l''anne scolaire';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."ACTU_CP" IS 'Code postal de l''�tudiant pendant l''ann�e scolaire';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."ACTU_VILLE" IS 'Ville de l''�tudiant pendant l''ann�e scolaire';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."ACTU_PAYS" IS 'Pays de l''�tudiant pendant l''ann�e scolaire';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."PERM_ADRESSE" IS 'Rue de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."PERM_CP" IS 'Code Postal de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."PERM_VILLE" IS 'Ville de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."PERM_PAYS" IS 'Pays de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."DERNIER_DIPLOME" IS 'Dernier dipl�me obtenu par l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."UNIVERSITE" IS 'Derni�re universit� fr�quent� par l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."SIGLE_ETU" IS 'Sigle de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."COMPTE_CRI" IS 'Compte CRI de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."UBO_EMAIL" IS 'Adresse email UBO de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."GRPE_ANGLAIS" IS 'Groupe d''anglais de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."ABANDON_MOTIF" IS 'Motif de l''abandon de l''�tudiant';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."ABANDON_DATE" IS 'Date � laquelle l''�tudiant a abandonn� la formation';
+   COMMENT ON COLUMN "SYSTEM"."ETUDIANT"."EST_DIPLOME" IS 'Repr�senet une valeur bool�en Oui ou Non';
+--------------------------------------------------------
+--  DDL for Table DROIT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."DROIT" 
+   (	"ID_EVALUATION" NUMBER(10,0), 
+	"NO_ENSEIGNANT" NUMBER(5,0), 
+	"CONSULTATION" CHAR(1 BYTE), 
+	"DUPLICATION" CHAR(1 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."DROIT"."NO_ENSEIGNANT" IS 'Num�ro unique de l''enseignant';
+--------------------------------------------------------
+--  DDL for View V_TYPE_EMPLOI
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_TYPE_EMPLOI" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'TYPE_EMPLOI'
+;
+--------------------------------------------------------
+--  DDL for View V_POSITIONNEMENT
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_POSITIONNEMENT" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE RV_DOMAIN='POSITIONNEMENT'
+;
+--------------------------------------------------------
+--  DDL for View V_ETAT_OFFRE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_ETAT_OFFRE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'ETAT_OFFRE'
+;
+--------------------------------------------------------
+--  DDL for View V_ETAT_EVALUATION_ENTREPRISE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_ETAT_EVALUATION_ENTREPRISE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'ETAT_EVALUATION_ENTREPRISE'
+;
+--------------------------------------------------------
+--  DDL for View V_TYPE_CONTACT
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_TYPE_CONTACT" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'TYPE_CONTACT'
+;
+--------------------------------------------------------
+--  DDL for View V_FONCTION
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_FONCTION" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'FONCTION'
+;
+--------------------------------------------------------
+--  DDL for View V_ETAT_STAGE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_ETAT_STAGE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'ETAT_STAGE'
+;
+--------------------------------------------------------
+--  DDL for View V_ETAT_CONVENTION
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_ETAT_CONVENTION" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'ETAT_CONVENTION'
+;
+--------------------------------------------------------
+--  DDL for View V_CODE_NOTE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_CODE_NOTE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'CODE_NOTE'
+;
+--------------------------------------------------------
+--  DDL for View V_SERVICE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_SERVICE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'SERVICE'
+;
+--------------------------------------------------------
+--  DDL for View V_OUI_NON
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_OUI_NON" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'OUI_NON'
+;
+--------------------------------------------------------
+--  DDL for View V_ETAT_STRUCTURE_EVAL
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_ETAT_STRUCTURE_EVAL" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'ETAT_STRUCTURE_EVAL'
+;
+--------------------------------------------------------
+--  DDL for View V_INTERLOCUTEUR
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_INTERLOCUTEUR" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'INTERLOCUTEUR'
+;
+--------------------------------------------------------
+--  DDL for View V_SALLE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_SALLE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'SALLE'
+;
+--------------------------------------------------------
+--  DDL for View V_DIPLOME
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_DIPLOME" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'DIPLOME'
+;
+--------------------------------------------------------
+--  DDL for View V_ETAT_EVALUATION
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_ETAT_EVALUATION" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE RV_DOMAIN='ETAT_EVALUATION'
+;
+--------------------------------------------------------
+--  DDL for View V_DOMAINE_ACTIVITE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_DOMAINE_ACTIVITE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'DOMAINE_ACTIVITE'
+;
+--------------------------------------------------------
+--  DDL for View V_PROCESSUS_STAGE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_PROCESSUS_STAGE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'PROCESSUS_STAGE'
+;
+--------------------------------------------------------
+--  DDL for View V_MOYEN_OBTENTION_EMPLOI
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_MOYEN_OBTENTION_EMPLOI" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'MOYEN_OBTENTION_EMPLOI'
+;
+--------------------------------------------------------
+--  DDL for View V_NIVEAU_REQUIS
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_NIVEAU_REQUIS" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'NIVEAU_REQUIS'
+;
+--------------------------------------------------------
+--  DDL for View V_SEMESTRE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."V_SEMESTRE" ("CODE", "ABREVIATION", "SIGNIFICATION") AS 
+  SELECT CGRC.RV_LOW_VALUE CODE
+          ,CGRC.RV_ABBREVIATION ABREVIATION
+          ,CGRC.RV_MEANING SIGNIFICATION
+FROM CG_REF_CODES CGRC
+  WHERE CGRC.RV_DOMAIN = 'SEMESTRE'
+;
+--------------------------------------------------------
+--  DDL for Index CRITE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CRITE_PK" ON "SYSTEM"."CRITERE_ENTREPRISE" ("CRITE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CAN_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CAN_PK" ON "SYSTEM"."CANDIDAT" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index FRM_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."FRM_PK" ON "SYSTEM"."FORMATION" ("CODE_FORMATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RPE_PK" ON "SYSTEM"."REPONSE_EVALUATION" ("ID_REPONSE_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index UE_FRM_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."UE_FRM_FK_I" ON "SYSTEM"."UNITE_ENSEIGNEMENT" ("CODE_FORMATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index OFF_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."OFF_PK" ON "SYSTEM"."OFFRE_STAGE" ("NO_OFFRE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_EC_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_EC_FK_I" ON "SYSTEM"."EVALUATION" ("CODE_EC") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_REV_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QEV_REV_FK_I" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_RUBRIQUE_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_CODN_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."NOTE_CODN_FK_I" ON "SYSTEM"."NOTE_ENTREPRISE" ("CODN_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPE_EVE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPE_EVE_FK_I" ON "SYSTEM"."REPONSE_EVALUATION" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index REV_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."REV_PK" ON "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_RUBRIQUE_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EVE_PK" ON "SYSTEM"."EVALUATION" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_EVE_UK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EVE_EVE_UK" ON "SYSTEM"."EVALUATION" ("ANNEE_PRO", "NO_ENSEIGNANT", "NO_EVALUATION", "CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPQ_RPE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPQ_RPE_FK_I" ON "SYSTEM"."REPONSE_QUESTION" ("ID_REPONSE_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DRT_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."DRT_ENS_FK_I" ON "SYSTEM"."DROIT" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_EMP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_EMP_FK_I" ON "SYSTEM"."STAGE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index OFF_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."OFF_PRO_FK_I" ON "SYSTEM"."OFFRE_STAGE" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."QEV_PK" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_QUESTION_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."STG_PK" ON "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_CRITE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."NOTE_CRITE_FK_I" ON "SYSTEM"."NOTE_ENTREPRISE" ("CRITE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CAN_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CAN_PRO_FK_I" ON "SYSTEM"."CANDIDAT" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_PRO_FK_I" ON "SYSTEM"."STAGE" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_SOUT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_SOUT_FK_I" ON "SYSTEM"."STAGE" ("NO_SESSION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ETU_COM_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."ETU_COM_FK_I" ON "SYSTEM"."ETUDIANT" ("CODE_COM") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_QUE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QEV_QUE_FK_I" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUE_QUA_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QUE_QUA_FK_I" ON "SYSTEM"."QUESTION" ("ID_QUALIFICATIF") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EMP_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EMP_ENT_FK_I" ON "SYSTEM"."EMPLOYE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CTS_PK" ON "SYSTEM"."CONTACT_STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO", "DATE_CONTACT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_UE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_UE_FK_I" ON "SYSTEM"."EVALUATION" ("CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index REV_EVE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."REV_EVE_FK_I" ON "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_STRE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."PRO_STRE_FK_I" ON "SYSTEM"."PROMOTION" ("NO_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."PRO_ENS_FK_I" ON "SYSTEM"."PROMOTION" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CGRC_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CGRC_I" ON "SYSTEM"."CG_REF_CODES" ("RV_DOMAIN", "RV_LOW_VALUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index VST_EMP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."VST_EMP_FK_I" ON "SYSTEM"."VISITE_STAGE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ENT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."ENT_PK" ON "SYSTEM"."ENTREPRISE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_ETU_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CTS_ETU_FK_I" ON "SYSTEM"."CONTACT_STAGE" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CODN_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CODN_PK" ON "SYSTEM"."CODE_NOTATION" ("CODN_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index VST_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."VST_PK" ON "SYSTEM"."VISITE_STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RBQ_QUE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RBQ_QUE_FK_I" ON "SYSTEM"."RUBRIQUE_QUESTION" ("ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."SOUT_PK" ON "SYSTEM"."SOUTENANCE" ("NO_SESSION", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUA_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."QUA_PK" ON "SYSTEM"."QUALIFICATIF" ("ID_QUALIFICATIF") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_ENS_RESPONSABLE_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."SOUT_ENS_RESPONSABLE_I" ON "SYSTEM"."SOUTENANCE" ("NO_ENSEIGNANT_RESPONSABLE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index POE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."POE_PK" ON "SYSTEM"."POSTE_ENTREPRISE" ("NO_ETUDIANT_NAT", "NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RUB_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RUB_PK" ON "SYSTEM"."RUBRIQUE" ("ID_RUBRIQUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ETU_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."ETU_PRO_FK_I" ON "SYSTEM"."ETUDIANT" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPQ_QEV_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPQ_QEV_FK_I" ON "SYSTEM"."REPONSE_QUESTION" ("ID_QUESTION_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPE_ETU_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPE_ETU_FK_I" ON "SYSTEM"."REPONSE_EVALUATION" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EC_MOD_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EC_MOD_FK_I" ON "SYSTEM"."ELEMENT_CONSTITUTIF" ("CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index POE_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."POE_ENT_FK_I" ON "SYSTEM"."POSTE_ENTREPRISE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ENS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."ENS_PK" ON "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index UE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."UE_PK" ON "SYSTEM"."UNITE_ENSEIGNEMENT" ("CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EC_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EC_PK" ON "SYSTEM"."ELEMENT_CONSTITUTIF" ("CODE_FORMATION", "CODE_UE", "CODE_EC") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RBQ_RUB_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RBQ_RUB_FK_I" ON "SYSTEM"."RUBRIQUE_QUESTION" ("ID_RUBRIQUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DRT_EVE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."DRT_EVE_FK_I" ON "SYSTEM"."DROIT" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RBQ_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RBQ_PK" ON "SYSTEM"."RUBRIQUE_QUESTION" ("ID_RUBRIQUE", "ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_EMP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CTS_EMP_FK_I" ON "SYSTEM"."CONTACT_STAGE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DIP_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."DIP_PK" ON "SYSTEM"."DIPLOME" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RUB_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RUB_ENS_FK_I" ON "SYSTEM"."RUBRIQUE" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index AVE_STG_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."AVE_STG_FK_I" ON "SYSTEM"."AVENANT" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index REV_RUB_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."REV_RUB_FK_I" ON "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_RUBRIQUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_NOTS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."PRO_NOTS_FK_I" ON "SYSTEM"."PROMOTION" ("NO_BAREME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_ENT_FK_I" ON "SYSTEM"."STAGE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CODN_NOTS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CODN_NOTS_FK_I" ON "SYSTEM"."CODE_NOTATION" ("NO_BAREME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUE_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QUE_ENS_FK_I" ON "SYSTEM"."QUESTION" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index AVE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."AVE_PK" ON "SYSTEM"."AVENANT" ("NO_AVENANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_ETU_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_ETU_FK_I" ON "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."QUE_PK" ON "SYSTEM"."QUESTION" ("ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_QUA_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QEV_QUA_FK_I" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_QUALIFICATIF") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CRITE_STRE_EVAL_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CRITE_STRE_EVAL_FK_I" ON "SYSTEM"."CRITERE_ENTREPRISE" ("NO_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_EVAE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."NOTE_EVAE_FK_I" ON "SYSTEM"."NOTE_ENTREPRISE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_ENS_ASSESSEUR_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."SOUT_ENS_ASSESSEUR_FK_I" ON "SYSTEM"."SOUTENANCE" ("NO_ENSEIGNANT_ASSESSEUR") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DRT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."DRT_PK" ON "SYSTEM"."DROIT" ("ID_EVALUATION", "NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."SOUT_PRO_FK_I" ON "SYSTEM"."SOUTENANCE" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index OFF_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."OFF_ENT_FK_I" ON "SYSTEM"."OFFRE_STAGE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_ENS_FK_I" ON "SYSTEM"."STAGE" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index POE_DIP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."POE_DIP_FK_I" ON "SYSTEM"."POSTE_ENTREPRISE" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_ENS_FK_I" ON "SYSTEM"."EVALUATION" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index UE_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."UE_ENS_FK_I" ON "SYSTEM"."UNITE_ENSEIGNEMENT" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EC_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EC_ENS_FK_I" ON "SYSTEM"."ELEMENT_CONSTITUTIF" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ETU_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."ETU_PK" ON "SYSTEM"."ETUDIANT" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_PRO_FK_I" ON "SYSTEM"."EVALUATION" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPQ_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RPQ_PK" ON "SYSTEM"."REPONSE_QUESTION" ("ID_REPONSE_QUESTION", "ID_QUESTION_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PRO_PK" ON "SYSTEM"."PROMOTION" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."NOTE_PK" ON "SYSTEM"."NOTE_ENTREPRISE" ("CRITE_ID", "NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EMP_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EMP_PK" ON "SYSTEM"."EMPLOYE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_STG_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CTS_STG_FK_I" ON "SYSTEM"."CONTACT_STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVAE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EVAE_PK" ON "SYSTEM"."EVALUATION_ENTREPRISE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CRITE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CRITE_PK" ON "SYSTEM"."CRITERE_ENTREPRISE" ("CRITE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CRITE_STRE_EVAL_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CRITE_STRE_EVAL_FK_I" ON "SYSTEM"."CRITERE_ENTREPRISE" ("NO_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CAN_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CAN_PK" ON "SYSTEM"."CANDIDAT" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CAN_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CAN_PRO_FK_I" ON "SYSTEM"."CANDIDAT" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."STG_PK" ON "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_ETU_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_ETU_FK_I" ON "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_SOUT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_SOUT_FK_I" ON "SYSTEM"."STAGE" ("NO_SESSION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_EMP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_EMP_FK_I" ON "SYSTEM"."STAGE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_PRO_FK_I" ON "SYSTEM"."STAGE" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_ENS_FK_I" ON "SYSTEM"."STAGE" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index STG_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."STG_ENT_FK_I" ON "SYSTEM"."STAGE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index AVE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."AVE_PK" ON "SYSTEM"."AVENANT" ("NO_AVENANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index AVE_STG_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."AVE_STG_FK_I" ON "SYSTEM"."AVENANT" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PRO_PK" ON "SYSTEM"."PROMOTION" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."PRO_ENS_FK_I" ON "SYSTEM"."PROMOTION" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_STRE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."PRO_STRE_FK_I" ON "SYSTEM"."PROMOTION" ("NO_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PRO_NOTS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."PRO_NOTS_FK_I" ON "SYSTEM"."PROMOTION" ("NO_BAREME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUE_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QUE_ENS_FK_I" ON "SYSTEM"."QUESTION" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUE_QUA_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QUE_QUA_FK_I" ON "SYSTEM"."QUESTION" ("ID_QUALIFICATIF") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."QUE_PK" ON "SYSTEM"."QUESTION" ("ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index VST_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."VST_PK" ON "SYSTEM"."VISITE_STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index VST_EMP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."VST_EMP_FK_I" ON "SYSTEM"."VISITE_STAGE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EC_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EC_PK" ON "SYSTEM"."ELEMENT_CONSTITUTIF" ("CODE_FORMATION", "CODE_UE", "CODE_EC") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EC_MOD_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EC_MOD_FK_I" ON "SYSTEM"."ELEMENT_CONSTITUTIF" ("CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EC_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EC_ENS_FK_I" ON "SYSTEM"."ELEMENT_CONSTITUTIF" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVAE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EVAE_PK" ON "SYSTEM"."EVALUATION_ENTREPRISE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EMP_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EMP_PK" ON "SYSTEM"."EMPLOYE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EMP_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EMP_ENT_FK_I" ON "SYSTEM"."EMPLOYE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QUA_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."QUA_PK" ON "SYSTEM"."QUALIFICATIF" ("ID_QUALIFICATIF") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RUB_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RUB_ENS_FK_I" ON "SYSTEM"."RUBRIQUE" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RUB_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RUB_PK" ON "SYSTEM"."RUBRIQUE" ("ID_RUBRIQUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CODN_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CODN_PK" ON "SYSTEM"."CODE_NOTATION" ("CODN_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CODN_NOTS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CODN_NOTS_FK_I" ON "SYSTEM"."CODE_NOTATION" ("NO_BAREME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."QEV_PK" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_QUESTION_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_REV_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QEV_REV_FK_I" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_RUBRIQUE_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_QUE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QEV_QUE_FK_I" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index QEV_QUA_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."QEV_QUA_FK_I" ON "SYSTEM"."QUESTION_EVALUATION" ("ID_QUALIFICATIF") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CGRC_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CGRC_I" ON "SYSTEM"."CG_REF_CODES" ("RV_DOMAIN", "RV_LOW_VALUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."SOUT_PK" ON "SYSTEM"."SOUTENANCE" ("NO_SESSION", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."SOUT_PRO_FK_I" ON "SYSTEM"."SOUTENANCE" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_ENS_RESPONSABLE_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."SOUT_ENS_RESPONSABLE_I" ON "SYSTEM"."SOUTENANCE" ("NO_ENSEIGNANT_RESPONSABLE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SOUT_ENS_ASSESSEUR_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."SOUT_ENS_ASSESSEUR_FK_I" ON "SYSTEM"."SOUTENANCE" ("NO_ENSEIGNANT_ASSESSEUR") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EVE_PK" ON "SYSTEM"."EVALUATION" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_EVE_UK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."EVE_EVE_UK" ON "SYSTEM"."EVALUATION" ("ANNEE_PRO", "NO_ENSEIGNANT", "NO_EVALUATION", "CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_PRO_FK_I" ON "SYSTEM"."EVALUATION" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_ENS_FK_I" ON "SYSTEM"."EVALUATION" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_UE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_UE_FK_I" ON "SYSTEM"."EVALUATION" ("CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index EVE_EC_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."EVE_EC_FK_I" ON "SYSTEM"."EVALUATION" ("CODE_EC") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index OFF_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."OFF_PK" ON "SYSTEM"."OFFRE_STAGE" ("NO_OFFRE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index OFF_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."OFF_PRO_FK_I" ON "SYSTEM"."OFFRE_STAGE" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index OFF_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."OFF_ENT_FK_I" ON "SYSTEM"."OFFRE_STAGE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index UE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."UE_PK" ON "SYSTEM"."UNITE_ENSEIGNEMENT" ("CODE_FORMATION", "CODE_UE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index UE_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."UE_ENS_FK_I" ON "SYSTEM"."UNITE_ENSEIGNEMENT" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index UE_FRM_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."UE_FRM_FK_I" ON "SYSTEM"."UNITE_ENSEIGNEMENT" ("CODE_FORMATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SYS_C0010552
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."SYS_C0010552" ON "SYSTEM"."STRUCTURE_EVALUATION" ("NO_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RBQ_QUE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RBQ_QUE_FK_I" ON "SYSTEM"."RUBRIQUE_QUESTION" ("ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RBQ_RUB_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RBQ_RUB_FK_I" ON "SYSTEM"."RUBRIQUE_QUESTION" ("ID_RUBRIQUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RBQ_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RBQ_PK" ON "SYSTEM"."RUBRIQUE_QUESTION" ("ID_RUBRIQUE", "ID_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."NOTE_PK" ON "SYSTEM"."NOTE_ENTREPRISE" ("CRITE_ID", "NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_CODN_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."NOTE_CODN_FK_I" ON "SYSTEM"."NOTE_ENTREPRISE" ("CODN_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_CRITE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."NOTE_CRITE_FK_I" ON "SYSTEM"."NOTE_ENTREPRISE" ("CRITE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index NOTE_EVAE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."NOTE_EVAE_FK_I" ON "SYSTEM"."NOTE_ENTREPRISE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index POE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."POE_PK" ON "SYSTEM"."POSTE_ENTREPRISE" ("NO_ETUDIANT_NAT", "NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index POE_DIP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."POE_DIP_FK_I" ON "SYSTEM"."POSTE_ENTREPRISE" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index POE_ENT_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."POE_ENT_FK_I" ON "SYSTEM"."POSTE_ENTREPRISE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DIP_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."DIP_PK" ON "SYSTEM"."DIPLOME" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ENT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."ENT_PK" ON "SYSTEM"."ENTREPRISE" ("NO_ENTREPRISE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ENS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."ENS_PK" ON "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index SYS_C0010468
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."SYS_C0010468" ON "SYSTEM"."NOTATION_STAGE" ("NO_BAREME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."CTS_PK" ON "SYSTEM"."CONTACT_STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO", "DATE_CONTACT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_STG_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CTS_STG_FK_I" ON "SYSTEM"."CONTACT_STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_EMP_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CTS_EMP_FK_I" ON "SYSTEM"."CONTACT_STAGE" ("NO_CONTACT_ILI") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index CTS_ETU_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."CTS_ETU_FK_I" ON "SYSTEM"."CONTACT_STAGE" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPQ_QEV_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPQ_QEV_FK_I" ON "SYSTEM"."REPONSE_QUESTION" ("ID_QUESTION_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPQ_RPE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPQ_RPE_FK_I" ON "SYSTEM"."REPONSE_QUESTION" ("ID_REPONSE_QUESTION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPQ_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RPQ_PK" ON "SYSTEM"."REPONSE_QUESTION" ("ID_REPONSE_QUESTION", "ID_QUESTION_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index FRM_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."FRM_PK" ON "SYSTEM"."FORMATION" ("CODE_FORMATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPE_ETU_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPE_ETU_FK_I" ON "SYSTEM"."REPONSE_EVALUATION" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPE_EVE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."RPE_EVE_FK_I" ON "SYSTEM"."REPONSE_EVALUATION" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index RPE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."RPE_PK" ON "SYSTEM"."REPONSE_EVALUATION" ("ID_REPONSE_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index REV_RUB_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."REV_RUB_FK_I" ON "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_RUBRIQUE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index REV_EVE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."REV_EVE_FK_I" ON "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index REV_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."REV_PK" ON "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_RUBRIQUE_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ETU_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."ETU_PK" ON "SYSTEM"."ETUDIANT" ("NO_ETUDIANT_NAT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ETU_COM_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."ETU_COM_FK_I" ON "SYSTEM"."ETUDIANT" ("CODE_COM") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index ETU_PRO_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."ETU_PRO_FK_I" ON "SYSTEM"."ETUDIANT" ("ANNEE_PRO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DRT_ENS_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."DRT_ENS_FK_I" ON "SYSTEM"."DROIT" ("NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DRT_EVE_FK_I
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."DRT_EVE_FK_I" ON "SYSTEM"."DROIT" ("ID_EVALUATION") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index DRT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."DRT_PK" ON "SYSTEM"."DROIT" ("ID_EVALUATION", "NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  Constraints for Table CRITERE_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" ADD CONSTRAINT "CRITE_PK" PRIMARY KEY ("CRITE_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" MODIFY ("POIDS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" MODIFY ("DESIGNATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" MODIFY ("ORDRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" MODIFY ("NO_EVALUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" MODIFY ("CRITE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table CANDIDAT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CK_CAN_REPONSE_CANDIDAT" CHECK (REPONSE_CAN BETWEEN 'CON' 
+AND 'CON' OR REPONSE_CAN BETWEEN 'ANN' 
+AND 'ANN' OR REPONSE_CAN BETWEEN 'NRE' AND 'NRE') ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CK_CAN_REPONSE_ILI" CHECK (REPONSE_ILI BETWEEN 'O' AND 'O' OR REPONSE_ILI BETWEEN 'N' AND 'N') ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CK_CAN_SELECTION_COURANTE" CHECK (SELECTION_COURANTE BETWEEN 'LP' 
+AND 'LP' OR SELECTION_COURANTE BETWEEN 'LA' AND 'LA') ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CK_CAN_SELECTION_ORIGINE" CHECK (SELECTION_ORIGINE BETWEEN 'LP' 
+AND 'LP' OR SELECTION_ORIGINE BETWEEN 'LA' AND 'LA') ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CK_CAN_SITUATION" CHECK (SITUATION BETWEEN 'CEL' 
+AND 'CEL' OR SITUATION BETWEEN 'MAR' 
+AND 'MAR' OR SITUATION BETWEEN 'VEU' 
+AND 'VEU' OR SITUATION BETWEEN 'DIV' AND 'DIV') ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CK_CAN_SEXE" CHECK (SEXE BETWEEN 'H' 
+AND 'H' OR SEXE BETWEEN 'F' AND 'F' OR SEXE BETWEEN 'L' AND 'L') ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CAN_PK" PRIMARY KEY ("NO_ETUDIANT_NAT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("REPONSE_ILI" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("SELECTION_COURANTE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("SELECTION_ORIGINE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("UNIVERSITE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("DERNIER_DIPLOME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("PERM_PAYS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("PERM_VILLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("PERM_CP" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("PERM_ADRESSE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("NATIONALITE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("SITUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("LIEU_NAISSANCE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("DATE_NAISSANCE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("PRENOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("NOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("SEXE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CANDIDAT" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_PK" PRIMARY KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("ETAT_STAGE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("LIEU" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("DATE_FIN" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("DATE_DEB" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("SUJET" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("INTITULE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("NO_CONTACT_ILI" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("NO_ENTREPRISE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STAGE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table AVENANT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."AVENANT" MODIFY ("MODIF_APPORTEE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."AVENANT" MODIFY ("NUM_ARTICLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."AVENANT" MODIFY ("ETAT_AVENANT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."AVENANT" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."AVENANT" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."AVENANT" MODIFY ("NO_AVENANT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."AVENANT" ADD CONSTRAINT "AVE_PK" PRIMARY KEY ("NO_AVENANT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table PROMOTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PROMOTION" ADD CONSTRAINT "CK_PRO_ETAT_PRESELECTION" CHECK (ETAT_PRESELECTION BETWEEN 'TER' 
+AND 'TER' OR ETAT_PRESELECTION BETWEEN 'ENC' AND 'ENC') ENABLE;
+  ALTER TABLE "SYSTEM"."PROMOTION" ADD CONSTRAINT "PRO_PK" PRIMARY KEY ("ANNEE_PRO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."PROMOTION" MODIFY ("ETAT_PRESELECTION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PROMOTION" MODIFY ("NB_ETU_SOUHAITE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PROMOTION" MODIFY ("SIGLE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PROMOTION" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table QUESTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."QUESTION" MODIFY ("intitul?" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUESTION" ADD CONSTRAINT "CK_QUE_TYPE" CHECK (TYPE IN ('QUP', 'QUS')) ENABLE;
+  ALTER TABLE "SYSTEM"."QUESTION" ADD CONSTRAINT "QUE_PK" PRIMARY KEY ("ID_QUESTION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."QUESTION" MODIFY ("INTITUL�" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUESTION" MODIFY ("ID_QUALIFICATIF" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUESTION" MODIFY ("TYPE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUESTION" MODIFY ("ID_QUESTION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table VISITE_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" MODIFY ("DATE_PREVISIONNELLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" MODIFY ("TYPE_CONTACT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" MODIFY ("NO_CONTACT_ILI" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" ADD CONSTRAINT "VST_PK" PRIMARY KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ELEMENT_CONSTITUTIF
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("UNITE_ENSEIGNEMENT_CODE_UE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" ADD CONSTRAINT "EC_PK" PRIMARY KEY ("CODE_FORMATION", "CODE_UE", "CODE_EC")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("DESCRIPTION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("DESIGNATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("NO_ENSEIGNANT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("CODE_EC" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("CODE_UE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" MODIFY ("CODE_FORMATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table EVALUATION_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."EVALUATION_ENTREPRISE" ADD CONSTRAINT "EVAE_PK" PRIMARY KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."EVALUATION_ENTREPRISE" MODIFY ("ETAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION_ENTREPRISE" MODIFY ("DATE_MAJ" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION_ENTREPRISE" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION_ENTREPRISE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table ENTREPRISE_JN
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ENTREPRISE_JN" MODIFY ("NO_ENTREPRISE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE_JN" MODIFY ("JN_DATETIME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE_JN" MODIFY ("JN_ORACLE_USER" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE_JN" MODIFY ("JN_OPERATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table EMPLOYE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."EMPLOYE" ADD CONSTRAINT "EMP_PK" PRIMARY KEY ("NO_CONTACT_ILI")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."EMPLOYE" MODIFY ("PRENOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EMPLOYE" MODIFY ("NOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EMPLOYE" MODIFY ("NO_ENTREPRISE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EMPLOYE" MODIFY ("NO_CONTACT_ILI" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table QUALIFICATIF
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."QUALIFICATIF" ADD CONSTRAINT "QUA_PK" PRIMARY KEY ("ID_QUALIFICATIF")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."QUALIFICATIF" MODIFY ("MINIMAL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUALIFICATIF" MODIFY ("MAXIMAL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUALIFICATIF" MODIFY ("ID_QUALIFICATIF" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table RUBRIQUE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RUBRIQUE" ADD CONSTRAINT "CK_RUB_TYPE" CHECK (TYPE IN ('RBS', 'RBP')) ENABLE;
+  ALTER TABLE "SYSTEM"."RUBRIQUE" ADD CONSTRAINT "RUB_PK" PRIMARY KEY ("ID_RUBRIQUE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."RUBRIQUE" MODIFY ("DESIGNATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RUBRIQUE" MODIFY ("TYPE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RUBRIQUE" MODIFY ("ID_RUBRIQUE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table CODE_NOTATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" ADD CONSTRAINT "CODN_PK" PRIMARY KEY ("CODN_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" MODIFY ("VALEUR_NOTE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" MODIFY ("DESIGNATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" MODIFY ("CODE_NOTE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" MODIFY ("NO_BAREME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" MODIFY ("CODN_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table QUESTION_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" ADD CONSTRAINT "QEV_PK" PRIMARY KEY ("ID_QUESTION_EVALUATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" MODIFY ("ORDRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" MODIFY ("ID_RUBRIQUE_EVALUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" MODIFY ("ID_QUESTION_EVALUATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table CG_REF_CODES
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CG_REF_CODES" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CG_REF_CODES" MODIFY ("RV_LOW_VALUE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CG_REF_CODES" MODIFY ("RV_DOMAIN" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table SOUTENANCE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."SOUTENANCE" ADD CONSTRAINT "SOUT_PK" PRIMARY KEY ("NO_SESSION", "ANNEE_PRO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("SALLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("PLAGE_HORAIRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("DATE_SOUTENANCE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("NO_ENSEIGNANT_ASSESSEUR" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("NO_ENSEIGNANT_RESPONSABLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("NO_SESSION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."SOUTENANCE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."EVALUATION" ADD CONSTRAINT "EVE_EVE_UK" UNIQUE ("ANNEE_PRO", "NO_ENSEIGNANT", "NO_EVALUATION", "CODE_FORMATION", "CODE_UE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."EVALUATION" ADD CONSTRAINT "EVE_PK" PRIMARY KEY ("ID_EVALUATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("FIN_REPONSE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("DEBUT_REPONSE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("ETAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("NO_EVALUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("CODE_UE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("CODE_FORMATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("NO_ENSEIGNANT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."EVALUATION" MODIFY ("ID_EVALUATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table OFFRE_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" ADD CONSTRAINT "OFF_PK" PRIMARY KEY ("NO_OFFRE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("PRENOM_RESPONSABLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("NOM_RESPONSABLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("PERIODE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("NIVEAU_REQUIS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("LIEU" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("ETAT_OFFRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("DUREE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("DATE_CREATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("SUJET" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("INTITULE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("NO_ENTREPRISE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" MODIFY ("NO_OFFRE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table UNITE_ENSEIGNEMENT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" ADD CONSTRAINT "UE_PK" PRIMARY KEY ("CODE_FORMATION", "CODE_UE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" MODIFY ("SEMESTRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" MODIFY ("DESIGNATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" MODIFY ("NO_ENSEIGNANT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" MODIFY ("CODE_UE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" MODIFY ("CODE_FORMATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table STRUCTURE_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."STRUCTURE_EVALUATION" ADD PRIMARY KEY ("NO_EVALUATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."STRUCTURE_EVALUATION" MODIFY ("ETAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STRUCTURE_EVALUATION" MODIFY ("DATE_CREATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."STRUCTURE_EVALUATION" MODIFY ("NO_EVALUATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table RUBRIQUE_QUESTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RUBRIQUE_QUESTION" ADD CONSTRAINT "RBQ_PK" PRIMARY KEY ("ID_RUBRIQUE", "ID_QUESTION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."RUBRIQUE_QUESTION" MODIFY ("ORDRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RUBRIQUE_QUESTION" MODIFY ("ID_QUESTION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RUBRIQUE_QUESTION" MODIFY ("ID_RUBRIQUE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table NOTE_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" ADD CONSTRAINT "NOTE_PK" PRIMARY KEY ("CRITE_ID", "NO_ETUDIANT_NAT", "ANNEE_PRO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" MODIFY ("CODN_ID" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" MODIFY ("CRITE_ID" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table POSTE_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" ADD CONSTRAINT "POE_PK" PRIMARY KEY ("NO_ETUDIANT_NAT", "NO_ENTREPRISE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" MODIFY ("MOYEN_OBTENTION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" MODIFY ("DATE_EMBAUCHE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" MODIFY ("FONCTION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" MODIFY ("NO_ENTREPRISE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table DIPLOME
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."DIPLOME" ADD CONSTRAINT "CK_DIP_AUTORISATION" CHECK (AUTORISATION_ANNUAIRE BETWEEN 'O' 
+AND 'O' OR AUTORISATION_ANNUAIRE BETWEEN 'N' AND 'N') ENABLE;
+  ALTER TABLE "SYSTEM"."DIPLOME" ADD CONSTRAINT "DIP_PK" PRIMARY KEY ("NO_ETUDIANT_NAT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."DIPLOME" MODIFY ("AUTORISATION_ANNUAIRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."DIPLOME" MODIFY ("PRENOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."DIPLOME" MODIFY ("NOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."DIPLOME" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ENTREPRISE" ADD CONSTRAINT "CK_ENT_OFFRE_STAGE" CHECK (OFFRE_STAGE BETWEEN 'O' AND 'O' OR OFFRE_STAGE BETWEEN 'N' AND 'N') ENABLE;
+  ALTER TABLE "SYSTEM"."ENTREPRISE" ADD CONSTRAINT "CK_ENT_REFERENCE" CHECK (REFERENCEE BETWEEN 'O' AND 'O' OR REFERENCEE BETWEEN 'N' AND 'N') ENABLE;
+  ALTER TABLE "SYSTEM"."ENTREPRISE" ADD CONSTRAINT "ENT_PK" PRIMARY KEY ("NO_ENTREPRISE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("TEL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("PAYS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("VILLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("CP" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("ADRESSE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("DOMAINE_ACTIVITE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("SIEGE_SOCIAL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("NOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("DATE_CREA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENTREPRISE" MODIFY ("NO_ENTREPRISE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table ENSEIGNANT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" ADD CONSTRAINT "CK_ENS_TYPE_ENSEIGNANT" CHECK (TYPE IN ('ENC', 'INT')) ENABLE;
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" ADD CONSTRAINT "CK_ENS_SEXE" CHECK (SEXE BETWEEN 'H' 
+AND 'H' OR SEXE BETWEEN 'F' AND 'F' OR SEXE BETWEEN 'L' AND 'L') ENABLE;
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" ADD CONSTRAINT "ENS_PK" PRIMARY KEY ("NO_ENSEIGNANT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("PAYS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("VILLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("CP" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("ADRESSE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("PRENOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("NOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("SEXE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("TYPE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ENSEIGNANT" MODIFY ("NO_ENSEIGNANT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table NOTATION_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" ADD PRIMARY KEY ("NO_BAREME")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" MODIFY ("ETAT_BAREME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" MODIFY ("DATE_CREATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" MODIFY ("COEFF_SOUTENANCE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" MODIFY ("COEFF_RAPPORT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" MODIFY ("COEFF_ENT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NOTATION_STAGE" MODIFY ("NO_BAREME" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table CONTACT_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" MODIFY ("TYPE_CONTACT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" MODIFY ("DATE_CONTACT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" ADD CONSTRAINT "CTS_PK" PRIMARY KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO", "DATE_CONTACT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" MODIFY ("OBJET" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table REPONSE_QUESTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."REPONSE_QUESTION" ADD CONSTRAINT "CK_RPQ_POSITIONNEMENT" CHECK (POSITIONNEMENT BETWEEN 1 AND 5) ENABLE;
+  ALTER TABLE "SYSTEM"."REPONSE_QUESTION" ADD CONSTRAINT "RPQ_PK" PRIMARY KEY ("ID_REPONSE_QUESTION", "ID_QUESTION_EVALUATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."REPONSE_QUESTION" MODIFY ("ID_QUESTION_EVALUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."REPONSE_QUESTION" MODIFY ("ID_REPONSE_QUESTION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table FORMATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."FORMATION" ADD CONSTRAINT "CK_FRM_NO_ANNEE" CHECK (N0_ANNEE BETWEEN 1 AND 3) ENABLE;
+  ALTER TABLE "SYSTEM"."FORMATION" ADD CONSTRAINT "FRM_PK" PRIMARY KEY ("CODE_FORMATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."FORMATION" MODIFY ("DOUBLE_DIPLOME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."FORMATION" MODIFY ("NOM_FORMATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."FORMATION" MODIFY ("N0_ANNEE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."FORMATION" MODIFY ("DIPLOME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."FORMATION" MODIFY ("CODE_FORMATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table REPONSE_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."REPONSE_EVALUATION" ADD CONSTRAINT "RPE_PK" PRIMARY KEY ("ID_REPONSE_EVALUATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."REPONSE_EVALUATION" MODIFY ("ID_EVALUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."REPONSE_EVALUATION" MODIFY ("ID_REPONSE_EVALUATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table RUBRIQUE_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RUBRIQUE_EVALUATION" ADD CONSTRAINT "REV_PK" PRIMARY KEY ("ID_RUBRIQUE_EVALUATION")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."RUBRIQUE_EVALUATION" MODIFY ("ORDRE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RUBRIQUE_EVALUATION" MODIFY ("ID_EVALUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RUBRIQUE_EVALUATION" MODIFY ("ID_RUBRIQUE_EVALUATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table ETUDIANT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ETUDIANT" ADD CONSTRAINT "CK_ETU_DIPLOME" CHECK (EST_DIPLOME BETWEEN 'O' AND 'O' OR EST_DIPLOME BETWEEN 'N' AND 'N') ENABLE;
+  ALTER TABLE "SYSTEM"."ETUDIANT" ADD CONSTRAINT "CK_ETU_SEXE" CHECK (SEXE BETWEEN 'H' 
+AND 'H' OR SEXE BETWEEN 'F' AND 'F' OR SEXE BETWEEN 'L' AND 'L') ENABLE;
+  ALTER TABLE "SYSTEM"."ETUDIANT" ADD CONSTRAINT "CK_ETU_SITUATION" CHECK (SITUATION BETWEEN 'CEL' 
+AND 'CEL' OR SITUATION BETWEEN 'MAR' 
+AND 'MAR' OR SITUATION BETWEEN 'VEU' 
+AND 'VEU' OR SITUATION BETWEEN 'DIV' AND 'DIV') ENABLE;
+  ALTER TABLE "SYSTEM"."ETUDIANT" ADD CONSTRAINT "ETU_PK" PRIMARY KEY ("NO_ETUDIANT_NAT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("COMPTE_CRI" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("SIGLE_ETU" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("UNIVERSITE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("DERNIER_DIPLOME" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("PERM_PAYS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("PERM_VILLE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("PERM_CP" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("PERM_ADRESSE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("NATIONALITE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("SITUATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("LIEU_NAISSANCE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("DATE_NAISSANCE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("PRENOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("NOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("SEXE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("ANNEE_PRO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ETUDIANT" MODIFY ("NO_ETUDIANT_NAT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table DROIT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."DROIT" ADD CONSTRAINT "DRT_DRT_UK" UNIQUE ("NO_ENSEIGNANT", "ID_EVALUATION")
+  USING INDEX (CREATE UNIQUE INDEX "SYSTEM"."DRT_PK" ON "SYSTEM"."DROIT" ("ID_EVALUATION", "NO_ENSEIGNANT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" )  ENABLE;
+  ALTER TABLE "SYSTEM"."DROIT" ADD CONSTRAINT "DRT_PK" PRIMARY KEY ("ID_EVALUATION", "NO_ENSEIGNANT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."DROIT" MODIFY ("DUPLICATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."DROIT" MODIFY ("CONSULTATION" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."DROIT" MODIFY ("NO_ENSEIGNANT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."DROIT" MODIFY ("ID_EVALUATION" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Ref Constraints for Table CRITERE_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CRITERE_ENTREPRISE" ADD CONSTRAINT "CRITE_STRE_FK" FOREIGN KEY ("NO_EVALUATION")
+	  REFERENCES "SYSTEM"."STRUCTURE_EVALUATION" ("NO_EVALUATION") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table CANDIDAT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CANDIDAT" ADD CONSTRAINT "CAN_PRO_FK" FOREIGN KEY ("ANNEE_PRO")
+	  REFERENCES "SYSTEM"."PROMOTION" ("ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_EMP_FK" FOREIGN KEY ("NO_CONTACT_ILI")
+	  REFERENCES "SYSTEM"."EMPLOYE" ("NO_CONTACT_ILI") ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_ENT_FK" FOREIGN KEY ("NO_ENTREPRISE")
+	  REFERENCES "SYSTEM"."ENTREPRISE" ("NO_ENTREPRISE") ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_ETU_FK" FOREIGN KEY ("NO_ETUDIANT_NAT")
+	  REFERENCES "SYSTEM"."ETUDIANT" ("NO_ETUDIANT_NAT") ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_OFF_FK" FOREIGN KEY ("NO_OFFRE")
+	  REFERENCES "SYSTEM"."OFFRE_STAGE" ("NO_OFFRE") ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_PRO_FK" FOREIGN KEY ("ANNEE_PRO")
+	  REFERENCES "SYSTEM"."PROMOTION" ("ANNEE_PRO") ENABLE;
+  ALTER TABLE "SYSTEM"."STAGE" ADD CONSTRAINT "STG_SOUT_FK" FOREIGN KEY ("NO_SESSION", "ANNEE_PRO")
+	  REFERENCES "SYSTEM"."SOUTENANCE" ("NO_SESSION", "ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table AVENANT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."AVENANT" ADD CONSTRAINT "AVE_STG_FK" FOREIGN KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+	  REFERENCES "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table PROMOTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PROMOTION" ADD CONSTRAINT "PRO_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."PROMOTION" ADD CONSTRAINT "PRO_FRM_FK" FOREIGN KEY ("CODE_FORMATION")
+	  REFERENCES "SYSTEM"."FORMATION" ("CODE_FORMATION") ENABLE;
+  ALTER TABLE "SYSTEM"."PROMOTION" ADD CONSTRAINT "PRO_NOTS_FK" FOREIGN KEY ("NO_BAREME")
+	  REFERENCES "SYSTEM"."NOTATION_STAGE" ("NO_BAREME") ENABLE;
+  ALTER TABLE "SYSTEM"."PROMOTION" ADD CONSTRAINT "PRO_STRE_FK" FOREIGN KEY ("NO_EVALUATION")
+	  REFERENCES "SYSTEM"."STRUCTURE_EVALUATION" ("NO_EVALUATION") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table QUESTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."QUESTION" ADD CONSTRAINT "QUE_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."QUESTION" ADD CONSTRAINT "QUE_QUA_FK" FOREIGN KEY ("ID_QUALIFICATIF")
+	  REFERENCES "SYSTEM"."QUALIFICATIF" ("ID_QUALIFICATIF") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table VISITE_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" ADD CONSTRAINT "VST_EMP_FK" FOREIGN KEY ("NO_CONTACT_ILI")
+	  REFERENCES "SYSTEM"."EMPLOYE" ("NO_CONTACT_ILI") ENABLE;
+  ALTER TABLE "SYSTEM"."VISITE_STAGE" ADD CONSTRAINT "VST_STG_FK" FOREIGN KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+	  REFERENCES "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ELEMENT_CONSTITUTIF
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" ADD CONSTRAINT "EC_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."ELEMENT_CONSTITUTIF" ADD CONSTRAINT "EC_UE_FK" FOREIGN KEY ("CODE_FORMATION", "CODE_UE")
+	  REFERENCES "SYSTEM"."UNITE_ENSEIGNEMENT" ("CODE_FORMATION", "CODE_UE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table EVALUATION_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."EVALUATION_ENTREPRISE" ADD CONSTRAINT "EVAE_STG_FK" FOREIGN KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+	  REFERENCES "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table EMPLOYE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."EMPLOYE" ADD CONSTRAINT "EMP_DIP_FK" FOREIGN KEY ("NO_ETUDIANT_NAT")
+	  REFERENCES "SYSTEM"."DIPLOME" ("NO_ETUDIANT_NAT") ENABLE;
+  ALTER TABLE "SYSTEM"."EMPLOYE" ADD CONSTRAINT "EMP_ENT_FK" FOREIGN KEY ("NO_ENTREPRISE")
+	  REFERENCES "SYSTEM"."ENTREPRISE" ("NO_ENTREPRISE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table RUBRIQUE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RUBRIQUE" ADD CONSTRAINT "RUB_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table CODE_NOTATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CODE_NOTATION" ADD CONSTRAINT "CODN_NOTS_FK" FOREIGN KEY ("NO_BAREME")
+	  REFERENCES "SYSTEM"."NOTATION_STAGE" ("NO_BAREME") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table QUESTION_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" ADD CONSTRAINT "QEV_QUA_FK" FOREIGN KEY ("ID_QUALIFICATIF")
+	  REFERENCES "SYSTEM"."QUALIFICATIF" ("ID_QUALIFICATIF") ENABLE;
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" ADD CONSTRAINT "QEV_QUE_FK" FOREIGN KEY ("ID_QUESTION")
+	  REFERENCES "SYSTEM"."QUESTION" ("ID_QUESTION") ENABLE;
+  ALTER TABLE "SYSTEM"."QUESTION_EVALUATION" ADD CONSTRAINT "QEV_REV_FK" FOREIGN KEY ("ID_RUBRIQUE_EVALUATION")
+	  REFERENCES "SYSTEM"."RUBRIQUE_EVALUATION" ("ID_RUBRIQUE_EVALUATION") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table SOUTENANCE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."SOUTENANCE" ADD CONSTRAINT "SOUT_ENS_ASSESSEUR_FK" FOREIGN KEY ("NO_ENSEIGNANT_ASSESSEUR")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."SOUTENANCE" ADD CONSTRAINT "SOUT_ENS_RESPONSABLE_FK" FOREIGN KEY ("NO_ENSEIGNANT_RESPONSABLE")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."SOUTENANCE" ADD CONSTRAINT "SOUT_PRO_FK" FOREIGN KEY ("ANNEE_PRO")
+	  REFERENCES "SYSTEM"."PROMOTION" ("ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."EVALUATION" ADD CONSTRAINT "EVE_EC_FK" FOREIGN KEY ("CODE_FORMATION", "CODE_UE", "CODE_EC")
+	  REFERENCES "SYSTEM"."ELEMENT_CONSTITUTIF" ("CODE_FORMATION", "CODE_UE", "CODE_EC") ENABLE;
+  ALTER TABLE "SYSTEM"."EVALUATION" ADD CONSTRAINT "EVE_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."EVALUATION" ADD CONSTRAINT "EVE_PRO_FK" FOREIGN KEY ("ANNEE_PRO")
+	  REFERENCES "SYSTEM"."PROMOTION" ("ANNEE_PRO") ENABLE;
+  ALTER TABLE "SYSTEM"."EVALUATION" ADD CONSTRAINT "EVE_UE_FK" FOREIGN KEY ("CODE_FORMATION", "CODE_UE")
+	  REFERENCES "SYSTEM"."UNITE_ENSEIGNEMENT" ("CODE_FORMATION", "CODE_UE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table OFFRE_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" ADD CONSTRAINT "OFF_ENT_FK" FOREIGN KEY ("NO_ENTREPRISE")
+	  REFERENCES "SYSTEM"."ENTREPRISE" ("NO_ENTREPRISE") ENABLE;
+  ALTER TABLE "SYSTEM"."OFFRE_STAGE" ADD CONSTRAINT "OFF_PRO_FK" FOREIGN KEY ("ANNEE_PRO")
+	  REFERENCES "SYSTEM"."PROMOTION" ("ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table UNITE_ENSEIGNEMENT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" ADD CONSTRAINT "UE_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."UNITE_ENSEIGNEMENT" ADD CONSTRAINT "UE_FRM_FK" FOREIGN KEY ("CODE_FORMATION")
+	  REFERENCES "SYSTEM"."FORMATION" ("CODE_FORMATION") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table RUBRIQUE_QUESTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RUBRIQUE_QUESTION" ADD CONSTRAINT "RBQ_QUE_FK" FOREIGN KEY ("ID_QUESTION")
+	  REFERENCES "SYSTEM"."QUESTION" ("ID_QUESTION") ENABLE;
+  ALTER TABLE "SYSTEM"."RUBRIQUE_QUESTION" ADD CONSTRAINT "RBQ_RUB_FK" FOREIGN KEY ("ID_RUBRIQUE")
+	  REFERENCES "SYSTEM"."RUBRIQUE" ("ID_RUBRIQUE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table NOTE_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" ADD CONSTRAINT "NOTE_CODN_FK" FOREIGN KEY ("CODN_ID")
+	  REFERENCES "SYSTEM"."CODE_NOTATION" ("CODN_ID") ENABLE;
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" ADD CONSTRAINT "NOTE_CRITE_FK" FOREIGN KEY ("CRITE_ID")
+	  REFERENCES "SYSTEM"."CRITERE_ENTREPRISE" ("CRITE_ID") ENABLE;
+  ALTER TABLE "SYSTEM"."NOTE_ENTREPRISE" ADD CONSTRAINT "NOTE_EVAE_FK" FOREIGN KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+	  REFERENCES "SYSTEM"."EVALUATION_ENTREPRISE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table POSTE_ENTREPRISE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" ADD CONSTRAINT "POE_DIP_FK" FOREIGN KEY ("NO_ETUDIANT_NAT")
+	  REFERENCES "SYSTEM"."DIPLOME" ("NO_ETUDIANT_NAT") ENABLE;
+  ALTER TABLE "SYSTEM"."POSTE_ENTREPRISE" ADD CONSTRAINT "POE_ENT_FK" FOREIGN KEY ("NO_ENTREPRISE")
+	  REFERENCES "SYSTEM"."ENTREPRISE" ("NO_ENTREPRISE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table DIPLOME
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."DIPLOME" ADD CONSTRAINT "DIP_ETU_FK" FOREIGN KEY ("NO_ETUDIANT_NAT")
+	  REFERENCES "SYSTEM"."ETUDIANT" ("NO_ETUDIANT_NAT") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table CONTACT_STAGE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" ADD CONSTRAINT "CTS_EMP_FK" FOREIGN KEY ("NO_CONTACT_ILI")
+	  REFERENCES "SYSTEM"."EMPLOYE" ("NO_CONTACT_ILI") ENABLE;
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" ADD CONSTRAINT "CTS_ETU_FK" FOREIGN KEY ("NO_ETUDIANT_NAT")
+	  REFERENCES "SYSTEM"."ETUDIANT" ("NO_ETUDIANT_NAT") ENABLE;
+  ALTER TABLE "SYSTEM"."CONTACT_STAGE" ADD CONSTRAINT "CTS_STG_FK" FOREIGN KEY ("NO_ETUDIANT_NAT", "ANNEE_PRO")
+	  REFERENCES "SYSTEM"."STAGE" ("NO_ETUDIANT_NAT", "ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table REPONSE_QUESTION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."REPONSE_QUESTION" ADD CONSTRAINT "RPQ_QEV_FK" FOREIGN KEY ("ID_QUESTION_EVALUATION")
+	  REFERENCES "SYSTEM"."QUESTION_EVALUATION" ("ID_QUESTION_EVALUATION") ENABLE;
+  ALTER TABLE "SYSTEM"."REPONSE_QUESTION" ADD CONSTRAINT "RPQ_RPE_FK" FOREIGN KEY ("ID_REPONSE_QUESTION")
+	  REFERENCES "SYSTEM"."REPONSE_EVALUATION" ("ID_REPONSE_EVALUATION") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table REPONSE_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."REPONSE_EVALUATION" ADD CONSTRAINT "RPE_ETU_FK" FOREIGN KEY ("NO_ETUDIANT_NAT")
+	  REFERENCES "SYSTEM"."ETUDIANT" ("NO_ETUDIANT_NAT") ENABLE;
+  ALTER TABLE "SYSTEM"."REPONSE_EVALUATION" ADD CONSTRAINT "RPE_EVE_FK" FOREIGN KEY ("ID_EVALUATION")
+	  REFERENCES "SYSTEM"."EVALUATION" ("ID_EVALUATION") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table RUBRIQUE_EVALUATION
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RUBRIQUE_EVALUATION" ADD CONSTRAINT "REV_EVE_FK" FOREIGN KEY ("ID_EVALUATION")
+	  REFERENCES "SYSTEM"."EVALUATION" ("ID_EVALUATION") ENABLE;
+  ALTER TABLE "SYSTEM"."RUBRIQUE_EVALUATION" ADD CONSTRAINT "REV_RUB_FK" FOREIGN KEY ("ID_RUBRIQUE")
+	  REFERENCES "SYSTEM"."RUBRIQUE" ("ID_RUBRIQUE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ETUDIANT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ETUDIANT" ADD CONSTRAINT "ETU_PRO_FK" FOREIGN KEY ("ANNEE_PRO")
+	  REFERENCES "SYSTEM"."PROMOTION" ("ANNEE_PRO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table DROIT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."DROIT" ADD CONSTRAINT "DRT_ENS_FK" FOREIGN KEY ("NO_ENSEIGNANT")
+	  REFERENCES "SYSTEM"."ENSEIGNANT" ("NO_ENSEIGNANT") ENABLE;
+  ALTER TABLE "SYSTEM"."DROIT" ADD CONSTRAINT "DRT_EVE_FK" FOREIGN KEY ("ID_EVALUATION")
+	  REFERENCES "SYSTEM"."EVALUATION" ("ID_EVALUATION") ENABLE;
