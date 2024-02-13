@@ -16,15 +16,15 @@ public class Question {
     @Column(name = "TYPE", nullable = false, length = 10)
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_QUALIFICATIF", nullable = false)
     private Qualificatif idQualificatif;
 
-    @Column(name = "`INTITULE", nullable = false, length = 64)
+    @Column(name = "INTITULE", nullable = false, length = 64)
     private String intitule;
 
 }

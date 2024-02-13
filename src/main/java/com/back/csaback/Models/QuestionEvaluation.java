@@ -13,15 +13,15 @@ public class QuestionEvaluation {
     @Column(name = "ID_QUESTION_EVALUATION", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_RUBRIQUE_EVALUATION", nullable = false)
     private RubriqueEvaluation idRubriqueEvaluation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_QUESTION")
     private Question idQuestion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_QUALIFICATIF")
     private Qualificatif idQualificatif;
 

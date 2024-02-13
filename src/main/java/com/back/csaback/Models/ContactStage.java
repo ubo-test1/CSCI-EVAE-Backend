@@ -13,7 +13,7 @@ public class ContactStage {
     private ContactStageId id;
 
     @MapsId("noEtudiantNat")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ETUDIANT_NAT", nullable = false)
     private Etudiant noEtudiantNat;
 
@@ -33,7 +33,7 @@ public class ContactStage {
     @Column(name = "RESUME")
     private String resume;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_CONTACT_ILI")
     private Employe noContactIli;
 

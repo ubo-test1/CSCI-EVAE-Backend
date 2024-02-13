@@ -15,12 +15,12 @@ public class ReponseQuestion {
     private ReponseQuestionId id;
 
     @MapsId("idReponseQuestion")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_REPONSE_QUESTION", nullable = false)
     private ReponseEvaluation idReponseQuestion;
 
     @MapsId("idQuestionEvaluation")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_QUESTION_EVALUATION", nullable = false)
     private QuestionEvaluation idQuestionEvaluation;
 

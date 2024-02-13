@@ -13,11 +13,11 @@ public class ReponseEvaluation {
     @Column(name = "ID_REPONSE_EVALUATION", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_EVALUATION", nullable = false)
     private Evaluation idEvaluation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ETUDIANT_NAT")
     private Etudiant noEtudiantNat;
 

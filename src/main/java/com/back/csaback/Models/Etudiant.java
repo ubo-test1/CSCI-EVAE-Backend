@@ -15,7 +15,7 @@ public class Etudiant {
     @Column(name = "NO_ETUDIANT_NAT", nullable = false, length = 50)
     private String noEtudiantNat;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ANNEE_PRO", nullable = false)
     private Promotion anneePro;
 

@@ -15,24 +15,24 @@ public class Stage {
     private StageId id;
 
     @MapsId("anneePro")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ANNEE_PRO", nullable = false)
     private Promotion anneePro;
 
     @MapsId("noEtudiantNat")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ETUDIANT_NAT", nullable = false)
     private Etudiant noEtudiantNat;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENTREPRISE", nullable = false)
     private Entreprise noEntreprise;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_OFFRE")
     private OffreStage noOffre;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_CONTACT_ILI", nullable = false)
     private Employe noContactIli;
 
@@ -63,7 +63,7 @@ public class Stage {
     @Column(name = "DATE_SIGNATURE_CONV")
     private Instant dateSignatureConv;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 
@@ -79,7 +79,7 @@ public class Stage {
     @Column(name = "NOTE_RAPPORT")
     private Double noteRapport;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
             @JoinColumn(name = "ANNEE_PRO", referencedColumnName = "ANNEE_PRO"),
             @JoinColumn(name = "NO_SESSION", referencedColumnName = "NO_SESSION")
