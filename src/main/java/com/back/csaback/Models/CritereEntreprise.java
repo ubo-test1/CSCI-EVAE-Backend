@@ -13,7 +13,7 @@ public class CritereEntreprise {
     @Column(name = "CRITE_ID", nullable = false)
     private Double id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_EVALUATION", nullable = false)
     private StructureEvaluation noEvaluation;
 

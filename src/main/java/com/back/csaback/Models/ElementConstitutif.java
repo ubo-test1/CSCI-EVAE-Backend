@@ -12,12 +12,12 @@ public class ElementConstitutif {
     @EmbeddedId
     private ElementConstitutifId id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @MapsId("codeUe") // This tells JPA to use the codeUe part of the composite ID for mapping.
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @MapsId("codeUe")
     @JoinColumn(name = "CODE_UE", referencedColumnName = "CODE_UE", nullable = false)
     private UniteEnseignement uniteEnseignement;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENSEIGNANT", nullable = false)
     private Enseignant noEnseignant;
 

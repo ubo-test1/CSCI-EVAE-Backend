@@ -15,7 +15,7 @@ public class EvaluationEntreprise {
     private EvaluationEntrepriseId id;
 
     @MapsId("id")
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumns({
             @JoinColumn(name = "ANNEE_PRO", referencedColumnName = "NO_ETUDIANT_NAT", nullable = false),
             @JoinColumn(name = "NO_ETUDIANT_NAT", referencedColumnName = "ANNEE_PRO", nullable = false)

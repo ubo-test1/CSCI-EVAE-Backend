@@ -14,7 +14,7 @@ public class Diplome {
     private String noEtudiantNat;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ETUDIANT_NAT", nullable = false)
     private Etudiant etudiant;
 

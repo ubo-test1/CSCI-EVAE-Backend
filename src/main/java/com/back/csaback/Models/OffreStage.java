@@ -15,14 +15,14 @@ public class OffreStage {
     @Column(name = "NO_OFFRE", nullable = false)
     private Double id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENTREPRISE", nullable = false)
     private Entreprise noEntreprise;
 
     @Column(name = "NO_OFFRE_ENTREPRISE", length = 20)
     private String noOffreEntreprise;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ANNEE_PRO", nullable = false)
     private Promotion anneePro;
 

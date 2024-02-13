@@ -15,12 +15,12 @@ public class PosteEntreprise {
     private PosteEntrepriseId id;
 
     @MapsId("noEtudiantNat")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ETUDIANT_NAT", nullable = false)
     private Diplome noEtudiantNat;
 
     @MapsId("noEntreprise")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENTREPRISE", nullable = false)
     private Entreprise noEntreprise;
 

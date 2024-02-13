@@ -22,7 +22,7 @@ public class Rubrique {
     @Column(name = "ORDRE")
     private Double ordre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 

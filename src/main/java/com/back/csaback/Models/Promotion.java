@@ -15,11 +15,11 @@ public class Promotion {
     @Column(name = "ANNEE_PRO", nullable = false, length = 10)
     private String anneePro;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CODE_FORMATION")
     private Formation codeFormation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 

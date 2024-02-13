@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "unite_enseignement")
 public class UniteEnseignement {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CODE_FORMATION", nullable = false)
     private Formation codeFormation;
 
@@ -20,7 +20,7 @@ public class UniteEnseignement {
     @Column(name = "CODE_UE", nullable = false, length = 8)
     private String codeUe;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENSEIGNANT", nullable = false)
     private Enseignant noEnseignant;
 

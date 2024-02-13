@@ -13,11 +13,11 @@ public class Employe {
     @Column(name = "NO_CONTACT_ILI", nullable = false)
     private Double id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENTREPRISE", nullable = false)
     private Entreprise noEntreprise;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ETUDIANT_NAT")
     private Diplome noEtudiantNat;
 

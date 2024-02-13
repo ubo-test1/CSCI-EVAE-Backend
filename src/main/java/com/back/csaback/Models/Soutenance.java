@@ -15,15 +15,15 @@ public class Soutenance {
     private SoutenanceId id;
 
     @MapsId("anneePro")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ANNEE_PRO", nullable = false)
     private Promotion anneePro;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENSEIGNANT_RESPONSABLE", nullable = false)
     private Enseignant noEnseignantResponsable;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "NO_ENSEIGNANT_ASSESSEUR", nullable = false)
     private Enseignant noEnseignantAssesseur;
 
