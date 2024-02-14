@@ -5,6 +5,7 @@ import com.back.csaback.Models.Role;
 import com.back.csaback.Models.User;
 import com.back.csaback.Repositories.RoleRepository;
 import com.back.csaback.Repositories.UserRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,7 @@ public class TestController {
         return "Hello VVorld";
     }
 
-    @GetMapping("init")
+    @PostConstruct
     public void init(){
         if(!rr.findAll().isEmpty()) return;
         pe = new BCryptPasswordEncoder();

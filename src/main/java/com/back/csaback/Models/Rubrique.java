@@ -9,6 +9,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "rubrique")
 public class Rubrique {
+
     @Id
     @Column(name = "ID_RUBRIQUE", nullable = false)
     private Long id;
@@ -22,7 +23,7 @@ public class Rubrique {
     @Column(name = "ORDRE")
     private Double ordre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 

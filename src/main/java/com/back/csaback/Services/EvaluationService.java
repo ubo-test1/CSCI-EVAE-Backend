@@ -22,6 +22,7 @@ public class EvaluationService {
         }
     }
 
+
     public List<Rubrique> getEvaRub(Long id){
         return null;
     }

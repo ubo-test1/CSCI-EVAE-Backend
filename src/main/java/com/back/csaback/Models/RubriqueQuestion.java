@@ -1,5 +1,6 @@
 package com.back.csaback.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,16 +16,24 @@ public class RubriqueQuestion {
     private RubriqueQuestionId id;
 
     @MapsId("idRubrique")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_RUBRIQUE", nullable = false)
     private Rubrique idRubrique;
 
     @MapsId("idQuestion")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_QUESTION", nullable = false)
     private Question idQuestion;
 
     @Column(name = "ORDRE", nullable = false, precision = 38)
-    private BigDecimal ordre;
+    private Long ordre;
 
+
+    public RubriqueQuestion(){}
+    public RubriqueQuestion(RubriqueQuestionId rubriqueQuestionId,Rubrique rubrique,Question question, Long ordre) {
+       this.id=rubriqueQuestionId;
+       this.ordre=ordre;
+    }
 }
