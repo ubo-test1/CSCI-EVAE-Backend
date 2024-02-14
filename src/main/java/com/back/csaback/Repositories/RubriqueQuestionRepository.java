@@ -14,6 +14,6 @@ public interface RubriqueQuestionRepository extends JpaRepository<RubriqueQuesti
     void deleteAllByIdRubrique(Rubrique rubrique);
     List<RubriqueQuestion> findAllByIdRubrique(Rubrique idRubrique);
 
-    void updateByOrdre(Long ordre);
+
 
 }

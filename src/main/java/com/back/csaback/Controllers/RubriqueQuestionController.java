@@ -115,6 +115,15 @@ public class RubriqueQuestionController {
         rubriqueQuestionService.deleteById(rubriqueQuestionId);
 
     }
+    @PutMapping("/update")
+    public void Update(@PathVariable RubriqueQuestion rubriqueQuestion){
+        Rubrique rubrique=rubriqueQuestion.getIdRubrique();
+        if (!rubriqueEvaluationService.findByRubrique(rubrique).isEmpty()) {
+            throw new IllegalArgumentException("La rubrique est utilisée dans une évaluation.");
+        }
+        rubriqueQuestionService.updateByOrdre(rubriqueQuestion);
+
+    }
 
 
 }

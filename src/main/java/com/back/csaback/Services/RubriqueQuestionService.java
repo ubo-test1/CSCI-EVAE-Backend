@@ -44,8 +44,8 @@ public class RubriqueQuestionService {
     }
 
    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateByOrdre(Long ordre) {
-         rubriqueQuestionRepository.updateByOrdre(ordre);
+    public void updateByOrdre(RubriqueQuestion rubriqueQuestionId) {
+        rubriqueQuestionRepository.save(rubriqueQuestionId);
     }
     public boolean existsByRubriqueAndQuestion(Rubrique rubrique, Question question) {
         return rubriqueQuestionRepository.existsByIdRubriqueAndIdQuestion(rubrique,question);
