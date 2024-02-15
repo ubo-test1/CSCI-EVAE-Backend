@@ -27,6 +27,7 @@ public class RubriqueQuestionService {
     @Autowired
     private QuestionRepository questionRepository;
 
+
     public RubriqueQuestion saveRubriqueQuestion(RubriqueQuestion rubriqueQuestion) {
         return rubriqueQuestionRepository.save(rubriqueQuestion);
     }

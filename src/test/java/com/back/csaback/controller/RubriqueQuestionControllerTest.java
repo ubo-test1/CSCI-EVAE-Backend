@@ -1,10 +1,9 @@
-package com.back.csaback;
+package com.back.csaback.controller;
 
 import com.back.csaback.Controllers.RubriqueQuestionController;
 import com.back.csaback.Models.Question;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Models.RubriqueQuestion;
-import com.back.csaback.Models.RubriqueQuestionId;
 import com.back.csaback.Services.QuestionService;
 import com.back.csaback.Services.RubriqueEvaluationService;
 import com.back.csaback.Services.RubriqueQuestionService;
@@ -17,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
-class RubriqueQuestionTest {
+class RubriqueQuestionControllerTest {
 
     @Mock
     private RubriqueQuestionService rubriqueQuestionService;
