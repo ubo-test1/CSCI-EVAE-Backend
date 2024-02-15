@@ -115,14 +115,25 @@ public class RubriqueQuestionController {
         rubriqueQuestionService.deleteById(rubriqueQuestionId);
 
     }
-    @PutMapping("/update")
-    public void Update(@PathVariable RubriqueQuestion rubriqueQuestion){
-        Rubrique rubrique=rubriqueQuestion.getIdRubrique();
-        if (!rubriqueEvaluationService.findByRubrique(rubrique).isEmpty()) {
-            throw new IllegalArgumentException("La rubrique est utilisée dans une évaluation.");
-        }
-        rubriqueQuestionService.updateByOrdre(rubriqueQuestion);
+    @PutMapping("/update/{rubriqueId}")
+    public void Update(@PathVariable Long rubriqueId, @RequestBody RubriqueQuestion newRubriqueQuestion) {
+        // Find the RubriqueQuestion by RubriqueID
+        List<RubriqueQuestion> existingRubriqueQuestions = rubriqueQuestionService.getAllRubriqueQuestionsByRubriqueId(rubriqueId);
 
+        // Check if the new questionId is already associated with another RubriqueID
+        for (RubriqueQuestion existingRubriqueQuestion : existingRubriqueQuestions) {
+            if (existingRubriqueQuestion.getIdQuestion().equals(newRubriqueQuestion.getIdQuestion())) {
+                throw new IllegalArgumentException("The new questionId is already associated with another RubriqueID.");
+            }
+        }
+
+        // Update the ordre and questionId
+        for (RubriqueQuestion existingRubriqueQuestion : existingRubriqueQuestions) {
+            existingRubriqueQuestion.setOrdre(newRubriqueQuestion.getOrdre());
+            existingRubriqueQuestion.setIdQuestion(newRubriqueQuestion.getIdQuestion());
+
+            rubriqueQuestionService.updateByOrdre(existingRubriqueQuestion);
+        }
     }
 
 
