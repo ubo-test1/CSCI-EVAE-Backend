@@ -36,6 +36,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "NO_ENSEIGNANT")
+    private Enseignant noEnseignant;
+
     public User() {
     }
 
@@ -43,5 +47,6 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.noEnseignant = null;
     }
 }

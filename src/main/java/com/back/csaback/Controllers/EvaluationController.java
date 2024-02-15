@@ -34,7 +34,6 @@ public class EvaluationController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("consulterInfo/{id}")
     public ResponseEntity<EvaluationDetails> consulterInfo(@PathVariable("id") Long id){
-        System.out.println(id);
         try{
             Evaluation e = es.findById(id);
             EvaluationDetails ret = es.ConsulterEvaluation(e);

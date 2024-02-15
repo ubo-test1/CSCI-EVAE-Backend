@@ -1,1 +1,0 @@
-Insert into RUBRIQUE_QUESTION (ID_RUBRIQUE,ID_QUESTION,ORDRE) values ('1','1','1');
