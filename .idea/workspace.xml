@@ -5,18 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad02aa8c-3576-4da9-a9a9-d9182722d01e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/QualificatifController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/ControllerAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/ErrorModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/QualificatifAssociated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Exceptions/ErrorQualificatifAssociated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Exceptions/QualificatifExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/QualificatifRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/QualificatifController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/QualificatifController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/Qualificatif.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/Qualificatif.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +55,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -70,6 +81,8 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Gradle.Build CSCI-EVAE-Backend.executor": "Run",
+    "Gradle.QualificatifServiceTest.executor": "Run",
+    "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -78,9 +91,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.CsaBackApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "US31-Hanae",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/dosi/CSCI-EVAE-Backend",
+    "last_opened_file_path": "/home/dosi/csa-projet",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,7 +109,65 @@
     ]
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.back.csaback.Repositories" />
+      <recent name="com.back.csaback.Services" />
+      <recent name="com.back.csaback.Controllers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.QualificatifServiceTest">
+    <configuration name="QualificatifServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Services.QualificatifServiceTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="csa-back.main" />
       <method v="2">
@@ -115,6 +188,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.QualificatifServiceTest" />
+        <item itemvalue="Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,7 +206,9 @@
       <workItem from="1707750110281" duration="3835000" />
       <workItem from="1707818186843" duration="18702000" />
       <workItem from="1707843066637" duration="3160000" />
-      <workItem from="1707904868961" duration="504000" />
+      <workItem from="1707904868961" duration="14018000" />
+      <workItem from="1707945707911" duration="2039000" />
+      <workItem from="1707950698378" duration="16400000" />
     </task>
     <servers />
   </component>

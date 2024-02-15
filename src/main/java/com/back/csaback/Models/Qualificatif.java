@@ -11,8 +11,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Entity
 @Table(
         name = "qualificatif"
@@ -20,16 +25,11 @@ import java.io.Serializable;
 public class Qualificatif implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.AUTO
-    )
-    @Column(
-            name = "ID_QUALIFICATIF"
-    )
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID_QUALIFICATIF", nullable = false)
     private Long idQualificatif;
-    @Column(
-            name = "MAXIMAL"
-    )
+    @Column(name = "MAXIMAL")
     private String maximal;
     @Column(
             name = "MINIMAL"
@@ -39,29 +39,7 @@ public class Qualificatif implements Serializable {
     public Qualificatif() {
     }
 
-    public Long getIdQualificatif() {
-        return this.idQualificatif;
-    }
 
-    public void setIdQualificatif(Long idQualificatif) {
-        this.idQualificatif = idQualificatif;
-    }
-
-    public String getMaximal() {
-        return this.maximal;
-    }
-
-    public void setMaximal(String maximal) {
-        this.maximal = maximal;
-    }
-
-    public String getMinimal() {
-        return this.minimal;
-    }
-
-    public void setMinimal(String minimal) {
-        this.minimal = minimal;
-    }
 
     public Qualificatif(Long idQualificatif, String maximal, String minimal) {
         this.idQualificatif = idQualificatif;
