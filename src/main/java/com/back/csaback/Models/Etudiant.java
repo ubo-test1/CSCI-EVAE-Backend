@@ -1,109 +1,108 @@
 package com.back.csaback.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "etudiant")
+@Table(name = "ETUDIANT")
 public class Etudiant {
     @Id
-    @Column(name = "NO_ETUDIANT_NAT", nullable = false, length = 50)
-    private String noEtudiantNat;
+    @Size(max = 50)
+    @Column(name = "NO_ETUDIANT", nullable = false, length = 50)
+    private String noEtudiant;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ANNEE_PRO", nullable = false)
-    private Promotion anneePro;
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumns({
+            @JoinColumn(name = "CODE_FORMATION", referencedColumnName = "ANNEE_UNIVERSITAIRE", nullable = false),
+            @JoinColumn(name = "ANNEE_UNIVERSITAIRE", referencedColumnName = "CODE_FORMATION", nullable = false)
+    })
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    private Promotion promotion;
 
-    @Column(name = "CODE_COM", length = 10)
-    private String codeCom;
-
-    @Column(name = "NO_ETUDIANT_UBO", length = 20)
-    private String noEtudiantUbo;
-
-    @Column(name = "SEXE", nullable = false, length = 1)
-    private String sexe;
-
+    @Size(max = 50)
+    @NotNull
     @Column(name = "NOM", nullable = false, length = 50)
     private String nom;
 
+    @Size(max = 50)
+    @NotNull
     @Column(name = "PRENOM", nullable = false, length = 50)
     private String prenom;
 
-    @Column(name = "DATE_NAISSANCE", nullable = false)
-    private Instant dateNaissance;
+    @Size(max = 1)
+    @NotNull
+    @Column(name = "SEXE", nullable = false, length = 1)
+    private String sexe;
 
+    @NotNull
+    @Column(name = "DATE_NAISSANCE", nullable = false)
+    private LocalDate dateNaissance;
+
+    @Size(max = 255)
+    @NotNull
     @Column(name = "LIEU_NAISSANCE", nullable = false)
     private String lieuNaissance;
 
-    @Column(name = "SITUATION", nullable = false, length = 3)
-    private String situation;
-
+    @Size(max = 50)
+    @NotNull
     @Column(name = "NATIONALITE", nullable = false, length = 50)
     private String nationalite;
 
-    @Column(name = "TEL_PORT", length = 20)
-    private String telPort;
+    @Size(max = 20)
+    @Column(name = "TELEPHONE", length = 20)
+    private String telephone;
 
-    @Column(name = "TEL_FIXE", length = 20)
-    private String telFixe;
+    @Size(max = 20)
+    @Column(name = "MOBILE", length = 20)
+    private String mobile;
 
-    @Column(name = "EMAIL")
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @Column(name = "ACTU_ADRESSE")
-    private String actuAdresse;
+    @Size(max = 255)
+    @Column(name = "EMAIL_UBO")
+    private String emailUbo;
 
-    @Column(name = "ACTU_CP", length = 10)
-    private String actuCp;
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "ADRESSE", nullable = false)
+    private String adresse;
 
-    @Column(name = "ACTU_VILLE")
-    private String actuVille;
+    @Size(max = 10)
+    @Column(name = "CODE_POSTAL", length = 10)
+    private String codePostal;
 
-    @Column(name = "ACTU_PAYS")
-    private String actuPays;
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "VILLE", nullable = false)
+    private String ville;
 
-    @Column(name = "PERM_ADRESSE", nullable = false)
-    private String permAdresse;
+    @Size(max = 5)
+    @NotNull
+    @Column(name = "PAYS_ORIGINE", nullable = false, length = 5)
+    private String paysOrigine;
 
-    @Column(name = "PERM_CP", nullable = false, length = 10)
-    private String permCp;
+    @Size(max = 6)
+    @NotNull
+    @Column(name = "UNIVERSITE_ORIGINE", nullable = false, length = 6)
+    private String universiteOrigine;
 
-    @Column(name = "PERM_VILLE", nullable = false)
-    private String permVille;
+    @Column(name = "GROUPE_TP")
+    private Long groupeTp;
 
-    @Column(name = "PERM_PAYS", nullable = false)
-    private String permPays;
-
-    @Column(name = "DERNIER_DIPLOME", nullable = false)
-    private String dernierDiplome;
-
-    @Column(name = "UNIVERSITE", nullable = false)
-    private String universite;
-
-    @Column(name = "SIGLE_ETU", nullable = false, length = 3)
-    private String sigleEtu;
-
-    @Column(name = "COMPTE_CRI", nullable = false, length = 10)
-    private String compteCri;
-
-    @Column(name = "UBO_EMAIL")
-    private String uboEmail;
-
-    @Column(name = "GRPE_ANGLAIS")
-    private Byte grpeAnglais;
-
-    @Column(name = "ABANDON_MOTIF")
-    private String abandonMotif;
-
-    @Column(name = "ABANDON_DATE")
-    private Instant abandonDate;
-
-    @Column(name = "EST_DIPLOME")
-    private Character estDiplome;
+    @Column(name = "GROUPE_ANGLAIS")
+    private Long groupeAnglais;
 
 }

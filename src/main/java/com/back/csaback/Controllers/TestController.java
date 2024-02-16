@@ -1,36 +1,27 @@
 package com.back.csaback.Controllers;
 
-import com.back.csaback.Models.ERole;
-import com.back.csaback.Models.Role;
-import com.back.csaback.Models.User;
-import com.back.csaback.Repositories.RoleRepository;
+import com.back.csaback.Config.MD5PasswordEncoder;
+import com.back.csaback.Models.Authentification;
 import com.back.csaback.Repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @RestController
 @RequestMapping("test")
 public class TestController {
-    private BCryptPasswordEncoder pe;
+    private MD5PasswordEncoder pe;
 
     @Autowired
     private UserRepository ur;
-
-    @Autowired
-    private RoleRepository rr;
 
     @GetMapping("test")
     public String test(){
         return "Hello VVorld";
     }
+<<<<<<< HEAD
 
     @PostConstruct
     public void init(){
@@ -61,4 +52,14 @@ public class TestController {
         ur.save(u);
         ur.save(u2);
     }
+=======
+/*
+    @PostConstruct
+    public void fixPasswords(){
+        pe = new MD5PasswordEncoder();
+        Authentification a1 = ur.findByLoginConnection("Administrateur").get();
+        a1.setMotPasse(pe.encode(a1.getMotPasse()));
+        ur.save(a1);
+    }*/
+>>>>>>> 5e8e0b197ba38f2d42bfe30f5d9bbefce4fb5028
 }
