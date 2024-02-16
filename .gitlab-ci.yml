@@ -11,7 +11,6 @@ project_build:
   script:
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
-
 docker_build:
   stage: docker_build
   image: docker:19.03.12
