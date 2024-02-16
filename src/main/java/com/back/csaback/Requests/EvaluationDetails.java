@@ -1,7 +1,6 @@
 package com.back.csaback.Requests;
 
 import com.back.csaback.Models.Evaluation;
-import com.back.csaback.Models.Rubrique;
 import lombok.Getter;
 import lombok.Setter;
 

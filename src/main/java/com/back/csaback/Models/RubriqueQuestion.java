@@ -1,30 +1,34 @@
 package com.back.csaback.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "rubrique_question")
+@Table(name = "RUBRIQUE_QUESTION")
 public class RubriqueQuestion {
     @EmbeddedId
     private RubriqueQuestionId id;
 
     @MapsId("idRubrique")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_RUBRIQUE", nullable = false)
     private Rubrique idRubrique;
 
     @MapsId("idQuestion")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_QUESTION", nullable = false)
     private Question idQuestion;
 
-    @Column(name = "ORDRE", nullable = false, precision = 38)
-    private BigDecimal ordre;
+    @NotNull
+    @Column(name = "ORDRE", nullable = false)
+    private Long ordre;
 
 }

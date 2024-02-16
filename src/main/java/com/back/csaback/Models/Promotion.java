@@ -1,61 +1,61 @@
 package com.back.csaback.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "promotion")
+@Table(name = "PROMOTION")
 public class Promotion {
-    @Id
-    @Column(name = "ANNEE_PRO", nullable = false, length = 10)
-    private String anneePro;
+    @EmbeddedId
+    private PromotionId id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CODE_FORMATION")
+    @MapsId("codeFormation")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "CODE_FORMATION", nullable = false)
     private Formation codeFormation;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 
-    @Column(name = "SIGLE_PRO", nullable = false, length = 5)
-    private String siglePro;
+    @Size(max = 16)
+    @Column(name = "SIGLE_PROMOTION", length = 16)
+    private String siglePromotion;
 
-    @Column(name = "NB_ETU_SOUHAITE", nullable = false)
-    private Short nbEtuSouhaite;
-
-    @Column(name = "ETAT_PRESELECTION", nullable = false, length = 3)
-    private String etatPreselection;
-
-    @Column(name = "DATE_RENTREE")
-    private Instant dateRentree;
-
-    @Column(name = "LIEU_RENTREE")
-    private String lieuRentree;
+    @NotNull
+    @Column(name = "NB_MAX_ETUDIANT", nullable = false)
+    private Short nbMaxEtudiant;
 
     @Column(name = "DATE_REPONSE_LP")
-    private Instant dateReponseLp;
-
-    @Column(name = "COMMENTAIRE")
-    private String commentaire;
+    private LocalDate dateReponseLp;
 
     @Column(name = "DATE_REPONSE_LALP")
-    private Instant dateReponseLalp;
+    private LocalDate dateReponseLalp;
 
+    @Column(name = "DATE_RENTREE")
+    private LocalDate dateRentree;
+
+    @Size(max = 12)
+    @Column(name = "LIEU_RENTREE", length = 12)
+    private String lieuRentree;
+
+    @Size(max = 5)
     @Column(name = "PROCESSUS_STAGE", length = 5)
     private String processusStage;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NO_EVALUATION")
-    private StructureEvaluation noEvaluation;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NO_BAREME")
-    private NotationStage noBareme;
+    @Size(max = 255)
+    @Column(name = "COMMENTAIRE")
+    private String commentaire;
 
 }

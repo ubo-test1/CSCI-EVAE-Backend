@@ -1,0 +1,7 @@
+-- 
+-- Script de suppression des séquences du CSCI-ADM
+-- Ph. Saliou 
+--
+
+drop sequence "CGRC_SEQ";
+drop sequence "AUT_SEQ";

@@ -1,0 +1,405 @@
+--
+-- Création des tables de l'article de configuration CSCI_ADM
+--
+
+PROMPT Creating Table 'ETUDIANT'
+CREATE TABLE ETUDIANT
+ (NO_ETUDIANT VARCHAR2(50) NOT NULL
+ ,CODE_FORMATION VARCHAR2(8) NOT NULL
+ ,ANNEE_UNIVERSITAIRE VARCHAR2(10) NOT NULL
+ ,NOM VARCHAR2(50) NOT NULL
+ ,PRENOM VARCHAR2(50) NOT NULL
+ ,SEXE VARCHAR2(1) NOT NULL
+ ,DATE_NAISSANCE DATE NOT NULL
+ ,LIEU_NAISSANCE VARCHAR2(255) NOT NULL
+ ,NATIONALITE VARCHAR2(50) DEFAULT 'Française' NOT NULL
+ ,TELEPHONE VARCHAR2(20)
+ ,MOBILE VARCHAR2(20)
+ ,EMAIL VARCHAR2(255) NOT NULL
+ ,EMAIL_UBO VARCHAR2(255)
+ ,ADRESSE VARCHAR2(255) NOT NULL
+ ,CODE_POSTAL VARCHAR2(10)
+ ,VILLE VARCHAR2(255) NOT NULL
+ ,PAYS_ORIGINE VARCHAR2(5) NOT NULL
+ ,UNIVERSITE_ORIGINE VARCHAR2(6) NOT NULL
+ ,GROUPE_TP NUMBER
+ ,GROUPE_ANGLAIS NUMBER
+ )
+/
+
+COMMENT ON COLUMN ETUDIANT.NO_ETUDIANT IS 'Numéro National de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.CODE_FORMATION IS 'Code de la formation suivie par l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.ANNEE_UNIVERSITAIRE IS 'Année universitaire suivie par l''étudiant. Ex. : 2014-2015.'
+/
+
+COMMENT ON COLUMN ETUDIANT.NOM IS 'Nom de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.PRENOM IS 'Prénom de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.SEXE IS 'Sexe de l''étudiant : Homme ou Femme.'
+/
+
+COMMENT ON COLUMN ETUDIANT.DATE_NAISSANCE IS 'Date de naiisance de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.LIEU_NAISSANCE IS 'Lieu de naissance de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.NATIONALITE IS 'Nationalité de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.TELEPHONE IS 'Numéro de téléphone fixe de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.MOBILE IS 'Numéro de téléphone portable de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.EMAIL IS 'Adresse email personnel de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.EMAIL_UBO IS 'Adresse email UBO de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.ADRESSE IS 'Rue de l''étudiant pendant l''anne scolaire'
+/
+
+COMMENT ON COLUMN ETUDIANT.CODE_POSTAL IS 'Code postal de l''étudiant pendant l''année scolaire'
+/
+
+COMMENT ON COLUMN ETUDIANT.VILLE IS 'Ville de l''étudiant pendant l''année scolaire'
+/
+
+COMMENT ON COLUMN ETUDIANT.PAYS_ORIGINE IS 'Pays d''origine de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.UNIVERSITE_ORIGINE IS 'Université d''origine de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.GROUPE_TP IS 'N° du groupe de TP de l''étudiant'
+/
+
+COMMENT ON COLUMN ETUDIANT.GROUPE_ANGLAIS IS 'N° du groupe d''anglais de l''étudiant'
+/
+
+PROMPT Creating Table 'ENSEIGNANT'
+CREATE TABLE ENSEIGNANT
+ (NO_ENSEIGNANT NUMBER(5) NOT NULL
+ ,TYPE VARCHAR2(5) NOT NULL
+ ,SEXE VARCHAR2(1) NOT NULL
+ ,NOM VARCHAR2(50) NOT NULL
+ ,PRENOM VARCHAR2(50) NOT NULL
+ ,ADRESSE VARCHAR2(255) NOT NULL
+ ,CODE_POSTAL VARCHAR2(10) NOT NULL
+ ,VILLE VARCHAR2(255) NOT NULL
+ ,PAYS VARCHAR2(5) NOT NULL
+ ,MOBILE VARCHAR2(20) NOT NULL
+ ,TELEPHONE VARCHAR2(20)
+ ,EMAIL_UBO VARCHAR2(255) NOT NULL
+ ,EMAIL_PERSO VARCHAR2(255)
+ )
+/
+
+COMMENT ON COLUMN ENSEIGNANT.NO_ENSEIGNANT IS 'Numéro de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.TYPE IS 'Type de l''enseignant : Maître de Conférences, Professeur des Universités, Intervenant Extérieur, etc.'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.SEXE IS 'Sexe de l''enseignant : Homme ou Femme.'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.NOM IS 'Nom de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.PRENOM IS 'Prénom de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.ADRESSE IS 'Rue de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.CODE_POSTAL IS 'Code Postal de la ville où réside l''enseignant.'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.VILLE IS 'Ville de résidence de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.PAYS IS 'Pays où vit l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.MOBILE IS 'Numéro de téléphone portable de l''enseignant chercheur'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.TELEPHONE IS 'Numéro de téléphone fixe de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.EMAIL_UBO IS 'Adresse email UBO de l''enseignant'
+/
+
+COMMENT ON COLUMN ENSEIGNANT.EMAIL_PERSO IS 'Adresse email de l''UBO de l''enseignant'
+/
+
+PROMPT Creating Table 'PROMOTION'
+CREATE TABLE PROMOTION
+ (CODE_FORMATION VARCHAR2(8) NOT NULL
+ ,ANNEE_UNIVERSITAIRE VARCHAR2(10) NOT NULL
+ ,NO_ENSEIGNANT NUMBER(5)
+ ,SIGLE_PROMOTION VARCHAR2(16)
+ ,NB_MAX_ETUDIANT NUMBER(3) NOT NULL
+ ,DATE_REPONSE_LP DATE
+ ,DATE_REPONSE_LALP DATE
+ ,DATE_RENTREE DATE
+ ,LIEU_RENTREE VARCHAR2(12) DEFAULT 'LC117A'
+ ,PROCESSUS_STAGE VARCHAR2(5) DEFAULT 'RECH'
+ ,COMMENTAIRE VARCHAR2(255)
+ )
+/
+
+COMMENT ON COLUMN PROMOTION.CODE_FORMATION IS 'Code de la formation'
+/
+
+COMMENT ON COLUMN PROMOTION.ANNEE_UNIVERSITAIRE IS 'Année universitaire. Ex. : 2014-2015'
+/
+
+COMMENT ON COLUMN PROMOTION.NO_ENSEIGNANT IS 'N° de l''enseignant responsable de la promotion.'
+/
+
+COMMENT ON COLUMN PROMOTION.SIGLE_PROMOTION IS 'Sigle de la promotion. Ex. : DOSI5 pour la 5ème promotion DOSI.'
+/
+
+COMMENT ON COLUMN PROMOTION.NB_MAX_ETUDIANT IS 'Nombre maximum d''étudiants que peut contenir la promotion.'
+/
+
+COMMENT ON COLUMN PROMOTION.DATE_REPONSE_LP IS 'Date (au plus tard) à laquelle les candidats sur liste principale doivent donner leur réponse'
+/
+
+COMMENT ON COLUMN PROMOTION.DATE_REPONSE_LALP IS 'Date (au plus tard) à laquelle les candidats passés de la liste d''attente à la liste principale doivent donner leur réponse'
+/
+
+COMMENT ON COLUMN PROMOTION.DATE_RENTREE IS 'Date à laquelle la rentrée est prévue.'
+/
+
+COMMENT ON COLUMN PROMOTION.LIEU_RENTREE IS 'Salle où s''effectuera la rentrée'
+/
+
+COMMENT ON COLUMN PROMOTION.PROCESSUS_STAGE IS 'Etat d''avancement du processus stage.'
+/
+
+COMMENT ON COLUMN PROMOTION.COMMENTAIRE IS 'Commentaire sur la promotion'
+/
+
+PROMPT Creating Table 'ELEMENT_CONSTITUTIF'
+CREATE TABLE ELEMENT_CONSTITUTIF
+ (CODE_FORMATION VARCHAR2(8) NOT NULL
+ ,CODE_UE VARCHAR2(8) NOT NULL
+ ,CODE_EC VARCHAR2(8) NOT NULL
+ ,NO_ENSEIGNANT NUMBER(5) NOT NULL
+ ,DESIGNATION VARCHAR2(64) NOT NULL
+ ,DESCRIPTION VARCHAR2(240)
+ ,NBH_CM NUMBER(2)
+ ,NBH_TD NUMBER(2)
+ ,NBH_TP NUMBER(2)
+ )
+/
+
+COMMENT ON TABLE ELEMENT_CONSTITUTIF IS 'Element Constitutif'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.CODE_FORMATION IS 'Code de la formation (Ex. : M2DOSI)'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.CODE_UE IS 'Code de l''Unité d''Enseignement (Ex. : ISI, J2EE, WEB, etc.)'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.CODE_EC IS 'Code de l''Elément Constitutif (Ex. : SD pour Serveur de Données dans l''UE PSI'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.NO_ENSEIGNANT IS 'N° de l''enseignant responsable de l''EC'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.DESIGNATION IS 'Désignation de l''EC'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.DESCRIPTION IS 'Description ou résumé de l''élément constitutof'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.NBH_CM IS 'Nb d''heures de Cours Magistraux (CM) dispensées dans l''EC.'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.NBH_TD IS 'Nb d''heures de Travaux Dirigés (TD) dispensées dans l''EC.'
+/
+
+COMMENT ON COLUMN ELEMENT_CONSTITUTIF.NBH_TP IS 'Nb d''heures de Travaux Pratiques (TP) dispensées dans l''EC.'
+/
+
+PROMPT Creating Table 'CANDIDAT'
+CREATE TABLE CANDIDAT
+ (NO_CANDIDAT VARCHAR2(50) NOT NULL
+ ,CODE_FORMATION VARCHAR2(8) NOT NULL
+ ,ANNEE_UNIVERSITAIRE VARCHAR2(10) NOT NULL
+ ,NOM VARCHAR2(50) NOT NULL
+ ,PRENOM VARCHAR2(50) NOT NULL
+ ,SEXE VARCHAR2(1) NOT NULL
+ ,DATE_NAISSANCE DATE NOT NULL
+ ,LIEU_NAISSANCE VARCHAR2(255) NOT NULL
+ ,NATIONALITE VARCHAR2(50) DEFAULT 'Française' NOT NULL
+ ,TELEPHONE VARCHAR2(20)
+ ,MOBILE VARCHAR2(20)
+ ,EMAIL VARCHAR2(255) NOT NULL
+ ,ADRESSE VARCHAR2(255) NOT NULL
+ ,CODE_POSTAL VARCHAR2(10)
+ ,VILLE VARCHAR2(255) NOT NULL
+ ,PAYS_ORIGINE VARCHAR2(5) NOT NULL
+ ,UNIVERSITE_ORIGINE VARCHAR2(6) NOT NULL
+ ,LISTE_SELECTION VARCHAR2(6)
+ ,SELECTION_NO_ORDRE NUMBER
+ ,CONFIRMATION_CANDIDAT CHAR(1)
+ ,DATE_REPONSE_CANDIDAT DATE
+ )
+/
+
+COMMENT ON COLUMN CANDIDAT.NO_CANDIDAT IS 'Numéro du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.CODE_FORMATION IS 'Code de la formation sur laquelle le candidat postule.'
+/
+
+COMMENT ON COLUMN CANDIDAT.ANNEE_UNIVERSITAIRE IS 'Année universitaire. Ex. : 2014-2015'
+/
+
+COMMENT ON COLUMN CANDIDAT.NOM IS 'Nom de famille du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.PRENOM IS 'Prénom du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.SEXE IS 'Sexe du candidat : Homme ou Femme.'
+/
+
+COMMENT ON COLUMN CANDIDAT.DATE_NAISSANCE IS 'Date de naissance du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.LIEU_NAISSANCE IS 'Lieu de naissance du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.NATIONALITE IS 'Nationalité du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.TELEPHONE IS 'Numéro de téléphone fixe du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.MOBILE IS 'Numéro de téléphone portable du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.EMAIL IS 'Adresse email du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.ADRESSE IS 'Rue du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.CODE_POSTAL IS 'Code postal de la ville où réside le candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.VILLE IS 'Ville où habite le candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.PAYS_ORIGINE IS 'Pays d''origine du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.UNIVERSITE_ORIGINE IS 'Université d''originie du candidat'
+/
+
+COMMENT ON COLUMN CANDIDAT.LISTE_SELECTION IS 'Liste sur laquelle est positionné le candidat  : liste principale, liste d''attente ou non retenu.'
+/
+
+COMMENT ON COLUMN CANDIDAT.SELECTION_NO_ORDRE IS 'Classement du candidat sur la liste prinicipale ou sur la liste d''attente'
+/
+
+COMMENT ON COLUMN CANDIDAT.CONFIRMATION_CANDIDAT IS 'Confirmation du candidat.'
+/
+
+COMMENT ON COLUMN CANDIDAT.DATE_REPONSE_CANDIDAT IS 'Date à laquelle le candidat a confirmé ou annulé son inscription.'
+/
+
+PROMPT Creating Table 'UNITE_ENSEIGNEMENT'
+CREATE TABLE UNITE_ENSEIGNEMENT
+ (CODE_FORMATION VARCHAR2(8) NOT NULL
+ ,CODE_UE VARCHAR2(8) NOT NULL
+ ,NO_ENSEIGNANT NUMBER(5) NOT NULL
+ ,DESIGNATION VARCHAR2(64) NOT NULL
+ ,SEMESTRE CHAR(3) NOT NULL
+ ,DESCRIPTION VARCHAR2(256)
+ ,NBH_CM INTEGER
+ ,NBH_TD NUMBER(2)
+ ,NBH_TP NUMBER(2)
+ )
+/
+
+COMMENT ON TABLE UNITE_ENSEIGNEMENT IS 'Unité d''Enseignement'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.CODE_FORMATION IS 'Code de la formation (Ex. : M2DOSI)'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.CODE_UE IS 'Code de l''Unité d''Enseignement (Ex. : ISI, J2EE, WEB, etc.)'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.NO_ENSEIGNANT IS 'N° de l''enseignant responsable de l''UC'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.DESIGNATION IS 'Désignation de l''Unité d''Enseignement.'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.SEMESTRE IS 'N° de semestre dans lequel l''UE doit être dispensée.'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.DESCRIPTION IS 'Description ou résumé de l''Unité d''Enseignement'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.NBH_CM IS 'Nb d''heures de Cours Magistraux (CM) dispensées dans l''UE.'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.NBH_TD IS 'Nb d''heures de Travaux Dirigés (TD) dispensées dans l''UE.'
+/
+
+COMMENT ON COLUMN UNITE_ENSEIGNEMENT.NBH_TP IS 'Nb d''heures de Travaux Pratiques (TP) dispensées dans l''UE.'
+/
+
+PROMPT Creating Table 'FORMATION'
+CREATE TABLE FORMATION
+ (CODE_FORMATION VARCHAR2(8) NOT NULL
+ ,DIPLOME VARCHAR2(3) NOT NULL
+ ,N0_ANNEE NUMBER(1) DEFAULT 1 NOT NULL
+ ,NOM_FORMATION VARCHAR2(64) NOT NULL
+ ,DOUBLE_DIPLOME CHAR(1) NOT NULL
+ ,DEBUT_ACCREDITATION DATE
+ ,FIN_ACCREDITATION DATE
+ )
+/
+
+COMMENT ON COLUMN FORMATION.CODE_FORMATION IS 'Code de la formation (Ex. : M2DOSI)'
+/
+
+COMMENT ON COLUMN FORMATION.DIPLOME IS 'Type de diplôem préparé : Licence, Master ou Doctorat.'
+/
+
+COMMENT ON COLUMN FORMATION.N0_ANNEE IS 'Année de formation (Ex.: 2 pour Licence 2)'
+/
+
+COMMENT ON COLUMN FORMATION.NOM_FORMATION IS 'Nom de  la formation'
+/
+
+COMMENT ON COLUMN FORMATION.DOUBLE_DIPLOME IS 'Indique s''il s''agit d''un double dipôme ou non'
+/
+
+COMMENT ON COLUMN FORMATION.DEBUT_ACCREDITATION IS 'Date de début de validité de l''accréditation courante.'
+/
+
+COMMENT ON COLUMN FORMATION.FIN_ACCREDITATION IS 'Date de fin de validité de l''accréditation courante.'
+/
+

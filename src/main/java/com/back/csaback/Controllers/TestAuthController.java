@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("testAuth")
 public class TestAuthController {
     @GetMapping("testUser")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ENS')")
     public String testUser(){
         return "User auth working";
     }
 
     @GetMapping("testAdmin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADM')")
     public String testAdmin(){
         return "Admin auth working";
     }
 
     @GetMapping("testAuth")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ENS') or hasRole('ADM')")
     public String testAuth(){
         return "A   uth working";
     }

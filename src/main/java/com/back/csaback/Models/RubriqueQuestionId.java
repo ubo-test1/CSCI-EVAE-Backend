@@ -2,6 +2,7 @@ package com.back.csaback.Models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
@@ -13,12 +14,14 @@ import java.util.Objects;
 @Setter
 @Embeddable
 public class RubriqueQuestionId implements Serializable {
-    private static final long serialVersionUID = -1022039959927680839L;
+    private static final long serialVersionUID = 2660433074508583860L;
+    @NotNull
     @Column(name = "ID_RUBRIQUE", nullable = false)
-    private Long idRubrique;
+    private Integer idRubrique;
 
+    @NotNull
     @Column(name = "ID_QUESTION", nullable = false)
-    private Long idQuestion;
+    private Integer idQuestion;
 
     @Override
     public boolean equals(Object o) {

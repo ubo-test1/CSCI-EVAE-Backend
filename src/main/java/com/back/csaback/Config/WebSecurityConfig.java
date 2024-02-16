@@ -45,7 +45,7 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new MD5PasswordEncoder();
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -55,7 +55,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/test/**").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
-                                .anyRequest().authenticated()
+                                //.anyRequest().authenticated()
+                                .anyRequest().permitAll()
 
                 );
 
