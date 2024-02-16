@@ -1,5 +1,6 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.DTO.RubriqueAssociated;
 import com.back.csaback.Models.*;
 import com.back.csaback.Repositories.EvaRubRepository;
 import com.back.csaback.Repositories.EvaluationRepository;
@@ -43,7 +44,15 @@ public class RubriqueService {
             return null;
         }
     }
-
+    public List<RubriqueAssociated> getAllStd() {
+        List<Rubrique> rubriques = rr.findAll();
+        List<RubriqueAssociated> rubriqueAssociateds= new ArrayList<>();
+        for (Rubrique rubrique:rubriques){
+            if(checkIfUsed(rubrique)) rubriqueAssociateds.add(new RubriqueAssociated(rubrique,true));
+            else rubriqueAssociateds.add(new RubriqueAssociated(rubrique,false));
+        }
+        return rubriqueAssociateds;
+    }
     public Rubrique createRubStd(Rubrique r){
         try{
             r.setType("RBS");
@@ -98,7 +107,6 @@ public class RubriqueService {
             return null;
         }
     }
-
     public Rubrique consulter(Long id){
         try{
             return rr.findById(id).get();
