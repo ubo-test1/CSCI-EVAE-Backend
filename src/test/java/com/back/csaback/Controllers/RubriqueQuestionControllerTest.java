@@ -1,4 +1,4 @@
-package com.back.csaback.controller;
+package com.back.csaback.Controllers;
 
 import com.back.csaback.Controllers.RubriqueQuestionController;
 import com.back.csaback.Models.Question;

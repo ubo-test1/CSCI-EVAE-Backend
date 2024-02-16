@@ -28,11 +28,12 @@ public class RubriqueQuestionService {
     private QuestionRepository questionRepository;
 
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public RubriqueQuestion saveRubriqueQuestion(RubriqueQuestion rubriqueQuestion) {
         return rubriqueQuestionRepository.save(rubriqueQuestion);
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteAllByIdRubrique(Rubrique id){
          rubriqueQuestionRepository.deleteAllByIdRubrique(id);
     }
@@ -40,18 +41,22 @@ public class RubriqueQuestionService {
         rubriqueQuestionRepository.deleteById(rubriqueQuestionId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Optional<RubriqueQuestion> getRubriqueQuestion(RubriqueQuestionId id) {
         return rubriqueQuestionRepository.findById(id);
     }
 
-   // @PreAuthorize("hasRole('ROLE_ADMIN')")
+   @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateByOrdre(RubriqueQuestion rubriqueQuestionId) {
         rubriqueQuestionRepository.save(rubriqueQuestionId);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public boolean existsByRubriqueAndQuestion(Rubrique rubrique, Question question) {
         return rubriqueQuestionRepository.existsByIdRubriqueAndIdQuestion(rubrique,question);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<RubriqueQuestion> getAllRubriqueQuestionsByRubriqueId(Long rubriqueId) {
         Rubrique rubrique = rubriqueRepository.findById(rubriqueId).orElse(null);
         List<RubriqueQuestion> rubriqueQuestions = rubriqueQuestionRepository.findAllByIdRubrique(rubrique);
