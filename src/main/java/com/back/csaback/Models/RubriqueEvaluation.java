@@ -13,7 +13,7 @@ public class RubriqueEvaluation {
     @Column(name = "ID_RUBRIQUE_EVALUATION", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ID_EVALUATION", nullable = false)
     private Evaluation idEvaluation;
 
