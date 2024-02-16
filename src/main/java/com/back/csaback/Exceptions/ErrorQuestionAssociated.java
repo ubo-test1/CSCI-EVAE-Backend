@@ -7,7 +7,7 @@ package com.back.csaback.Exceptions;
  *
  * @author Achraf EL KRISSI
  * @version V1
- * @since 14/02/2023
+ * @since 16/02/2024
  */
 
 public class ErrorQuestionAssociated extends RuntimeException{

@@ -23,9 +23,9 @@ import java.util.List;
  *
  * @author Achraf EL KRISSI
  * @version V1
- * @since 14/02/2023
+ * @since 14/02/2024
  */
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/eva/qus")
 public class QuestionStandardController {

@@ -23,7 +23,7 @@ import java.util.Optional;
  * Les exceptions {@link ErrorQuestionAssociated} et {@link EntityNotFoundException} sont utilisées pour signaler des erreurs spécifiques.
  *  @author Achraf EL KRISSI
  *  @version V1
- *  @since 14/02/2023
+ *  @since 14/02/2024
  */
 
 
@@ -60,7 +60,7 @@ public class QuestionStandardService {
             }
         }
     }
-    public Question update(Question ques) {
+/*    public Question update(Question ques) {
         Long questionId = ques.getId();
         Question question =new Question();
         try{
@@ -72,6 +72,27 @@ public class QuestionStandardService {
         if (isQuestionAssociated(question.getId())) {
             throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
         } else {
+            return questionRepository.save(question);
+        }
+    }*/
+
+    public Question update(Question ques) {
+        Long questionId = ques.getId();
+        Question question =new Question();
+        try{
+            question=findById(questionId);
+        } catch (EntityNotFoundException exc){throw exc;}
+        if (questionId == null) {
+            throw new IllegalArgumentException("L'ID de la question ne peut pas être null.");
+        }
+        if (isQuestionAssociated(question.getId())) {
+            throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
+        } else {
+            question.setType(ques.getType());
+            question.setIntitule(ques.getIntitule());
+            question.setIdQualificatif(ques.getIdQualificatif());
+            System.out.println(question.getType());
+            System.out.println(question.getIntitule());
             return questionRepository.save(question);
         }
     }
