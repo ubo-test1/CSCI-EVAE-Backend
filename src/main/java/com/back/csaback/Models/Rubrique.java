@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Rubrique {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_RUBRIQUE", nullable = false)
     private Long id;
 

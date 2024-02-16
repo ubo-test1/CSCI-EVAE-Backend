@@ -23,24 +23,25 @@ public class RubriqueController {
     private EnseignantService enseignantService;
 
     @PostMapping("/create")
-    public ResponseEntity<Rubrique> saveRubrique(@RequestBody HashMap<String,String> req) {
-        Long id= Long.parseLong(req.get("id"));
-        String type= req.get("type");
-        String designation=req.get("designation");
-        Long noEnseignant= Long.parseLong(req.get("noEnseignant"));
-        Double ordre=Double.parseDouble(req.get("ordre"));
-        Enseignant enseignant=enseignantService.findById(noEnseignant).orElse(null);
-        if(enseignant==null){
-            throw new IllegalArgumentException("L'enseignant' spécifié n'existe pas.");
+    public ResponseEntity<Rubrique> saveRubrique(@RequestBody HashMap<String, Object> req) {
+        String type = (String) req.get("type");
+        String designation = (String) req.get("designation");
+        Long noEnseignant = Long.parseLong(req.get("noEnseignant").toString());
+        Double ordre = Double.parseDouble(req.get("ordre").toString());
+
+        Enseignant enseignant = enseignantService.findById(noEnseignant).orElse(null);
+        if (enseignant == null) {
+            throw new IllegalArgumentException("L'enseignant spécifié n'existe pas.");
         }
-        Rubrique rubrique=new Rubrique();
-        rubrique.setId(id);
+
+        Rubrique rubrique = new Rubrique();
         rubrique.setType(type);
         rubrique.setDesignation(designation);
         rubrique.setOrdre(ordre);
         rubrique.setNoEnseignant(enseignant);
 
         try {
+            // Let the database auto-generate the ID_RUBRIQUE
             Rubrique savedRubrique = rubriqueService.saveRubrique(rubrique);
             return new ResponseEntity<>(savedRubrique, HttpStatus.CREATED);
         } catch (ResponseStatusException e) {

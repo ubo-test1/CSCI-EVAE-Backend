@@ -37,8 +37,7 @@ public class RubriqueControllerTest {
 
     @Test
     public void testSaveRubrique() {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("id", "1");
+        HashMap<String, Object> request = new HashMap<>();
         request.put("type", "type");
         request.put("designation", "designation");
         request.put("noEnseignant", "1");
