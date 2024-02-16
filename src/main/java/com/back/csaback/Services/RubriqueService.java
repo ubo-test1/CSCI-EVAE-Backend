@@ -1,17 +1,19 @@
 package com.back.csaback.Services;
 
-import com.back.csaback.Models.Question;
-import com.back.csaback.Models.Rubrique;
-import com.back.csaback.Models.RubriqueQuestion;
+import com.back.csaback.DTO.RubriqueAssociated;
+import com.back.csaback.Models.*;
 import com.back.csaback.Repositories.EvaRubRepository;
+import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.RubQuesRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
 import com.back.csaback.Requests.RubriqueDetails;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RubriqueService {
@@ -24,6 +26,8 @@ public class RubriqueService {
 
     @Autowired
     private EvaRubRepository err;
+    @Autowired
+    private EvaluationRepository eer;
 
     public List<Question> getRubQuest(Rubrique r){
         try{
@@ -39,7 +43,15 @@ public class RubriqueService {
             return null;
         }
     }
-
+    public List<RubriqueAssociated> getAllStd() {
+        List<Rubrique> rubriques = rr.findAll();
+        List<RubriqueAssociated> rubriqueAssociateds= new ArrayList<>();
+        for (Rubrique rubrique:rubriques){
+            if(checkIfUsed(rubrique)) rubriqueAssociateds.add(new RubriqueAssociated(rubrique,true));
+            else rubriqueAssociateds.add(new RubriqueAssociated(rubrique,false));
+        }
+        return rubriqueAssociateds;
+    }
     public Rubrique createRubStd(Rubrique r){
         try{
             r.setType("RBS");
@@ -51,6 +63,7 @@ public class RubriqueService {
     }
 
     private boolean checkIfUsed(Rubrique r){
+        System.out.println(r.getId());
         return !err.findAllByIdRubrique(r).isEmpty();
     }
 
@@ -61,6 +74,23 @@ public class RubriqueService {
         }catch(Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    public void delete(Long id) {
+        Rubrique rubrique=new Rubrique();
+        try{
+            rubrique=findById(id);
+        }catch (EntityNotFoundException exc){throw exc;}
+        if (id == null) {
+            throw new IllegalArgumentException("L'ID de la rubrique ne peut pas être null.");
+        }
+        if (checkIfUsed(rubrique)) {
+            throw new IllegalStateException("La rubrique est utilise dans une evaluation");
+        }else {
+           rqr.deleteAll(rqr.findAllByIdRubrique(rubrique));
+           rr.delete(rubrique);
         }
     }
 
@@ -76,7 +106,6 @@ public class RubriqueService {
             return null;
         }
     }
-
     public Rubrique consulter(Long id){
         try{
             return rr.findById(id).get();
@@ -85,4 +114,9 @@ public class RubriqueService {
             return null;
         }
     }
+    public Rubrique findById(Long id) {
+        return rr.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("La question avec l'ID " + id + " n'existe pas."));
+    }
+
 }

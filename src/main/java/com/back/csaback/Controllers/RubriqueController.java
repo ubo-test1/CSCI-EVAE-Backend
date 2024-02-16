@@ -1,17 +1,23 @@
 package com.back.csaback.Controllers;
 
+import com.back.csaback.DTO.RubriqueAssociated;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Repositories.RubriqueRepository;
 import com.back.csaback.Services.RubriqueService;
 import com.back.csaback.Services.Tooltip;
 import jakarta.websocket.server.PathParam;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("rub")
@@ -95,5 +101,26 @@ public class RubriqueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
+    @GetMapping("/allStd")
+    public ResponseEntity<List<RubriqueAssociated>> getAll() {
+        List<RubriqueAssociated> questions= rs.getAllStd();
+        return  ResponseEntity.ok(questions);
+    }
+    @DeleteMapping("/deleteStd/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
+        try {
+            rs.delete(id);
+            return ResponseEntity.ok("rubrique supprimée");
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()) ;
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    @GetMapping("/test")
+    public ResponseEntity<String> gettest() {
+        return  ResponseEntity.ok("test bien passé");
+    }
 }
