@@ -1,6 +1,8 @@
 package com.back.csaback.Controllers;
 
+import com.back.csaback.Models.Enseignant;
 import com.back.csaback.Models.Rubrique;
+import com.back.csaback.Services.EnseignantService;
 import com.back.csaback.Services.RubriqueService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,22 +11,21 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RubriqueControllerTest {
 
-    private MockMvc mockMvc;
-
     @Mock
     private RubriqueService rubriqueService;
+
+    @Mock
+    private EnseignantService enseignantService;
 
     @InjectMocks
     private RubriqueController rubriqueController;
@@ -32,41 +33,37 @@ public class RubriqueControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(rubriqueController).build();
     }
 
     @Test
-    public void testSaveRubrique() throws Exception {
-        Rubrique rubrique = new Rubrique();
-        rubrique.setId(1L);
-        rubrique.setType("Type");
-        rubrique.setDesignation("Designation");
+    public void testSaveRubrique() {
+        HashMap<String, String> request = new HashMap<>();
+        request.put("id", "1");
+        request.put("type", "type");
+        request.put("designation", "designation");
+        request.put("noEnseignant", "1");
+        request.put("ordre", "1.0");
 
+        Enseignant enseignant = new Enseignant();
+        when(enseignantService.findById(1L)).thenReturn(java.util.Optional.of(enseignant));
+
+        Rubrique rubrique = new Rubrique();
         when(rubriqueService.saveRubrique(any(Rubrique.class))).thenReturn(rubrique);
 
-        mockMvc.perform(post("/rubrique/create")
-                        .contentType("application/json")
-                        .content("{\"id\":1,\"type\":\"Type\",\"designation\":\"Designation\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.type").value("Type"))
-                .andExpect(jsonPath("$.designation").value("Designation"));
+        ResponseEntity<Rubrique> responseEntity = rubriqueController.saveRubrique(request);
 
-        verify(rubriqueService, times(1)).saveRubrique(any(Rubrique.class));
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(rubrique, responseEntity.getBody());
     }
 
     @Test
-    public void testGetAllRubriques() throws Exception {
-        List<Rubrique> rubriques = new ArrayList<>();
-        rubriques.add(new Rubrique());
-        rubriques.add(new Rubrique());
+    public void testGetAllRubriques() {
+        List<Rubrique> rubriqueList = new ArrayList<>();
+        when(rubriqueService.getAllRubriques()).thenReturn(rubriqueList);
 
-        when(rubriqueService.getAllRubriques()).thenReturn(rubriques);
+        ResponseEntity<List<Rubrique>> responseEntity = rubriqueController.getAllRubriques();
 
-        mockMvc.perform(get("/rubrique/listAll"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2));
-
-        verify(rubriqueService, times(1)).getAllRubriques();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(rubriqueList, responseEntity.getBody());
     }
 }
