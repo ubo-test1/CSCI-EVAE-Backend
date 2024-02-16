@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.back.csaback.Repositories.QualificatifRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-02-16T14:25:32" hostname="dosi-Latitude-5520" time="0.834">
+  <properties/>
+  <testcase name="testDelete()" classname="com.back.csaback.Repositories.QualificatifRepositoryTest" time="0.834"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

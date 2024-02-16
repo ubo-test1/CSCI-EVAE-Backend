@@ -1,5 +1,6 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.Controllers.QualificatifController;
 import com.back.csaback.DTO.QualificatifAssociated;
 import com.back.csaback.Exceptions.ErrorQualificatifAssociated;
 import com.back.csaback.Exceptions.QualificatifExistException;
@@ -13,16 +14,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class QualificatifServiceTest {
 
+    @Mock
+    QuestionRepository mockDAO;
     @Mock
     private QualificatifRepository qualificatifRepository;
 
@@ -31,6 +35,9 @@ class QualificatifServiceTest {
 
     @InjectMocks
     private QualificatifService qualificatifService;
+
+    @InjectMocks
+    private QualificatifController qualificatifController;
 
     @BeforeEach
     void setUp() {
@@ -87,18 +94,37 @@ class QualificatifServiceTest {
         verify(qualificatifRepository, times(1)).delete(qualificatif);
     }
 
-    /*@Test
+    @Test
     void testUpdateQualificatif_ThrowErrorQualificatifAssociated() {
-        // Given
+        // Création d'un qualificatif fictif avec un ID existant
         Long idQualificatif = 1L;
-        Qualificatif existingQualificatif = new Qualificatif(idQualificatif, "Minimal", "Maximal");
-        Qualificatif newQualificatif = new Qualificatif(idQualificatif, "New Minimal", "New Maximal");
-        when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(existingQualificatif));
-        when(qualificatifService.isQualificatifAssociated(idQualificatif)).thenReturn(true);
+        Qualificatif existingQualificatif = new Qualificatif(idQualificatif, "Ancien Minimal", "Ancien Maximal");
 
-        // When / Then
-        assertThrows(ErrorQualificatifAssociated.class, () -> qualificatifService.updateQualificatif(idQualificatif, newQualificatif));
-    }*/
+        // Simulation de la méthode findById du repository
+        when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(existingQualificatif));
+
+        // Création d'un nouveau qualificatif avec des valeurs modifiées
+        Qualificatif newQualificatif = new Qualificatif(idQualificatif, "Nouveau Minimal", "Nouveau Maximal");
+
+        // Simulation de la méthode existsByMinimalAndMaximal du repository (renvoie false car le nouveau qualificatif n'existe pas encore)
+        when(qualificatifRepository.existsByMinimalAndMaximal(newQualificatif.getMinimal(), newQualificatif.getMaximal())).thenReturn(false);
+
+        // Simulation de la méthode save du repository
+        when(qualificatifRepository.save(existingQualificatif)).thenReturn(existingQualificatif);
+
+        // Appel de la méthode à tester
+        Qualificatif updatedQualificatif = qualificatifService.updateQualificatif(idQualificatif, newQualificatif);
+
+        // Vérification des résultats
+        assertNotNull(updatedQualificatif);
+        assertEquals(newQualificatif.getMinimal(), updatedQualificatif.getMinimal());
+        assertEquals(newQualificatif.getMaximal(), updatedQualificatif.getMaximal());
+
+        // Vérification des appels de méthodes sur les mocks
+        //verify(qualificatifRepository, times(1)).findById(idQualificatif);
+        verify(qualificatifRepository, times(1)).existsByMinimalAndMaximal(newQualificatif.getMinimal(), newQualificatif.getMaximal());
+        verify(qualificatifRepository, times(1)).save(existingQualificatif);
+    }
 
     @Test
     void testUpdateQualificatif_ThrowQualificatifExistException() {

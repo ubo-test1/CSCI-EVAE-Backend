@@ -33,6 +33,7 @@ public class QualificatifService {
         this.questionRepository = questionRepository;
     }
 
+
     public boolean isQualificatifExists(String minimal, String maximal) {
         return qualificatifRepository.existsByMinimalAndMaximal(minimal, maximal);
     }
