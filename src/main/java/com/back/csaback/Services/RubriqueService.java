@@ -8,7 +8,6 @@ import com.back.csaback.Repositories.RubQuesRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
 import com.back.csaback.Requests.RubriqueDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

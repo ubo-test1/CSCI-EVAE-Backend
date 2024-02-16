@@ -74,7 +74,7 @@ public class EvaluationService {
         }
     }
 
-    public Evaluation findById(Long id){
+    public Evaluation findById(Integer id){
         try{
             return er.findById(id).get();
         }catch(Exception e){

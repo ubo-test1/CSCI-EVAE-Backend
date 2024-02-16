@@ -8,10 +8,6 @@ import java.util.stream.Collectors;
 
 import com.back.csaback.Config.JWT.JwtUtils;
 import com.back.csaback.Config.Services.UserDetailsImpl;
-import com.back.csaback.Models.ERole;
-import com.back.csaback.Models.Role;
-import com.back.csaback.Models.User;
-import com.back.csaback.Repositories.RoleRepository;
 import com.back.csaback.Repositories.UserRepository;
 import com.back.csaback.Requests.JwtResponse;
 import com.back.csaback.Requests.LoginRequest;
@@ -42,9 +38,6 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
     PasswordEncoder encoder;
 
     @Autowired
@@ -53,7 +46,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
-        System.out.println("im here");
+        System.out.println("im here "+loginRequest.getUsername());
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -73,6 +66,7 @@ public class AuthController {
                 roles));
     }
 
+    /*
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -120,5 +114,5 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-    }
+    }*/
 }

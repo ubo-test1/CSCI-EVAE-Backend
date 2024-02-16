@@ -1,7 +1,7 @@
 package com.back.csaback.Config.Services;
 
 
-import com.back.csaback.Models.User;
+import com.back.csaback.Models.Authentification;
 import com.back.csaback.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +19,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        Authentification user = userRepository.findByLoginOrPseudo(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+
+        System.out.println(user);
 
         return UserDetailsImpl.build(user);
     }

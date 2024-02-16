@@ -22,7 +22,7 @@ public class Tooltip {
     public Enseignant getUserFromToken(String token){
         try{
             token = token.substring(7);
-            return er.findById(Long.valueOf(ur.findByUsername(jwt.getUserNameFromJwtToken(token)).get().getNoEnseignant().getId())).get();
+            return er.findById(Long.valueOf(ur.findByLoginOrPseudo(jwt.getUserNameFromJwtToken(token)).get().getNoEnseignant().getId())).get();
         }catch(Exception e){
             e.printStackTrace();
             return null;
