@@ -1,39 +1,52 @@
 package com.back.csaback.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "element_constitutif")
+@Table(name = "ELEMENT_CONSTITUTIF")
 public class ElementConstitutif {
     @EmbeddedId
     private ElementConstitutifId id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @MapsId("codeUe") // This tells JPA to use the codeUe part of the composite ID for mapping.
-    @JoinColumn(name = "CODE_UE", referencedColumnName = "CODE_UE", nullable = false)
+    @MapsId("id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumns({
+            @JoinColumn(name = "CODE_FORMATION", referencedColumnName = "CODE_FORMATION", nullable = false),
+            @JoinColumn(name = "CODE_UE", referencedColumnName = "CODE_UE", nullable = false)
+    })
+    @OnDelete(action = OnDeleteAction.RESTRICT)
     private UniteEnseignement uniteEnseignement;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "NO_ENSEIGNANT", nullable = false)
     private Enseignant noEnseignant;
 
+    @Size(max = 64)
+    @NotNull
     @Column(name = "DESIGNATION", nullable = false, length = 64)
     private String designation;
 
-    @Column(name = "DESCRIPTION", nullable = false, length = 240)
+    @Size(max = 240)
+    @Column(name = "DESCRIPTION", length = 240)
     private String description;
 
     @Column(name = "NBH_CM")
-    private Byte nbhCm;
+    private Short nbhCm;
 
     @Column(name = "NBH_TD")
-    private Byte nbhTd;
+    private Short nbhTd;
 
     @Column(name = "NBH_TP")
-    private Byte nbhTp;
+    private Short nbhTp;
 
 }
