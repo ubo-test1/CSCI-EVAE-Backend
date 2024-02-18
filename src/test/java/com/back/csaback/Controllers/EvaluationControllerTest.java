@@ -62,7 +62,7 @@ public class EvaluationControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     public void consulterInfoTest() throws Exception {
-        Long id = 1L;
+        Integer id = 1;
         EvaluationDetails details = new EvaluationDetails();
         given(evaluationService.findById(id)).willReturn(new Evaluation());
         given(evaluationService.ConsulterEvaluation(new Evaluation())).willReturn(details);

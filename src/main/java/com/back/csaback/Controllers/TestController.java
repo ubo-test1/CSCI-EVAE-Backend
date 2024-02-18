@@ -21,38 +21,6 @@ public class TestController {
     public String test(){
         return "Hello VVorld";
     }
-<<<<<<< HEAD
-
-    @PostConstruct
-    public void init(){
-        if(!rr.findAll().isEmpty()) return;
-        pe = new BCryptPasswordEncoder();
-        Role r1 = new Role();
-        Role r2 = new Role();
-        r1.setName(ERole.ROLE_USER);
-        r2.setName(ERole.ROLE_ADMIN);
-        r1 = rr.save(r1);
-        r2 = rr.save(r2);
-        if(!ur.findAll().isEmpty()) return;
-        Set<Role> sr1 = new HashSet<>();
-        sr1.add(r1);
-        Set<Role> sr2 = new HashSet<>();
-        sr2.add(r2);
-        User u = new User();
-        u.setEmail("sa.hadiche@gmail.com");
-        u.setPassword(pe.encode("test1"));
-        u.setUsername("test");
-        u.setRoles(sr1);
-        User u2 = new User();
-        u2.setEmail("admin");
-        u2.setUsername("admin");
-        u2.setPassword(pe.encode("admin"));
-        u2.setRoles(sr2);
-
-        ur.save(u);
-        ur.save(u2);
-    }
-=======
 /*
     @PostConstruct
     public void fixPasswords(){
@@ -61,5 +29,4 @@ public class TestController {
         a1.setMotPasse(pe.encode(a1.getMotPasse()));
         ur.save(a1);
     }*/
->>>>>>> 5e8e0b197ba38f2d42bfe30f5d9bbefce4fb5028
 }

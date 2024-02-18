@@ -40,13 +40,13 @@ class QuestionRepositoryTest {
     public void testSaveQuestion() {
         Qualificatif qualificatif=new Qualificatif();
 
-        qualificatif.setId(1L);
+        qualificatif.setId(1);
         qualificatif.setMinimal("testMin");
         qualificatif.setMaximal("testMax");
         qualificatifRepository.save(qualificatif);
 
         Question questionToSave = new Question();
-        questionToSave.setId(1L);
+        questionToSave.setId(1);
         questionToSave.setType("QUS");
         questionToSave.setIntitule("test");
         questionToSave.setIdQualificatif(qualificatif);
@@ -61,19 +61,19 @@ class QuestionRepositoryTest {
     @Test
     public void testFindAllQuestion() {
         Qualificatif qualificatif=new Qualificatif();
-        qualificatif.setId(1L);
+        qualificatif.setId(1);
         qualificatif.setMinimal("testMin");
         qualificatif.setMaximal("testMax");
         qualificatifRepository.save(qualificatif);
         Question question1= new Question();
-        question1.setId(1L);
+        question1.setId(1);
         question1.setType("QUS");
         question1.setIntitule("test1");
         question1.setIdQualificatif(qualificatif);
         questionRepository.save(question1);
 
         Question question2 = new Question();
-        question2.setId(2L);
+        question2.setId(2);
         question2.setType("QUS");
         question2.setIntitule("test2");
         question2.setIdQualificatif(qualificatif);
@@ -93,7 +93,7 @@ class QuestionRepositoryTest {
         questionToSave.setType("Type");
         questionToSave.setIntitule("Intitule");
         Qualificatif qualificatif=new Qualificatif();
-        qualificatif.setId(1L);
+        qualificatif.setId(1);
         qualificatif.setMinimal("testMin");
         qualificatif.setMaximal("testMax");
         qualificatifRepository.save(qualificatif);
@@ -111,13 +111,13 @@ class QuestionRepositoryTest {
     @Test
     public void testDeleteQuestion() {
         Qualificatif qualificatif = new Qualificatif();
-        qualificatif.setId(1L);
+        qualificatif.setId(1);
         qualificatif.setMinimal("testMin");
         qualificatif.setMaximal("testMax");
         qualificatifRepository.save(qualificatif);
         // Création et sauvegarde d'une question
         Question question= new Question();
-        question.setId(1L);
+        question.setId(1);
         question.setType("QUS");
         question.setIntitule("test");
         question.setIdQualificatif(qualificatif);
@@ -136,14 +136,14 @@ class QuestionRepositoryTest {
     @Test
     public void testUpdateQuestion() {
         Qualificatif qualificatif = new Qualificatif();
-        qualificatif.setId(1L);
+        qualificatif.setId(1);
         qualificatif.setMinimal("testMin");
         qualificatif.setMaximal("testMax");
         qualificatifRepository.save(qualificatif);
 
         // Création et sauvegarde d'une question
         Question question = new Question();
-        question.setId(1L);
+        question.setId(1);
         question.setType("QUS");
         question.setIntitule("test");
         question.setIdQualificatif(qualificatif);

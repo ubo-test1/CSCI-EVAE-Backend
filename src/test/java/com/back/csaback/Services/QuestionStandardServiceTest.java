@@ -91,7 +91,7 @@ class QuestionStandardServiceTest {
     @Test
     void delete_WhenQuestionIsNotAssociated_ShouldDeleteSuccessfully() {
         // Mocking the behavior of findById
-        Long questionId = 1L;
+        Integer questionId = 1;
         when(mockDAO.findById(questionId)).thenReturn(Optional.of(new Question()));
         // Call the method to be tested
         questionStandardService.delete(questionId);
@@ -107,7 +107,7 @@ class QuestionStandardServiceTest {
 @Test
 void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     // Création d'une question avec un ID spécifique
-    Long questionId = 1L;
+    Integer questionId = 1;
     when(mockDAO.findById(questionId)).thenReturn(Optional.of(new Question()));
     //when(questionStandardService.isQuestionAssociated(questionId)).thenReturn(true);
     // Appel de la méthode delete() et vérification de l'exception
@@ -122,7 +122,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void update_NonAssociatedQuestion_ReturnsUpdatedQuestion() {
         // Création d'une question avec un ID spécifique
-        Long questionId = 1L;
+       Integer questionId = 1;
         Question updatedQuestion = new Question();
         updatedQuestion.setId(questionId);
         // Configuration du mock findById() pour retourner la question
@@ -142,7 +142,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void update_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
         // Création d'une question avec un ID spécifique
-        Long questionId = 1L;
+        Integer questionId = 1;
         Question updatedQuestion = new Question();
         updatedQuestion.setId(questionId);
         // Configuration du mock findById() pour retourner la question
@@ -161,7 +161,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void update_NonExistentQuestion_ThrowsEntityNotFoundException() {
         // Création d'une question avec un ID spécifique
-        Long questionId = 1L;
+         Integer questionId = 1;
         Question updatedQuestion = new Question();
         updatedQuestion.setId(questionId);
         // Configuration du mock findById() pour retourner null
@@ -195,7 +195,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void findById_NonExistingQuestion() {
         // Given
-        Long questionId = 1L;
+        Integer questionId = 1;
         when(mockDAO.findById(questionId)).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> questionStandardService.findById(questionId));
     }
@@ -206,7 +206,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void isQuestionAssociated_True() {
         // Given
-        Long questionId = 1L;
+        Integer questionId = 1;
         List<RubriqueQuestion> rubriqueQuestions = new ArrayList<>();
         // Initialiser un exemple de RubriqueQuestion où la question est associée
         Question question = new Question();
@@ -229,7 +229,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void isQuestionAssociated_False() {
         // Given
-        Long questionId = 1L;
+        Integer questionId = 1;
         List<RubriqueQuestion> rubriqueQuestions = new ArrayList<>();
         // Initialiser un exemple de RubriqueQuestion où la question est associée
         Question question = new Question();

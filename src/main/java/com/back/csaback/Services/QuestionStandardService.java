@@ -2,12 +2,14 @@ package com.back.csaback.Services;
 
 
 import com.back.csaback.DTO.QuestionAssociated;
+import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
 import com.back.csaback.Exceptions.ErrorQuestionAssociated;
 import com.back.csaback.Models.Question;
 import com.back.csaback.Models.RubriqueQuestion;
 import com.back.csaback.Repositories.QuestionRepository;
 import com.back.csaback.Repositories.RubriqueQuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +35,13 @@ public class QuestionStandardService {
     QuestionRepository questionRepository;
     @Autowired
     RubriqueQuestionRepository rubriqueQuestionRepository;
+
+
+
+
     public Question save(Question newQuestion) {
-       return questionRepository.save(newQuestion);
+         if (questionRepository.existsByIntitule(newQuestion.getIntitule())) throw new ErrorQuestionAlreadyExist("la question déja existe !!");
+         else   return questionRepository.save(newQuestion);
     }
     public List<QuestionAssociated> getAll() {
         List<Question> questions = questionRepository.findAll();
@@ -48,7 +55,7 @@ public class QuestionStandardService {
         }
         return questionAssociateds;
     }
-    public void delete(Long id) {
+    public void delete(Integer id) {
         if (isQuestionAssociated(id)) {
             throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
         } else {
@@ -77,11 +84,11 @@ public class QuestionStandardService {
     }*/
 
     public Question update(Question ques) {
-        Long questionId = ques.getId();
+        Integer questionId = ques.getId();
         Question question =new Question();
         try{
             question=findById(questionId);
-        } catch (EntityNotFoundException exc){throw exc;}
+        } catch (EntityNotFoundException exc){throw new EntityNotFoundException("la question que vous voulez modifié n'existe pas");}
         if (questionId == null) {
             throw new IllegalArgumentException("L'ID de la question ne peut pas être null.");
         }
@@ -100,11 +107,13 @@ public class QuestionStandardService {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("La question avec l'ID " + id + " n'existe pas."));
     }
-boolean isQuestionAssociated(Long id){
+    boolean isQuestionAssociated(Integer id){
         List<RubriqueQuestion>  rubriqueQuestions =rubriqueQuestionRepository.findAll();
     for (RubriqueQuestion rubriqueQuestion:rubriqueQuestions){
         if (Objects.equals(rubriqueQuestion.getIdQuestion().getId(), id)) return true;
     }
     return false;
     }
+
+
 }

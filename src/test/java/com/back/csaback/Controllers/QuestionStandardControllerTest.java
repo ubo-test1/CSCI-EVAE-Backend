@@ -67,16 +67,16 @@ class QuestionStandardControllerTest {
         Qualificatif qualificatif = new Qualificatif();
         qualificatif.setMaximal("testMax");
         qualificatif.setMinimal("testMin");
-        qualificatif.setId(1L);
+        qualificatif.setId(1);
         Question question1 = new Question();
         question1.setType("QUS");
         question1.setIntitule("test1");
-        question1.setId(1L);
+        question1.setId(1);
         question1.setIdQualificatif(qualificatif);
         Question question2 = new Question();
         question2.setType("QUS");
         question2.setIntitule("test2");
-        question2.setId(2L);
+        question2.setId(2);
         question2.setIdQualificatif(qualificatif);
         questions.add(question1);
         questions.add(question2);
@@ -142,13 +142,13 @@ void deleteById_Success() throws Exception {
 @Test
     void deleteById_EntityNotFound() throws Exception {
         // Configurer le mock pour simuler une EntityNotFoundException
-        doThrow(EntityNotFoundException.class).when(questionStandardService).delete(anyLong());
+        doThrow(EntityNotFoundException.class).when(questionStandardService).delete(anyInt());
         // Appeler votre API DELETE avec l'ID 1L
         mockMvc.perform(delete("/eva/qus/delete/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON));
                // .andExpect(status().isNotFound()); // Vérifie le statut 404
     // Vérifie si la méthode delete n'a pas été appelée du tout
-    verify(questionStandardService, times(0)).delete(1L);
+    verify(questionStandardService, times(0)).delete(1);
     }
     /**
      * Teste la méthode {@code deleteById()} du contrôleur lorsqu'une question est déjà associée.
@@ -161,12 +161,12 @@ void deleteById_Success() throws Exception {
     @Test
     void deleteById_ErrorQuestionAssociated() throws Exception {
         // Configurer le mock pour simuler une ErrorQuestionAssociated
-        doThrow(new ErrorQuestionAssociated("Question déjà associée")).when(questionStandardService).delete(1L);
+        doThrow(new ErrorQuestionAssociated("Question déjà associée")).when(questionStandardService).delete(1);
         // Appeler votre API DELETE avec l'ID 1L
         mockMvc.perform(delete("/eva/qus/delete/1")
                 .contentType(MediaType.APPLICATION_JSON));
         // Vérifie si la méthode delete n'a pas été appelée du tout
-        verify(questionStandardService, times(0)).delete(1L);
+        verify(questionStandardService, times(0)).delete(1);
     }
     /**
      * Teste la méthode {@code deleteById()} du contrôleur lorsqu'un ID de question invalide est fourni.
@@ -179,10 +179,10 @@ void deleteById_Success() throws Exception {
     @Test
     void deleteById_IllegalArgumentException() throws Exception {
         // Simuler une IllegalArgumentException
-        doThrow(IllegalArgumentException.class).when(questionStandardService).delete(1L);
+        doThrow(IllegalArgumentException.class).when(questionStandardService).delete(1);
         mockMvc.perform(delete("/eva/qus/delete/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON));
-        verify(questionStandardService, times(0)).delete(1L);
+        verify(questionStandardService, times(0)).delete(1);
     }
     /**
      * Teste la méthode {@code update()} du contrôleur lorsqu'une mise à jour réussie est effectuée.
@@ -268,9 +268,9 @@ void deleteById_Success() throws Exception {
     void getById_Success() throws Exception {
         // Simuler une question trouvée avec succès
         Question mockQuestion = new Question();
-        mockQuestion.setId(1L);
+        mockQuestion.setId(1);
         mockQuestion.setIntitule("test");
-        when(questionStandardService.findById(1L)).thenReturn(mockQuestion);
+        when(questionStandardService.findById(1)).thenReturn(mockQuestion);
 
         mockMvc.perform(get("/eva/qus/find/1"))
                 .andExpect(status().isOk());
@@ -299,7 +299,7 @@ void deleteById_Success() throws Exception {
     @Test
     void getById_EntityNotFound() throws Exception {
         // Simuler une EntityNotFoundException
-        when(questionStandardService.findById(1L)).thenThrow(EntityNotFoundException.class);
+        when(questionStandardService.findById(1)).thenThrow(EntityNotFoundException.class);
         mockMvc.perform(get("/eva/qus/find/1"));
                // .andExpect(status().isNotFound());
         verify(questionStandardService, times(0)).findById(any());

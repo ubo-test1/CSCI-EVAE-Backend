@@ -2,13 +2,12 @@ package com.back.csaback.Controllers;
 
 
 import com.back.csaback.DTO.QuestionAssociated;
+import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
 import com.back.csaback.Exceptions.ErrorQuestionAssociated;
 import com.back.csaback.Models.Question;
 import com.back.csaback.Services.QuestionStandardService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,17 +28,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/eva/qus")
 public class QuestionStandardController {
-    private static final Logger logger = LoggerFactory.getLogger(QuestionStandardController.class);
 
     @Autowired
     QuestionStandardService questionStandardService;
     @PostMapping("/create")
-    public ResponseEntity<String> save(@Valid @RequestBody Question newQuestion, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Erreur de validation: " + bindingResult.getAllErrors());
+    public ResponseEntity<?> save(@Valid @RequestBody Question newQuestion, BindingResult bindingResult) {
+        try{ if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Erreur de validation : " + bindingResult.getAllErrors());
         }else {
              questionStandardService.save(newQuestion);
         return ResponseEntity.status(201).body("question créé avec succès");
+        }
+        }catch (ErrorQuestionAlreadyExist ex)  {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
     }
     @GetMapping("/all")
@@ -53,17 +54,17 @@ public class QuestionStandardController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Question> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
         try {
             Question question = questionStandardService.findById(id);
             return ResponseEntity.ok(question);
         } catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
 
    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable Integer id) {
         try {
             questionStandardService.delete(id);
             return ResponseEntity.ok("question supprimée");
@@ -90,7 +91,7 @@ public class QuestionStandardController {
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
 
     }
