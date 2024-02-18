@@ -178,7 +178,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
     @Test
     void findById_ExistingQuestion() {
         // Given
-        Long questionId = 1L;
+        Integer questionId = 1;
         Question mockQuestion = new Question();
         mockQuestion.setId(questionId);
         when(mockDAO.findById(questionId)).thenReturn(Optional.of(mockQuestion));
@@ -233,7 +233,7 @@ void delete_AssociatedQuestion_ThrowsErrorQuestionAssociated() {
         List<RubriqueQuestion> rubriqueQuestions = new ArrayList<>();
         // Initialiser un exemple de RubriqueQuestion où la question est associée
         Question question = new Question();
-        question.setId(2L);
+        question.setId(2);
         Rubrique rubrique = new Rubrique();
         RubriqueQuestion rubriqueQuestion = new RubriqueQuestion();
         rubriqueQuestion.setIdQuestion(question);

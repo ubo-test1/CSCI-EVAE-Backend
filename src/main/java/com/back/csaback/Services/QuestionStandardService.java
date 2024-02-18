@@ -96,7 +96,7 @@ public class QuestionStandardService {
             return questionRepository.save(question);
         }
     }
-    public Question findById(Long id) {
+    public Question findById(Integer id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("La question avec l'ID " + id + " n'existe pas."));
     }

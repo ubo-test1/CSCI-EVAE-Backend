@@ -1,28 +1,24 @@
 package com.back.csaback.Models;
 
-<<<<<<< HEAD
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-=======
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
->>>>>>> 5e8e0b197ba38f2d42bfe30f5d9bbefce4fb5028
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-<<<<<<< HEAD
-@Table(name = "enseignant")
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-=======
+
 @Table(name = "ENSEIGNANT")
->>>>>>> 5e8e0b197ba38f2d42bfe30f5d9bbefce4fb5028
 public class Enseignant {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ens_generator")
