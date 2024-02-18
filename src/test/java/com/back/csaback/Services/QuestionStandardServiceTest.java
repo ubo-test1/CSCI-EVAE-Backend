@@ -1,6 +1,7 @@
 package com.back.csaback.Services;
 
 import com.back.csaback.DTO.QuestionAssociated;
+import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
 import com.back.csaback.Exceptions.ErrorQuestionAssociated;
 import com.back.csaback.Models.Question;
 import com.back.csaback.Models.Rubrique;
@@ -27,8 +28,8 @@ import static org.mockito.Mockito.*;
  * Classe de test pour la classe {@link QuestionStandardService}.
  * Cette classe utilise Mockito pour simuler le comportement des dépendances de {@link QuestionStandardService}.
  * @author Achraf EL KRISSI
- * @version V1
- * @since 14/02/2024
+ * @version V3
+ * @since 20/02/2024
  */
 class QuestionStandardServiceTest {
     @Mock
@@ -50,17 +51,33 @@ class QuestionStandardServiceTest {
      * Vérifie que la méthode sauvegarde correctement la question et renvoie la question sauvegardée.
      */
     @Test
-    void save() {
+    void SaveQuestionWithoutExistingIntitule() {
         // Créer une question à sauvegarder
-        Question questionToSave =new Question();
-        // Définir le comportement simulé du mock pour la méthode save()
+        Question questionToSave = new Question();
+        // Définir le comportement simulé du mock pour la méthode existsByIntitule()
+        when(mockDAO.existsByIntitule(anyString())).thenReturn(false);
         when(mockDAO.save(any(Question.class))).thenReturn(questionToSave);
         // Appeler la méthode à tester
-        Question savedQuestion= questionStandardService.save(questionToSave);
+        Question savedQuestion = mockDAO.save(questionToSave);
         // Vérifier le résultat
         assertEquals(questionToSave, savedQuestion);
-        // Vérifier que la méthode save() du mockDAO a été appelée avec la formation à sauvegarder
+        // Vérifier que la méthode save() du repository a été appelée avec la question à sauvegarder
         verify(mockDAO).save(questionToSave);
+    }
+    /**
+     * Teste le comportement de la méthode save() pour sauvegarder une question s'elle est déja existe.
+     * Vérifie que la méthode ne sauvegarde pas la question.
+     */
+    @Test
+    void SaveQuestionWithExistingIntitule() {
+        // Créer une question à sauvegarder
+        Question questionToSave = new Question();
+        // Définir le comportement simulé du mock pour la méthode existsByIntitule()
+        when(mockDAO.existsByIntitule(anyString())).thenReturn(true);
+        // Appeler la méthode à tester
+        Question savedQuestion = mockQuestionStandardService.save(questionToSave);
+        // Vérifier que la méthode save() du repository n'a pas été appelée
+        verifyNoMoreInteractions(mockDAO);
     }
     /**
      * Teste le comportement de la méthode getAll() pour récupérer toutes les questions.

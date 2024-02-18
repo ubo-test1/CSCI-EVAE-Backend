@@ -21,8 +21,8 @@ import java.util.List;
  * ainsi que des méthodes de gestion des exceptions spécifiques.
  *
  * @author Achraf EL KRISSI
- * @version V1
- * @since 14/02/2024
+ * @version V2
+ * @since 19/02/2024
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

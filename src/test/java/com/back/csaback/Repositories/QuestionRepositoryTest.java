@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 /**
  * Classe de test pour le repository {@link QuestionRepository}.
@@ -19,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Les dépendances sont simulées à l'aide de Mockito.
  *
  * @author Achraf EL KRISSI
- * @version V1
- * @since 14/02/2024
+ * @version V3
+ * @since 20/02/2024
  */
 
 @DataJpaTest
@@ -160,5 +161,27 @@ class QuestionRepositoryTest {
         assertNotNull(updatedQuestion);
         assertEquals("nouveauTest", updatedQuestion.getIntitule());
     }
+
+    @Test
+    void testExistsByIntitule() {
+        Qualificatif qualificatif = new Qualificatif();
+        qualificatif.setId(1);
+        qualificatif.setMinimal("testMin");
+        qualificatif.setMaximal("testMax");
+        qualificatifRepository.save(qualificatif);
+
+        // Création et sauvegarde d'une question
+        Question question = new Question();
+        question.setId(1);
+        question.setType("QUS");
+        question.setIntitule("test");
+        question.setIdQualificatif(qualificatif);
+        questionRepository.save(question);
+        // Appeler la méthode à tester avec un intitulé existant et vérifier le résultat
+        assertTrue(questionRepository.existsByIntitule(question.getIntitule()));
+        // Appeler la méthode à tester avec un intitulé inexistant et vérifier le résultat
+        assertFalse(questionRepository.existsByIntitule("intituleNotExist"));
+    }
+
 }
 

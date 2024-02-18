@@ -24,8 +24,8 @@ import java.util.Optional;
  * Les questions standard sont gérées en interagissant avec les référentiels de données {@link QuestionRepository} et {@link RubriqueQuestionRepository}.
  * Les exceptions {@link ErrorQuestionAssociated} et {@link EntityNotFoundException} sont utilisées pour signaler des erreurs spécifiques.
  *  @author Achraf EL KRISSI
- *  @version V1
- *  @since 14/02/2024
+ *  @version V2
+ *  @since 20/02/2024
  */
 
 
@@ -35,9 +35,6 @@ public class QuestionStandardService {
     QuestionRepository questionRepository;
     @Autowired
     RubriqueQuestionRepository rubriqueQuestionRepository;
-
-
-
 
     public Question save(Question newQuestion) {
          if (questionRepository.existsByIntitule(newQuestion.getIntitule())) throw new ErrorQuestionAlreadyExist("la question déja existe !!");
@@ -67,22 +64,6 @@ public class QuestionStandardService {
             }
         }
     }
-/*    public Question update(Question ques) {
-        Long questionId = ques.getId();
-        Question question =new Question();
-        try{
-        question=findById(questionId);
-        } catch (EntityNotFoundException exc){throw exc;}
-        if (questionId == null) {
-            throw new IllegalArgumentException("L'ID de la question ne peut pas être null.");
-        }
-        if (isQuestionAssociated(question.getId())) {
-            throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
-        } else {
-            return questionRepository.save(question);
-        }
-    }*/
-
     public Question update(Question ques) {
         Integer questionId = ques.getId();
         Question question =new Question();
