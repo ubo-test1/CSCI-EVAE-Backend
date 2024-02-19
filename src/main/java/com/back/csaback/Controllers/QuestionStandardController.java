@@ -62,7 +62,6 @@ public class QuestionStandardController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
-
    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Integer id) {
         try {

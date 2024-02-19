@@ -35,7 +35,6 @@ public class QuestionStandardService {
     QuestionRepository questionRepository;
     @Autowired
     RubriqueQuestionRepository rubriqueQuestionRepository;
-
     public Question save(Question newQuestion) {
          if (questionRepository.existsByIntitule(newQuestion.getIntitule())) throw new ErrorQuestionAlreadyExist("la question déja existe !!");
          else   return questionRepository.save(newQuestion);
@@ -65,23 +64,14 @@ public class QuestionStandardService {
         }
     }
     public Question update(Question ques) {
-        Integer questionId = ques.getId();
-        Question question =new Question();
+        Question question= new Question();
         try{
-            question=findById(questionId);
+            question=findById(ques.getId());
         } catch (EntityNotFoundException exc){throw new EntityNotFoundException("la question que vous voulez modifié n'existe pas");}
-        if (questionId == null) {
-            throw new IllegalArgumentException("L'ID de la question ne peut pas être null.");
-        }
         if (isQuestionAssociated(question.getId())) {
             throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
         } else {
-            question.setType(ques.getType());
-            question.setIntitule(ques.getIntitule());
-            question.setIdQualificatif(ques.getIdQualificatif());
-            System.out.println(question.getType());
-            System.out.println(question.getIntitule());
-            return questionRepository.save(question);
+            return questionRepository.save(ques);
         }
     }
     public Question findById(Integer id) {

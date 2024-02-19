@@ -6,8 +6,8 @@ package com.back.csaback.Exceptions;
  * Exception levée lorsqu'une tentative est faite de créer une question qui existe déjà.
  *
  * @author Achraf EL KRISSI
- * @version V1
- * @since 14/02/2024
+ * @version V2
+ * @since 20/02/2024
  */
 public class ErrorQuestionAlreadyExist extends RuntimeException{
     /**
