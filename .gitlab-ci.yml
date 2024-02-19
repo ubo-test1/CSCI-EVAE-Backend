@@ -25,3 +25,4 @@ docker_build:
     - docker push $DOCKER_IMAGE_TAG
   only:
     - main
+    
