@@ -11,6 +11,7 @@ project_build:
   script:
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
+    - echo '-------------------------azer----------------'
 
 docker_build:
   stage: docker_build
