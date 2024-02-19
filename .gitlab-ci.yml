@@ -3,7 +3,7 @@ stages:
   - docker_build
 
 variables:
-  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest" # Remplacez par le nom de votre image Docker
+  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest" # Remplacez par le nom de votre image  Docker
 
 project_build:
   stage: build
