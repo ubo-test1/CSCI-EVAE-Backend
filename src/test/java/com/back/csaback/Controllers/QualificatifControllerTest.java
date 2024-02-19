@@ -46,7 +46,7 @@ class QualificatifControllerTest {
     void testCreateQualificatif() {
         Qualificatif qualificatif = new Qualificatif();
         when(qualificatifService.createQualificatif(qualificatif)).thenReturn(qualificatif);
-        ResponseEntity<String> response = qualificatifController.createQualificatif(qualificatif);
+        ResponseEntity<?> response = qualificatifController.createQualificatif(qualificatif);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("Couple qualificatif créé avec succès !", response.getBody());
         verify(qualificatifService, times(1)).createQualificatif(qualificatif);
@@ -54,7 +54,7 @@ class QualificatifControllerTest {
 
     @Test
     void testDeleteQualificatif() {
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         ResponseEntity<?> responseEntity = qualificatifController.deleteQualificatif(idQualificatif);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(qualificatifService, times(1)).deleteQualificatif(idQualificatif);
@@ -62,7 +62,7 @@ class QualificatifControllerTest {
 
     @Test
     void testGetQualificatifById() {
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         Qualificatif qualificatif = new Qualificatif();
         when(qualificatifService.findQualificationById(idQualificatif)).thenReturn(qualificatif);
         ResponseEntity<Qualificatif> response = qualificatifController.getQualificatifById(idQualificatif);
@@ -73,20 +73,20 @@ class QualificatifControllerTest {
 
     @Test
     void testUpdateQualificatif() {
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         Qualificatif qualificatif = new Qualificatif();
         BindingResult bindingResult = mock(BindingResult.class); // Mock BindingResult
         when(bindingResult.hasErrors()).thenReturn(false); // Mock hasErrors() to return false
         Qualificatif updatedQualificatif = new Qualificatif();
-        when(qualificatifService.updateQualificatif(idQualificatif, qualificatif)).thenReturn(updatedQualificatif);
-        ResponseEntity<?> responseEntity = qualificatifController.updateQualificatif(idQualificatif, qualificatif, bindingResult);
+        when(qualificatifService.updateQualificatif(qualificatif)).thenReturn(updatedQualificatif);
+        ResponseEntity<?> responseEntity = qualificatifController.updateQualificatif(qualificatif, bindingResult);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        verify(qualificatifService, times(1)).updateQualificatif(idQualificatif, qualificatif);
+        verify(qualificatifService, times(1)).updateQualificatif(qualificatif);
     }
 
     @Test
     void testDeleteQualificatifError() {
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         doThrow(ErrorQualificatifAssociated.class).when(qualificatifService).deleteQualificatif(idQualificatif);
         ResponseEntity<?> responseEntity = qualificatifController.deleteQualificatif(idQualificatif);
         assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());

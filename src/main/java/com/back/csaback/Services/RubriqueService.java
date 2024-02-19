@@ -6,14 +6,13 @@ import com.back.csaback.Repositories.EvaRubRepository;
 import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.RubQuesRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
-import com.back.csaback.Requests.RubriqueDetails;
+import com.back.csaback.DTO.RubriqueDetails;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class RubriqueService {
@@ -55,8 +54,16 @@ public class RubriqueService {
     }
 
     public Rubrique createRubStd(Rubrique r) {
+        if(rr.existsByDesignation(r.getDesignation())) throw new IllegalArgumentException("Il existe deja une rubrique avec la designation");
+        r.setType("RBS");
+        return rr.save(r);
+    }
+
+
+    public Rubrique createRubPers(Rubrique r) {
         try {
-            r.setType("RBS");
+            if(rr.existsByDesignation(r.getDesignation())) throw new IllegalArgumentException("Il existe deja une rubrique avec la designation");
+            r.setType("RBP");
             return rr.save(r);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,26 +77,16 @@ public class RubriqueService {
     }
 
     public Rubrique updateRub(Rubrique r) {
-        try {
-            if (this.checkIfUsed(r)) throw new IllegalStateException("La rubrique est utilise dans une evaluation");
-            return rr.save(r);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        if (this.checkIfUsed(r)) throw new IllegalStateException("La rubrique est utilise dans une evaluation");
+        return rr.save(r);
     }
 
 
-    public void delete(Long id) {
-        Rubrique rubrique = new Rubrique();
-        try {
-            rubrique = findById(id);
-        } catch (EntityNotFoundException exc) {
-            throw exc;
-        }
+    public void delete(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("L'ID de la rubrique ne peut pas être null.");
         }
+        Rubrique rubrique = this.findById(id);
         if (checkIfUsed(rubrique)) {
             throw new IllegalStateException("La rubrique est utilise dans une evaluation");
         } else {
@@ -111,7 +108,7 @@ public class RubriqueService {
         }
     }
 
-    public Rubrique consulter(Long id) {
+    public Rubrique consulter(Integer id) {
         try {
             return rr.findById(id).get();
         } catch (Exception e) {
@@ -120,7 +117,11 @@ public class RubriqueService {
         }
     }
 
-    public Rubrique findById(Long id) {
+    public boolean isCompose(Rubrique r){
+        return !rqr.findAllByIdRubrique(r).isEmpty();
+    }
+
+    public Rubrique findById(Integer id) {
         return rr.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("La question avec l'ID " + id + " n'existe pas."));
     }

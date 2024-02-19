@@ -1,4 +1,4 @@
-package com.back.csaback.Requests;
+package com.back.csaback.DTO;
 
 import com.back.csaback.Models.Question;
 import com.back.csaback.Models.Rubrique;

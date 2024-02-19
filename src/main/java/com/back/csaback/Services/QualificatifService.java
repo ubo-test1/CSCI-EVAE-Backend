@@ -40,18 +40,18 @@ public class QualificatifService {
 
     public List<QualificatifAssociated> GetAllQualificatifs() {
         List<Qualificatif> qualificatifs = qualificatifRepository.findAll();
+        if(qualificatifs.isEmpty()) throw new IllegalArgumentException("Pas de qualificatifs");
         List<QualificatifAssociated> qualificatifAssociateds= new ArrayList<>();
         for (Qualificatif qualificatif:qualificatifs){
             QualificatifAssociated qualificatifAssociated = new QualificatifAssociated();
-            if(isQualificatifAssociated(qualificatif.getIdQualificatif())) qualificatifAssociated.setAssociated(true);
-            else qualificatifAssociated.setAssociated(false);
+            if(isQualificatifAssociated(qualificatif.getId())) qualificatifAssociated.setAssociated(true);
             qualificatifAssociated.setQualificatif(qualificatif);
             qualificatifAssociateds.add(qualificatifAssociated);
         }
         return qualificatifAssociateds;
     }
 
-    public Qualificatif findQualificationById(Long idQualificatif) {
+    public Qualificatif findQualificationById(Integer idQualificatif) {
         return qualificatifRepository.findById(idQualificatif)
                 .orElseThrow(() -> new EntityNotFoundException("Le couple qualificatif avec l'ID" + idQualificatif + " n'a pas été trouvé."));
     }
@@ -62,7 +62,7 @@ public class QualificatifService {
 
 
 
-    public void deleteQualificatif(Long qualificatifId) {
+    public void deleteQualificatif(Integer qualificatifId) {
         if (isQualificatifAssociated(qualificatifId)) {
             throw new ErrorQualificatifAssociated("Le couple qualificatif est déjà utilisé dans une question et ne peut pas être supprimé.");
         } else {
@@ -79,47 +79,17 @@ public class QualificatifService {
 
 
 
-    public Qualificatif updateQualificatif(Long idQualificatif, Qualificatif newQualificatif) {
-        // Vérifier si le couple qualificatif existe dans la table Question
-        Qualificatif qualificatif = new Qualificatif();
-        try{
-            qualificatif = findQualificationById(idQualificatif);
-        }
-        catch(EntityNotFoundException exc){
+    public Qualificatif updateQualificatif(Qualificatif q) {
+        if(qualificatifRepository.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Qualificatif n'existe pas");
+        if(this.isQualificatifAssociated(q.getId())) throw new ErrorQualificatifAssociated("Qualificatif associe a une question deja");
 
-        }
-
-        if (isQualificatifAssociated(idQualificatif)) {
-            throw new ErrorQualificatifAssociated("Le couple qualificatif est déjà utilisé dans une question et ne peut pas être mis à jour.");
-        }
-
-
-        // Vérifier si le nouveau couple qualificatif existe déjà dans la base de données avec un autre ID
-        String newMinimal = newQualificatif.getMinimal();
-        String newMaximal = newQualificatif.getMaximal();
-        boolean existingQualificatif = qualificatifRepository.existsByMinimalAndMaximal(newMinimal, newMaximal);
-        if (existingQualificatif) {
-            throw new QualificatifExistException("Un autre couple qualificatif avec les mêmes valeurs minimal et maximal existe déjà.");
-        }
-
-        Optional<Qualificatif> qualificatifOptional = qualificatifRepository.findById(idQualificatif);
-        Qualificatif qualificatifToUpdate = qualificatifOptional.orElse(null);
-
-        if (qualificatifToUpdate == null) {
-            throw new IllegalArgumentException("L'ID du qualificatif ne peut pas être null.");
-        }
-        // Mettre à jour les valeurs du couple qualificatif
-        qualificatifToUpdate.setMinimal(newQualificatif.getMinimal());
-        qualificatifToUpdate.setMaximal(newQualificatif.getMaximal());
-
-        // Enregistrer et retourner le couple qualificatif mis à jour
-        return qualificatifRepository.save(qualificatifToUpdate);
+        return qualificatifRepository.save(q);
     }
 
-    public boolean isQualificatifAssociated(Long id){
-        List<Question>  questions =questionRepository.findAll();
+    public boolean isQualificatifAssociated(Integer id){
+        List<Question> questions =questionRepository.findAll();
         for (Question q:questions){
-            if (Objects.equals(q.getIdQualificatif().getIdQualificatif(), id)) return true;
+            if (Objects.equals(q.getIdQualificatif().getId(), id)) return true;
         }
         return false;
     }

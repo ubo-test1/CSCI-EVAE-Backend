@@ -16,7 +16,7 @@ public class EnseignantService {
     @Autowired
     private EnseignantRepository enseignantRepository;
 
-    public Optional<Enseignant> findById(Long id){
+    public Optional<Enseignant> findById(Integer id){
         try {
             return enseignantRepository.findById(id);
         } catch (Exception e) {

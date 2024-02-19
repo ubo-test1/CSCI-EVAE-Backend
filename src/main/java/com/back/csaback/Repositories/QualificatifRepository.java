@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QualificatifRepository extends JpaRepository<Qualificatif, Long> {
+public interface QualificatifRepository extends JpaRepository<Qualificatif, Integer> {
 
 
     boolean existsByMinimalAndMaximal(String minimal, String maximal);

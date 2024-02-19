@@ -7,8 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QualificatifAssociated {
-    boolean associated;
-    Qualificatif qualificatif;
+    private boolean associated;
+    private Qualificatif qualificatif;
 
-
+    public QualificatifAssociated(){
+        this.associated = false;
+    }
 }

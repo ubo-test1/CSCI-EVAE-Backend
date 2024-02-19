@@ -27,4 +27,13 @@ public class Qualificatif {
     @Column(name = "MINIMAL", nullable = false, length = 16)
     private String minimal;
 
+    public Qualificatif(){
+
+    }
+    public Qualificatif(Integer id, String min, String max){
+        this.id = id;
+        this.maximal = max;
+        this.minimal = min;
+    }
+
 }

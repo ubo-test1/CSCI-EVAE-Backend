@@ -17,11 +17,11 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public void deleteQuestion(Long id) {
+    public void deleteQuestion(Integer id) {
         questionRepository.deleteById(id);
     }
 
-    public Optional<Question> getQuestion(Long id) {
+    public Optional<Question> getQuestion(Integer id) {
         return questionRepository.findById(id);
     }
 

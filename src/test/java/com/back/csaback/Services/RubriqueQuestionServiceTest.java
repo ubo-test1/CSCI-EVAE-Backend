@@ -98,7 +98,7 @@ class RubriqueQuestionServiceTest {
 
     @Test
     void testGetAllRubriqueQuestionsByRubriqueId() {
-        Long rubriqueId = 1L;
+        Integer rubriqueId = 1;
         Rubrique rubrique = new Rubrique();
         when(rubriqueRepository.findById(rubriqueId)).thenReturn(Optional.of(rubrique));
 
@@ -110,5 +110,4 @@ class RubriqueQuestionServiceTest {
         assertEquals(rubriqueQuestion, result.get(0));
     }
 
-    // Add more tests as needed for other methods in RubriqueQuestionService
 }

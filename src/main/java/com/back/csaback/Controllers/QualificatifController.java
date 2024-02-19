@@ -16,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,40 +28,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping({"/qualificatifs"})
+@RequestMapping({"/qualificatif"})
 public class QualificatifController {
-    private final QualificatifService qualificatifService;
 
     @Autowired
-    public QualificatifController(QualificatifService qualificatifService) {
-        this.qualificatifService = qualificatifService;
-    }
+    private QualificatifService qualificatifService;
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADM')")
     public ResponseEntity<List<QualificatifAssociated>> getAllQualificatifs() {
-        List<QualificatifAssociated> qualificatifs= qualificatifService.GetAllQualificatifs();
+        List<QualificatifAssociated> qualificatifs = qualificatifService.GetAllQualificatifs();
         return  ResponseEntity.ok(qualificatifs);
     }
 
+    /**
+     * {
+     *     "maximal":"test1",
+     *     "minimal":"test1"
+     * }
+     * @param qualificatif
+     * @return
+     */
     @PostMapping("/create")
-    public ResponseEntity<String> createQualificatif(@RequestBody Qualificatif qualificatif) {
-        String minimal = qualificatif.getMinimal();
-        String maximal = qualificatif.getMaximal();
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<?> createQualificatif(@RequestBody Qualificatif qualificatif) {
+        try{
+            String minimal = qualificatif.getMinimal();
+            String maximal = qualificatif.getMaximal();
 
-        if (qualificatifService.isQualificatifExists(minimal, maximal)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Couple qualificatif déjà existant !");
+            if (qualificatifService.isQualificatifExists(minimal, maximal)) {
+                return ResponseEntity.badRequest().body("Couple qualificatif déjà existant !");
+            }
+            Qualificatif createdQualificatif = this.qualificatifService.createQualificatif(qualificatif);
+            return ResponseEntity.ok(createdQualificatif);
         }
-        Qualificatif createdQualificatif = this.qualificatifService.createQualificatif(qualificatif);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Couple qualificatif créé avec succès !");
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteQualificatif(@PathVariable("id") Long idQualificatif) {
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<?> deleteQualificatif(@PathVariable("id") Integer idQualificatif) {
         try {
             this.qualificatifService.deleteQualificatif(idQualificatif);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Le couple qualificatif a ete supprime");
         } catch (ErrorQualificatifAssociated ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         } catch (IllegalArgumentException ex) {
@@ -71,34 +86,52 @@ public class QualificatifController {
 
 
     @GetMapping({"/find/{id}"})
-    public ResponseEntity<Qualificatif> getQualificatifById(@PathVariable("id") Long idQualificatif) {
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<Qualificatif> getQualificatifById(@PathVariable("id") Integer idQualificatif) {
         try{
             Qualificatif qualificatif = this.qualificatifService.findQualificationById(idQualificatif);
             return ResponseEntity.ok(qualificatif);
         }
         catch (EntityNotFoundException ex) {
+            ex.printStackTrace();
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PutMapping({"/{id}"})
-    public ResponseEntity<?> updateQualificatif(@PathVariable("id") Long idQualificatif, @RequestBody Qualificatif qualificatif , BindingResult bindingResult) {
+    /**
+     * {
+     *     "id":15,
+     *     "maximal":"non",
+     *     "minimal":"non"
+     * }
+     * @param qualificatif
+     * @return
+     */
+    @PutMapping({"update"})
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<?> updateQualificatif(@RequestBody Qualificatif qualificatif , BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("Erreur de validation: " + bindingResult.getAllErrors());
         }else {
             try {
-                Qualificatif updatedQualificatif= qualificatifService.updateQualificatif(idQualificatif, qualificatif);
+                Qualificatif updatedQualificatif= qualificatifService.updateQualificatif(qualificatif);
                 return ResponseEntity.ok(updatedQualificatif);
             } catch (ErrorQualificatifAssociated ex) {
+                ex.printStackTrace();
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
             } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }catch (EntityNotFoundException ex) {
+                ex.printStackTrace();
                 return ResponseEntity.notFound().build();
             }catch (QualificatifExistException ex) {
+                ex.printStackTrace();
                 return ResponseEntity.badRequest().body("Un autre couple qualificatif avec les mêmes valeurs minimal et maximal existe déjà.");
-
-
+            }catch(Exception e){
+                e.printStackTrace();
+                return ResponseEntity.internalServerError().build();
+            }
     }}
-}}
+}

@@ -1,5 +1,6 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.DTO.RubriqueAssociated;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Repositories.RubriqueRepository;
 import com.back.csaback.Services.RubriqueService;
@@ -31,7 +32,7 @@ public class RubriqueServiceTest {
     @Test
     public void testSaveRubrique() {
         Rubrique rubrique = new Rubrique();
-        rubrique.setId(1L);
+        rubrique.setId(1);
 
         when(rubriqueRepository.save(any(Rubrique.class))).thenReturn(rubrique);
 
@@ -43,9 +44,9 @@ public class RubriqueServiceTest {
 
     @Test
     public void testDeleteRubrique() {
-        Long rubriqueId = 1L;
+        Integer rubriqueId = 1;
 
-        rubriqueService.deleteRubrique(rubriqueId);
+        rubriqueService.delete(rubriqueId);
 
         verify(rubriqueRepository, times(1)).deleteById(rubriqueId);
     }
@@ -53,15 +54,15 @@ public class RubriqueServiceTest {
     @Test
     public void testGetRubrique() {
         Rubrique rubrique = new Rubrique();
-        rubrique.setId(1L);
+        rubrique.setId(1);
 
-        when(rubriqueRepository.findById(any(Long.class))).thenReturn(Optional.of(rubrique));
+        when(rubriqueRepository.findById(any(Integer.class))).thenReturn(Optional.of(rubrique));
 
-        Optional<Rubrique> fetchedRubrique = rubriqueService.getRubrique(1L);
+        Optional<Rubrique> fetchedRubrique = rubriqueRepository.findById(1);
 
         assertTrue(fetchedRubrique.isPresent());
         assertEquals(rubrique.getId(), fetchedRubrique.get().getId());
-        verify(rubriqueRepository, times(1)).findById(1L);
+        verify(rubriqueRepository, times(1)).findById(1);
     }
 
     @Test
@@ -72,7 +73,7 @@ public class RubriqueServiceTest {
 
         when(rubriqueRepository.findAll()).thenReturn(rubriques);
 
-        List<Rubrique> fetchedRubriques = rubriqueService.getAllRubriques();
+        List<RubriqueAssociated> fetchedRubriques = rubriqueService.getAllStd();
 
         assertEquals(2, fetchedRubriques.size());
         verify(rubriqueRepository, times(1)).findAll();

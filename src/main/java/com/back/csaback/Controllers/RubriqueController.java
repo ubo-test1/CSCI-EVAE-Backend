@@ -33,27 +33,30 @@ public class RubriqueController {
     private Tooltip ttip;
 
     /**
-     *
+     * @author Saad Hadiche
      * @param auth
      * @param r
+     * Request:
      * {
-     *     "type" : "RBS",
      *     "designation" : "oui"
      * }
      * @return
      */
     @PreAuthorize("hasRole('ADM')")
-    @PostMapping("createStd")
+    @PostMapping("create")
     public ResponseEntity<?> createStd(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @RequestBody Rubrique r){
         try{
             Rubrique ru = new Rubrique();
-            if(r.getType().equals("RBP") || r.getType().equals("RBS")) ru.setType(r.getType());
-            else throw new IllegalArgumentException("Type doit etre RBS ou RBP");
             ru.setDesignation(r.getDesignation());
-            if(r.getNoEnseignant() != null) ru.setNoEnseignant(ttip.getUserFromToken(auth));
+            if(r.getNoEnseignant() == null){
+                if(!ttip.getRoleFromToken(auth).equals("ADM")) ru.setNoEnseignant(ttip.getUserFromToken(auth));
+            }
             Long maxOrdre = rr.findMaxOrdre();
             ru.setOrdre(maxOrdre + 1);
-            return ResponseEntity.ok(rs.createRubStd(ru));
+            if(ttip.getRoleFromToken(auth).equals("ADM")){
+                return ResponseEntity.ok(rs.createRubStd(ru));
+            }
+            return ResponseEntity.ok(rs.createRubPers(ru));
         }
         catch(IllegalArgumentException ee){
             ee.printStackTrace();
@@ -69,45 +72,51 @@ public class RubriqueController {
      * {
      *     "id": 13,
      *     "type": "RBP",
-     *     "noEnseignant": null,
+     *     "noEnseignant": 1,
      *     "designation": "AAAAAAAA",
      *     "ordre": 11
      * }
-     * @param r
      * @return
      */
     @PreAuthorize("hasRole('ADM')")
-    @PostMapping("updateStd")
-    public ResponseEntity<Rubrique> updateStd(@RequestBody Rubrique r){
+    @PostMapping("update")
+    public ResponseEntity<?> updateStd(@RequestBody Rubrique r){
         try{
-            Rubrique q = rr.findById(Long.parseLong(""+r.getId())).get();
+            Rubrique q = rr.findById(Integer.parseInt(""+r.getId())).get();
+            if(!r.getType().equals("RBS") && !r.getType().equals("RBP")) throw new IllegalArgumentException("Type invalide");
             q.setType(r.getType());
-            q.setDesignation(r.getDesignation());
-            q.setOrdre(r.getOrdre());
+            if(r.getDesignation() != null) q.setDesignation(r.getDesignation());
+            if(r.getOrdre() != null)q.setOrdre(r.getOrdre());
             return ResponseEntity.ok(rs.updateRub(q));
         }catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
     @PreAuthorize("hasRole('ADM')")
-    @GetMapping("consulterStd/{id}")
-    public ResponseEntity<Rubrique> consulterStd(@PathVariable("id") Long id){
+    @GetMapping("consulter/{id}")
+    public ResponseEntity<?> consulterStd(@PathVariable("id") Integer id){
         try{
+            Rubrique r = rs.findById(id);
+            if(rs.isCompose(r)){
+                return ResponseEntity.ok(rs.consulterRubriqueComp(r));
+            }
             return ResponseEntity.ok(rs.consulter(id));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
+    @PreAuthorize("hasRole('ADM')")
     @GetMapping("/allStd")
     public ResponseEntity<List<RubriqueAssociated>> getAll() {
         List<RubriqueAssociated> questions= rs.getAllStd();
         return  ResponseEntity.ok(questions);
     }
+    @PreAuthorize("hasRole('ADM')")
     @DeleteMapping("/deleteStd/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable("id") Integer id) {
         try {
             rs.delete(id);
             return ResponseEntity.ok("rubrique supprimée");

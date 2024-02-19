@@ -23,7 +23,7 @@ public class RubriqueQuestionId implements Serializable {
     @Column(name = "ID_QUESTION", nullable = false)
     private Integer idQuestion;
 
-    public RubriqueQuestionId(Long idRubrique, Long idQuestion) {
+    public RubriqueQuestionId(Integer idRubrique, Integer idQuestion) {
         this.idRubrique = idRubrique;
         this.idQuestion = idQuestion;
     }

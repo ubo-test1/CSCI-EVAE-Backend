@@ -1,6 +1,7 @@
 package com.back.csaback.Services;
 
 import com.back.csaback.Config.JWT.JwtUtils;
+import com.back.csaback.Models.Authentification;
 import com.back.csaback.Models.Enseignant;
 import com.back.csaback.Repositories.EnseignantRepository;
 import com.back.csaback.Repositories.UserRepository;
@@ -22,7 +23,19 @@ public class Tooltip {
     public Enseignant getUserFromToken(String token){
         try{
             token = token.substring(7);
-            return er.findById(Long.valueOf(ur.findByLoginOrPseudo(jwt.getUserNameFromJwtToken(token)).get().getNoEnseignant().getId())).get();
+            Authentification a = ur.findByLoginOrPseudo(jwt.getUserNameFromJwtToken(token)).get();
+            Enseignant e = er.findByEmailUbo(a.getLoginConnection()).get();
+            return e;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getRoleFromToken(String token){
+        try{
+            token = token.substring(7);
+            return ur.findByLoginOrPseudo(jwt.getUserNameFromJwtToken(token)).get().getRole();
         }catch(Exception e){
             e.printStackTrace();
             return null;

@@ -53,8 +53,19 @@ class QualificatifServiceTest {
     @Test
     void testGetAllQualificatifs() {
         List<Qualificatif> qualificatifs = new ArrayList<>();
-        qualificatifs.add(new Qualificatif(1L, "Minimal1", "Maximal1"));
-        qualificatifs.add(new Qualificatif(2L, "Minimal2", "Maximal2"));
+
+        Qualificatif q1 = new Qualificatif();
+        q1.setId(1);
+        q1.setMinimal("mini1");
+        q1.setMaximal("max2");
+        Qualificatif q2 = new Qualificatif();
+        q2.setId(2);
+        q2.setMinimal("mini2");
+        q2.setMaximal("max2");
+
+        qualificatifs.add(q1);
+        qualificatifs.add(q2);
+
         when(qualificatifRepository.findAll()).thenReturn(qualificatifs);
 
         List<QualificatifAssociated> result = qualificatifService.GetAllQualificatifs();
@@ -63,29 +74,32 @@ class QualificatifServiceTest {
 
     @Test
     void testFindQualificationById_ThrowsEntityNotFoundException() {
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> qualificatifService.findQualificationById(idQualificatif));
     }
 
     @Test
     void testFindQualificationById() {
-        Long idQualificatif = 1L;
-        Qualificatif qualificatif = new Qualificatif(idQualificatif, "Minimal", "Maximal");
-        when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(qualificatif));
-        assertEquals(qualificatif, qualificatifService.findQualificationById(idQualificatif));
+        Integer idQualificatif = 1;
+        Qualificatif q = new Qualificatif();
+        q.setId(idQualificatif);
+        q.setMaximal("max");
+        q.setMinimal("min");
+        when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(q));
+        assertEquals(q, qualificatifService.findQualificationById(idQualificatif));
     }
 
     @Test
     void testCreateQualificatif() {
-        Qualificatif qualificatif = new Qualificatif(1L, "Minimal", "Maximal");
+        Qualificatif qualificatif = new Qualificatif(1, "Minimal", "Maximal");
         when(qualificatifRepository.save(qualificatif)).thenReturn(qualificatif);
         assertEquals(qualificatif, qualificatifService.createQualificatif(qualificatif));
     }
 
     @Test
     void testDeleteQualificatif() {
-        Long qualificatifId = 1L;
+        Integer qualificatifId = 1;
         Qualificatif qualificatif = new Qualificatif(qualificatifId, "Minimal", "Maximal");
         when(qualificatifRepository.findById(qualificatifId)).thenReturn(Optional.of(qualificatif));
         when(questionRepository.findAll()).thenReturn(new ArrayList<>());
@@ -97,7 +111,7 @@ class QualificatifServiceTest {
     @Test
     void testUpdateQualificatif_ThrowErrorQualificatifAssociated() {
         // Création d'un qualificatif fictif avec un ID existant
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         Qualificatif existingQualificatif = new Qualificatif(idQualificatif, "Ancien Minimal", "Ancien Maximal");
 
         // Simulation de la méthode findById du repository
@@ -113,7 +127,7 @@ class QualificatifServiceTest {
         when(qualificatifRepository.save(existingQualificatif)).thenReturn(existingQualificatif);
 
         // Appel de la méthode à tester
-        Qualificatif updatedQualificatif = qualificatifService.updateQualificatif(idQualificatif, newQualificatif);
+        Qualificatif updatedQualificatif = qualificatifService.updateQualificatif(newQualificatif);
 
         // Vérification des résultats
         assertNotNull(updatedQualificatif);
@@ -129,13 +143,13 @@ class QualificatifServiceTest {
     @Test
     void testUpdateQualificatif_ThrowQualificatifExistException() {
         // Given
-        Long idQualificatif = 1L;
+        Integer idQualificatif = 1;
         Qualificatif existingQualificatif = new Qualificatif(idQualificatif, "Minimal", "Maximal");
-        Qualificatif newQualificatif = new Qualificatif(2L, "New Minimal", "New Maximal");
+        Qualificatif newQualificatif = new Qualificatif(2, "New Minimal", "New Maximal");
         when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(existingQualificatif));
         when(qualificatifRepository.existsByMinimalAndMaximal(newQualificatif.getMinimal(), newQualificatif.getMaximal())).thenReturn(true);
 
         // When / Then
-        assertThrows(QualificatifExistException.class, () -> qualificatifService.updateQualificatif(idQualificatif, newQualificatif));
+        assertThrows(QualificatifExistException.class, () -> qualificatifService.updateQualificatif(newQualificatif));
     }
 }
