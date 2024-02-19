@@ -1,7 +1,9 @@
 # Utilisez une image de base qui inclut déjà Java et installez également findutils
 FROM openjdk:21
 
-RUN apt-get update && apt-get install -y findutils
+# Installer xargs
+RUN apt-get update && apt-get install -y xargs
+
 
 # Définition du répertoire de travail dans l'image
 WORKDIR /app
