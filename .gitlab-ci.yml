@@ -3,14 +3,15 @@ stages:
   - docker_build
 
 variables:
-  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest" # Remplacez par le nom de votre image Docker
+  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest" 
 
 project_build:
   stage: build
-  image: gradle:jdk21
+  image: openjdk:21
   script:
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
+
 docker_build:
   stage: docker_build
   image: docker:19.03.12
@@ -24,4 +25,6 @@ docker_build:
     - docker push $DOCKER_IMAGE_TAG
   only:
     - main
+
+
 
