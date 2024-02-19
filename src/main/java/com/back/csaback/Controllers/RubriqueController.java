@@ -1,7 +1,10 @@
 package com.back.csaback.Controllers;
 
+import com.back.csaback.DTO.RubQRequest;
 import com.back.csaback.DTO.RubriqueAssociated;
+import com.back.csaback.Models.Question;
 import com.back.csaback.Models.Rubrique;
+import com.back.csaback.Repositories.QuestionRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
 import com.back.csaback.Services.RubriqueService;
 import com.back.csaback.Services.Tooltip;
@@ -15,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import java.util.List;
@@ -31,6 +35,9 @@ public class RubriqueController {
 
     @Autowired
     private Tooltip ttip;
+
+    @Autowired
+    private QuestionRepository qr;
 
     /**
      * @author Saad Hadiche
@@ -128,8 +135,28 @@ public class RubriqueController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+
+    @PreAuthorize("hasRole('ADM')")
+    @PostMapping("/assignQuestion")
+    public ResponseEntity<?> addQ(@RequestBody HashMap<String,Object> req){
+        try{
+            RubQRequest test = new RubQRequest();
+            test.setRubriqueId((Integer)req.get("rubriqueId"));
+            test.setQList((List<Integer>)req.get("qList"));
+            rs.assignQList(test);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Erreur");
+        }
+    }
     @GetMapping("/test")
     public ResponseEntity<String> gettest() {
         return  ResponseEntity.ok("test bien passé");
+    }
+
+    @GetMapping("testQ")
+    public List<Question> test(){
+        return qr.findAll();
     }
 }

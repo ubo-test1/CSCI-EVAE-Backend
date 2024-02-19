@@ -1,13 +1,12 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.DTO.RubQRequest;
 import com.back.csaback.DTO.RubriqueAssociated;
 import com.back.csaback.Models.*;
-import com.back.csaback.Repositories.EvaRubRepository;
-import com.back.csaback.Repositories.EvaluationRepository;
-import com.back.csaback.Repositories.RubQuesRepository;
-import com.back.csaback.Repositories.RubriqueRepository;
+import com.back.csaback.Repositories.*;
 import com.back.csaback.DTO.RubriqueDetails;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,9 @@ public class RubriqueService {
     private EvaRubRepository err;
     @Autowired
     private EvaluationRepository eer;
+
+    @Autowired
+    private QuestionRepository qr;
 
     public List<Question> getRubQuest(Rubrique r) {
         try {
@@ -130,4 +132,34 @@ public class RubriqueService {
         return rr.save(rubrique);
     }
 
+    private void assignQ(Integer id, Question q){
+        RubriqueQuestion rq = new RubriqueQuestion();
+        RubriqueQuestionId rid = new RubriqueQuestionId();
+        rid.setIdRubrique(id);
+        rid.setIdQuestion(q.getId());
+        rq.setId(rid);
+        rq.setIdRubrique(rr.findById(id).get());
+        rq.setIdQuestion(q);
+        if(getLastOrdre(id) == null){
+            rq.setOrdre(1L);
+        }else{
+            rq.setOrdre(getLastOrdre(id) + 1);
+        }
+        rqr.save(rq);
+    }
+
+    private Long getLastOrdre(Integer idRub){
+        return rqr.findMaxOrdreByRubriqueId(idRub);
+    }
+
+    public void assignQList(RubQRequest req){
+        rr.findById(req.getRubriqueId()).orElseThrow(() -> new IllegalArgumentException("La rubrique n existe pas"));
+        for(Integer q : req.getQList()){
+            if(!checkQAssigned(req.getRubriqueId(),qr.findById(q).orElseThrow(() -> new IllegalArgumentException("La question n existe pas")))) assignQ(req.getRubriqueId(),qr.findById(q).orElseThrow(() -> new IllegalArgumentException("La question n existe pas")));
+        }
+    }
+
+    private Boolean checkQAssigned(Integer id, Question q){
+        return rqr.findQuestionsByRubriqueId(id).contains(q);
+    }
 }
