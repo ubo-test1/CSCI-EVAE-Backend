@@ -7,7 +7,7 @@ variables:
 
 project_build:
   stage: build
-  image: openjdk:21
+  image: ubuntu:latest
   script:
     - echo "Updating package repositories..."
     - apt-get update
