@@ -64,11 +64,8 @@ public class QuestionStandardService {
         }
     }
     public Question update(Question ques) {
-        Question question= new Question();
-        try{
-            question=findById(ques.getId());
-        } catch (EntityNotFoundException exc){throw new EntityNotFoundException("la question que vous voulez modifié n'existe pas");}
-        if (isQuestionAssociated(question.getId())) {
+        findById(ques.getId());
+        if (isQuestionAssociated(ques.getId())) {
             throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
         } else {
             return questionRepository.save(ques);
