@@ -5,54 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad02aa8c-3576-4da9-a9a9-d9182722d01e" name="Changes" comment="kk">
-      <change afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.5/fileChanges/last-build.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.5/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/ControllerAdvice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/QualificatifController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/QualificatifAssociated.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubQRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Exceptions/ErrorQualificatifAssociated.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Exceptions/QualificatifExistException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueEvaluationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/EnseignantService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QuestionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueQuestionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/RubriqueControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/QualificatifRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/RubriqueQuestionRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueQuestionServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/EvaluationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/EvaluationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/Qualificatif.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/Qualificatif.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/ReponseQuestionId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/ReponseQuestionId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/RubriqueQuestionId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/RubriqueQuestionId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EnseignantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EnseignantRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EvaluationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EvaluationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubQuesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubQuesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueQuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueQuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Requests/EvaluationDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/EvaluationDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Requests/RubriqueDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubriqueDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/EvaluationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/EvaluationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/Tooltip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/Tooltip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/back/csaback/Models/Qualificatif.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/back/csaback/Models/Qualificatif.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/back/csaback/Repositories/QualificatifRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/back/csaback/Repositories/QualificatifRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/back/csaback/Repositories/RubriqueQuestionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/back/csaback/Repositories/RubriqueQuestionRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/ControllerAdvice.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +95,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "Merging US32-Achraf",
+    "git-widget-placeholder": "US32-Achraf",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/dosi/csa-projet",
@@ -337,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708008002209</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="kk">
+      <option name="closed" value="true" />
+      <created>1708361621809</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1708361621809</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
