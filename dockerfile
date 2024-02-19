@@ -1,8 +1,5 @@
 # Stage 1: Build the application
-FROM gradle:8.5.0-jdk21-alpine
-
-# Install findutils
-RUN apk add --no-cache findutils
+FROM openjdk:8.5.0-jdk21
 
 # Set the working directory inside the container
 WORKDIR /app
