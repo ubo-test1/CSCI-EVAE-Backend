@@ -24,4 +24,5 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorModel> QuestionAlreadyExistExceptionHandler(ErrorQuestionAlreadyExist exception){
         return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "Enter another quetion"));
     }
+
 }
