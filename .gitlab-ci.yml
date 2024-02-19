@@ -6,4 +6,4 @@ stages:
 project-build:
   stage: build
   script:
-    - echo "Build step "
+    - echo "Build ste p "
