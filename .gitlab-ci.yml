@@ -7,7 +7,7 @@ variables:
 
 project-build:
   stage: project-build
-  image: adoptopenjdk/openjdk21:latest
+  image: openjdk21:latest
   script:
     - echo "Building project with Gradle..."
     - chmod +x gradlew
