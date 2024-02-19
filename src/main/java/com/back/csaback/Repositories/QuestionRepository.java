@@ -8,5 +8,3 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     boolean existsByIntitule(String intitule);
 
 }
-
-

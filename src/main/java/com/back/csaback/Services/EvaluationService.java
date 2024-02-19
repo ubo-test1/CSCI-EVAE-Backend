@@ -6,8 +6,8 @@ import com.back.csaback.Models.RubriqueEvaluation;
 import com.back.csaback.Repositories.EvaRubRepository;
 import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
-import com.back.csaback.Requests.EvaluationDetails;
-import com.back.csaback.Requests.RubriqueDetails;
+import com.back.csaback.DTO.EvaluationDetails;
+import com.back.csaback.DTO.RubriqueDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.back.csaback.Controllers;
 
 import com.back.csaback.Models.Evaluation;
-import com.back.csaback.Requests.EvaluationDetails;
+import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Services.EvaluationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +48,7 @@ public class EvaluationControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "ADM")
     public void getAllEvaluationsTest() throws Exception {
         List<Evaluation> evaluations = new ArrayList<>();
         given(evaluationService.getAll()).willReturn(evaluations);
@@ -60,7 +60,7 @@ public class EvaluationControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "ADM")
     public void consulterInfoTest() throws Exception {
         Integer id = 1;
         EvaluationDetails details = new EvaluationDetails();

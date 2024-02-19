@@ -2,12 +2,8 @@ package com.back.csaback.Controllers;
 
 import com.back.csaback.DTO.EvaDTO;
 import com.back.csaback.Models.Evaluation;
-import com.back.csaback.Repositories.EvaluationRepository;
-import com.back.csaback.Repositories.RubriqueRepository;
-import com.back.csaback.Requests.EvaluationDetails;
+import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Services.EvaluationService;
-import com.back.csaback.Services.RubriqueService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
