@@ -9,6 +9,8 @@ project_build:
   stage: build
   image: openjdk:21
   script:
+    - echo "Installing xargs..."
+    - apt-get update && apt-get install -y findutils
     - echo "Building project with Gradle..."
     - xargs --version
     - chmod +x gradlew
