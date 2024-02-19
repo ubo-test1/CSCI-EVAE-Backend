@@ -10,6 +10,7 @@ project_build:
   image: openjdk:21
   script:
     - echo "Building project with Gradle..."
+    - xargs --version
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
     - echo "Building project with Gradle...tttttttt"
