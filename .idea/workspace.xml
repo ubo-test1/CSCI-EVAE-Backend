@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad02aa8c-3576-4da9-a9a9-d9182722d01e" name="Changes" comment="kk">
+      <change afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.5/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.5/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/ControllerAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/QualificatifController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/QualificatifAssociated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubQRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Exceptions/ErrorQualificatifAssociated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Exceptions/QualificatifExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueEvaluationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/EnseignantService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QuestionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueQuestionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/RubriqueControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/QualificatifRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/RubriqueQuestionRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueQuestionServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/EvaluationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/EvaluationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/Qualificatif.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/Qualificatif.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/ReponseQuestionId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/ReponseQuestionId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/RubriqueQuestionId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Models/RubriqueQuestionId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EnseignantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EnseignantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EvaluationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/EvaluationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QualificatifRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubQuesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubQuesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueQuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueQuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/RubriqueRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Requests/EvaluationDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/EvaluationDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Requests/RubriqueDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubriqueDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/EvaluationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/EvaluationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/Tooltip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/Tooltip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2cGuCV576dXEHsoJtAF4aHZ95gu" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Gradle.Build CSCI-EVAE-Backend.executor": "Run",
+    "Gradle.QualificatifControllerTest.executor": "Run",
+    "Gradle.QualificatifControllerTest.testUpdateQualificatif.executor": "Run",
+    "Gradle.QualificatifRepositoryTest.executor": "Run",
+    "Gradle.QualificatifRepositoryTest.testDelete.executor": "Run",
+    "Gradle.QualificatifRepositoryTest.testFindAll.executor": "Run",
+    "Gradle.QualificatifRepositoryTest.testSaveAndFindById.executor": "Run",
+    "Gradle.QualificatifServiceTest.executor": "Run",
+    "Gradle.QualificatifServiceTest.testGetAllQualificatifs.executor": "Run",
+    "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated (1).executor": "Run",
+    "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated.executor": "Run",
+    "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowQualificatifExistException.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CsaBackApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "Merging US32-Achraf",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/dosi/csa-projet",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "oracle"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.back.csaback.Repositories" />
+      <recent name="com.back.csaback.Services" />
+      <recent name="com.back.csaback.Controllers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.CsaBackApplication">
+    <configuration name="QualificatifRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Repositories.QualificatifRepositoryTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QualificatifRepositoryTest.testFindAll" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Repositories.QualificatifRepositoryTest.testFindAll&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QualificatifRepositoryTest.testSaveAndFindById" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Repositories.QualificatifRepositoryTest.testSaveAndFindById&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="RubriqueControllerTest.testSaveRubrique" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Controllers.RubriqueControllerTest.testSaveRubrique&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="RubriqueQuestionRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Repositories.RubriqueQuestionRepositoryTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="csa-back.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="csa-back.main" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CsaBackApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="csa-back.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.back.csaback.CsaBackApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.RubriqueQuestionRepositoryTest" />
+        <item itemvalue="Gradle.QualificatifRepositoryTest.testFindAll" />
+        <item itemvalue="Gradle.QualificatifRepositoryTest.testSaveAndFindById" />
+        <item itemvalue="Gradle.QualificatifRepositoryTest" />
+        <item itemvalue="Gradle.RubriqueControllerTest.testSaveRubrique" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad02aa8c-3576-4da9-a9a9-d9182722d01e" name="Changes" comment="" />
+      <created>1707750109205</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707750109205</updated>
+      <workItem from="1707750110281" duration="3835000" />
+      <workItem from="1707818186843" duration="18702000" />
+      <workItem from="1707843066637" duration="3160000" />
+      <workItem from="1707904868961" duration="14018000" />
+      <workItem from="1707945707911" duration="2039000" />
+      <workItem from="1707950698378" duration="38072000" />
+      <workItem from="1708335004645" duration="15360000" />
+    </task>
+    <task id="LOCAL-00001" summary="kk">
+      <option name="closed" value="true" />
+      <created>1708008002209</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708008002209</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="kk" />
+    <option name="LAST_COMMIT_MESSAGE" value="kk" />
+  </component>
+</project>
