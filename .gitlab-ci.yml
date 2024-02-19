@@ -9,13 +9,15 @@ project_build:
   stage: build
   image: openjdk:21
   script:
-    - echo "Installing xargs..."
-    - apt-get update && apt-get install -y findutils
+    - echo "Updating package repositories..."
+    - apt-get update
+    - echo "Installing findutils..."
+    - apt-get install -y findutils
     - echo "Building project with Gradle..."
-    - xargs --version
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
     - echo "Building project with Gradle...tttttttt"
+
 
 docker_build:
   stage: docker_build
