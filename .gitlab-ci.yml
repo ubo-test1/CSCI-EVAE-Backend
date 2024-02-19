@@ -9,10 +9,15 @@ project-build:
   stage: project-build
   image: adoptopenjdk/openjdk21:latest
   script:
+    - echo "Building project with Gradle..."
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
+    - echo "Building project with Gradle est termminé"
+
+
 
 docker-build:
+  
   stage: docker-build
   image: docker:19.03.12
   services:
