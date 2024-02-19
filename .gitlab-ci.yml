@@ -1,28 +1,28 @@
 stages:
-  - build
-  - docker_build
+  - project-build
+  - docker-build
 
 variables:
-  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest" # Remplacez par le nom de votre image Docker
+  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest"
 
-project_build:
-  stage: build
-  image: openjdk:21
+project-build:
+  stage: project-build
+  image: adoptopenjdk/openjdk21:latest
   script:
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
-    - echo '-------------------------azer----------------'
 
-docker_build:
-  stage: docker_build
+docker-build:
+  stage: docker-build
   image: docker:19.03.12
-  variables:
-    DOCKER_DRIVER: overlay2
   services:
     - docker:19.03.12-dind
+  variables:
+    DOCKER_DRIVER: overlay2
+  before_script:
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
   script:
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
-    - docker build -t $DOCKER_IMAGE_TAG -f Dockerfile .
+    - docker build -t $DOCKER_IMAGE_TAG .
     - docker push $DOCKER_IMAGE_TAG
   only:
     - main
