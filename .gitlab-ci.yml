@@ -7,14 +7,8 @@ variables:
 
 project_build:
   stage: build
-  image: openjdk:17
+  image: gradle:8.5.0-jdk21-alpine
   script:
-    - echo "Updating package repositories..."
-    - apt-get update
-    - echo "Installing findutils..."
-    - apt-get install -y findutils
-    - echo "Installing xargs..."
-    - apt-get install -y xargs
     - echo "Building project with Gradle..."
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
