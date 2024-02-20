@@ -24,5 +24,14 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorModel> QuestionAlreadyExistExceptionHandler(ErrorQuestionAlreadyExist exception){
         return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "Enter another quetion"));
     }
+    @ExceptionHandler(ErrorQualificatifAssociated.class)
+    public ResponseEntity<ErrorModel> QualificatifAssociatedExceptionHandler(ErrorQualificatifAssociated exception){
+        return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "Enter another couple qualificatif"));
+    }
+
+    @ExceptionHandler(QualificatifExistException.class)
+    public ResponseEntity<ErrorModel> QualificatifExistExceptionHandler(QualificatifExistException exception){
+        return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "try another couple qualificatif"));
+    }
 
 }

@@ -39,7 +39,7 @@ class QuestionStandardServiceTest {
     @Mock
     RubriqueQuestionRepository rubriqueQuestionRepository;
 
-    //indiquer à Mockito d'injecter automatiquement les mocks annotés dans l'instance de FormationService créée dans le test.
+    //indiquer à Mockito d'injecter automatiquement les mocks annotés dans l'instance de FormationService crée dans le test.
     @InjectMocks
     QuestionStandardService questionStandardService;
     @BeforeEach

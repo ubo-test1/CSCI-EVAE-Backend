@@ -1,16 +1,27 @@
 stages:
   - build
+  - test
   - docker_build
 
 variables:
-  DOCKER_IMAGE_TAG: "hsaad11/test1-backend:latest" # Remplacez par le nom de votre image Docker
+  DOCKER_IMAGE_TAG: "axrafkrs/test1-backend:latest"
 
 project_build:
   stage: build
-  image: gradle:jdk21
+  image: gradle:8.5.0-jdk21-alpine
   script:
+    - echo "Building project with Gradle..."
     - chmod +x gradlew
     - ./gradlew build -Pwar -x test
+    - echo "Building project with Gradle...finished with success"
+
+unit_tests:
+  stage: test
+  image: gradle:8.5.0-jdk21-alpine
+  script:
+    - echo "Running unit tests..."
+    - ./gradlew test
+
 docker_build:
   stage: docker_build
   image: docker:19.03.12
@@ -19,8 +30,8 @@ docker_build:
   services:
     - docker:19.03.12-dind
   script:
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
-    - docker build -t $DOCKER_IMAGE_TAG .
+    - echo "$DOCKER_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker build -t $DOCKER_IMAGE_TAG -f Dockerfile .
     - docker push $DOCKER_IMAGE_TAG
   only:
     - main
