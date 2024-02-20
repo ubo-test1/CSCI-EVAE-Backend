@@ -1,19 +1,18 @@
 package com.back.csaback.Controllers;
 
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.back.csaback.Config.JWT.JwtUtils;
+import com.back.csaback.Config.Services.MD5PasswordEncoder;
+import com.back.csaback.Config.Services.HashUtils;
 import com.back.csaback.Config.Services.UserDetailsImpl;
+import com.back.csaback.Models.Authentification;
 import com.back.csaback.Repositories.UserRepository;
 import com.back.csaback.Requests.JwtResponse;
 import com.back.csaback.Requests.LoginRequest;
-import com.back.csaback.Requests.MessageResponse;
-import com.back.csaback.Requests.SignupRequest;
-import jakarta.validation.Valid;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,6 +42,22 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    UserRepository ur;
+
+
+    @PostConstruct
+    public void fixPasswords(){
+        List<Authentification> l = ur.findOriginals();
+        encoder = new MD5PasswordEncoder();
+        if(l.isEmpty()) return;
+        for(Authentification u : l){
+            if(!HashUtils.isValidMD5(u.getMotPasse())){
+                u.setMotPasse(encoder.encode(u.getMotPasse()));
+                ur.save(u);
+            }
+        }
+    }
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 

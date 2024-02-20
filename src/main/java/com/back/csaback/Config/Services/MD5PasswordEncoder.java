@@ -1,4 +1,4 @@
-package com.back.csaback.Config;
+package com.back.csaback.Config.Services;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.MessageDigest;

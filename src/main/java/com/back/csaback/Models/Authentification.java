@@ -35,12 +35,12 @@ public class Authentification {
     @Column(name = "MOT_PASSE", length = 32)
     private String motPasse;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "NO_ETUDIANT")
     private Etudiant noEtudiant;

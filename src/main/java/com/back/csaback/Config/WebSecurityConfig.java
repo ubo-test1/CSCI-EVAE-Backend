@@ -2,6 +2,7 @@ package com.back.csaback.Config;
 
 import com.back.csaback.Config.JWT.AuthEntryPointJwt;
 import com.back.csaback.Config.JWT.AuthTokenFilter;
+import com.back.csaback.Config.Services.MD5PasswordEncoder;
 import com.back.csaback.Config.Services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -45,7 +45,7 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new MD5PasswordEncoder();
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -55,10 +55,9 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 //requestMatchers("/test/**").permitAll()
-                                // .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/auth/**").permitAll()
                                 //   .requestMatchers("/eva/**").permitAll()
-                                //    .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                                    .anyRequest().authenticated()
 
                 );
 

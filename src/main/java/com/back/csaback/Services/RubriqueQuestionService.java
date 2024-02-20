@@ -57,6 +57,9 @@ public class RubriqueQuestionService {
         return rubriqueQuestions;
     }
 
-
+    public void deattachQuestion(Integer idRub, Integer idQues){
+        RubriqueQuestion n = rubriqueQuestionRepository.findByRubQuest(idRub,idQues).orElseThrow(() -> new IllegalArgumentException("L'element n'existe pas"));
+        rubriqueQuestionRepository.delete(n);
+    }
 
 }

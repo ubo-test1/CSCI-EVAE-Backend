@@ -4,8 +4,10 @@ import com.back.csaback.DTO.RubQRequest;
 import com.back.csaback.DTO.RubriqueAssociated;
 import com.back.csaback.Models.Question;
 import com.back.csaback.Models.Rubrique;
+import com.back.csaback.Models.RubriqueQuestionId;
 import com.back.csaback.Repositories.QuestionRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
+import com.back.csaback.Services.RubriqueQuestionService;
 import com.back.csaback.Services.RubriqueService;
 import com.back.csaback.Services.Tooltip;
 import jakarta.websocket.server.PathParam;
@@ -38,6 +40,9 @@ public class RubriqueController {
 
     @Autowired
     private QuestionRepository qr;
+
+    @Autowired
+    private RubriqueQuestionService rqs;
 
     /**
      * @author Saad Hadiche
@@ -136,6 +141,14 @@ public class RubriqueController {
         }
     }
 
+    /**
+     * {
+     *     "rubriqueId" : 49,
+     *     "qList":[1,2,3,4,5]
+     * }
+     * @param req
+     * @return
+     */
     @PreAuthorize("hasRole('ADM')")
     @PostMapping("/assignQuestion")
     public ResponseEntity<?> addQ(@RequestBody HashMap<String,Object> req){
@@ -150,6 +163,31 @@ public class RubriqueController {
             return ResponseEntity.badRequest().body("Erreur");
         }
     }
+
+    /**
+     * {
+     *     "rubriqueId" : 49,
+     *     "qList":[1,2,3,4,5]
+     * }
+     * @param req
+     * @return
+     */
+    @PreAuthorize("hasRole('ADM')")
+    @PostMapping ("/deletebyquestion")
+    public ResponseEntity<?> deleteById(@RequestBody HashMap<String,Object> req){
+        try{
+            Integer rubId = (Integer) req.get("rubriqueId");
+            for(Integer i : (List<Integer>) req.get("qList")){
+                RubriqueQuestionId tmp = new RubriqueQuestionId();
+                rqs.deattachQuestion(rubId,i);
+            }
+            return ResponseEntity.ok("Questions supprime avec succes");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @GetMapping("/test")
     public ResponseEntity<String> gettest() {
         return  ResponseEntity.ok("test bien passé");

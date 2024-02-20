@@ -1,9 +1,7 @@
 package com.back.csaback.Controllers;
 
-import com.back.csaback.Config.MD5PasswordEncoder;
-import com.back.csaback.Models.Authentification;
+import com.back.csaback.Config.Services.MD5PasswordEncoder;
 import com.back.csaback.Repositories.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
