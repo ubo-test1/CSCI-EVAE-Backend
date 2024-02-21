@@ -5,7 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad02aa8c-3576-4da9-a9a9-d9182722d01e" name="Changes" comment="kk">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/ElementConstitutifRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/FormationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/PromotionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/UniteEnseignementRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/EvaluationRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/EnseignantServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/EvaluationServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/CsaBackApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/CsaBackApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubQRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubQRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/RubriqueControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/RubriqueControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/CsaBackApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/CsaBackApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/RubriqueQuestionRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/RubriqueQuestionRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +58,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="com.haulmont.jpb.JpaRepository" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -66,8 +89,19 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Gradle.Build CSCI-EVAE-Backend.executor": "Run",
+    "Gradle.EvaluationControllerTest.consulterInfoTest.executor": "Run",
     "Gradle.EvaluationControllerTest.executor": "Run",
+    "Gradle.EvaluationControllerTest.getAllEvaluationsTest.executor": "Run",
+    "Gradle.EvaluationRepositoryTest.executor": "Run",
+    "Gradle.EvaluationRepositoryTest.testFindAllEvaluation.executor": "Run",
+    "Gradle.EvaluationRepositoryTest.testFindByIdQuestion.executor": "Run",
+    "Gradle.EvaluationServiceTest.executor": "Run",
+    "Gradle.EvaluationServiceTest.testConsulterEvaluation.executor": "Run",
+    "Gradle.EvaluationServiceTest.testFindById.executor": "Run",
+    "Gradle.EvaluationServiceTest.testGetAll.executor": "Run",
+    "Gradle.EvaluationServiceTest.testGetEvaRub.executor": "Run",
     "Gradle.QualificatifControllerTest.executor": "Run",
+    "Gradle.QualificatifControllerTest.testCreateQualificatif.executor": "Run",
     "Gradle.QualificatifControllerTest.testUpdateQualificatif.executor": "Run",
     "Gradle.QualificatifRepositoryTest.executor": "Run",
     "Gradle.QualificatifRepositoryTest.testDelete.executor": "Run",
@@ -75,12 +109,59 @@
     "Gradle.QualificatifRepositoryTest.testSaveAndFindById.executor": "Run",
     "Gradle.QualificatifServiceTest.executor": "Run",
     "Gradle.QualificatifServiceTest.testGetAllQualificatifs.executor": "Run",
+    "Gradle.QualificatifServiceTest.testUpdateQualificatif.executor": "Run",
+    "Gradle.QualificatifServiceTest.testUpdateQualificatifQualificatifNotFound.executor": "Run",
     "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated (1).executor": "Run",
     "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated.executor": "Run",
     "Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowQualificatifExistException.executor": "Run",
+    "Gradle.QuestionRepositoryTest.executor": "Run",
+    "Gradle.QuestionRepositoryTest.testFindAllQuestion.executor": "Run",
+    "Gradle.QuestionStandardControllerTest.executor": "Run",
     "Gradle.QuestionStandardServiceTest.executor": "Run",
+    "Gradle.RubriqueControllerTest.createStdTest.executor": "Run",
+    "Gradle.RubriqueControllerTest.executor": "Run",
+    "Gradle.RubriqueControllerTest.testAddQ.executor": "Run",
+    "Gradle.RubriqueControllerTest.testConsulterStd.executor": "Run",
+    "Gradle.RubriqueControllerTest.testCreateRubrique.executor": "Run",
+    "Gradle.RubriqueControllerTest.testCreateStd.executor": "Run",
+    "Gradle.RubriqueControllerTest.testDeleteById.executor": "Run",
+    "Gradle.RubriqueControllerTest.testDeleteById_EntityNotFoundException.executor": "Run",
+    "Gradle.RubriqueControllerTest.testGetAll.executor": "Run",
+    "Gradle.RubriqueControllerTest.testSaveRubrique.executor": "Run",
+    "Gradle.RubriqueControllerTest.testUpdateStd.executor": "Run",
+    "Gradle.RubriqueQuestionRepositoryTest.executor": "Run",
     "Gradle.RubriqueQuestionServiceTest.executor": "Run",
     "Gradle.RubriqueServiceTest.executor": "Run",
+    "Gradle.RubriqueServiceTest.testAssignQ.executor": "Run",
+    "Gradle.RubriqueServiceTest.testAssignQList.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCheckIfUsed_RubriqueNotUsed.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCheckIfUsed_RubriqueUsed.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCheckQAssigned.executor": "Run",
+    "Gradle.RubriqueServiceTest.testConsulterRubriqueComp_Exception.executor": "Run",
+    "Gradle.RubriqueServiceTest.testConsulterRubriqueComp_Success.executor": "Run",
+    "Gradle.RubriqueServiceTest.testConsulter_Exception.executor": "Run",
+    "Gradle.RubriqueServiceTest.testConsulter_RubriqueExists.executor": "Run",
+    "Gradle.RubriqueServiceTest.testConsulter_RubriqueNotFound.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCreateRubPers.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCreateRubPers_RubriqueExists.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCreateRubStd.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCreateRubStd_WithExistingDesignation.executor": "Run",
+    "Gradle.RubriqueServiceTest.testCreateRubStd_WithNonExistingDesignation.executor": "Run",
+    "Gradle.RubriqueServiceTest.testDelete.executor": "Run",
+    "Gradle.RubriqueServiceTest.testDelete_WithNullId.executor": "Run",
+    "Gradle.RubriqueServiceTest.testFindById_RubriqueDoesNotExist.executor": "Run",
+    "Gradle.RubriqueServiceTest.testFindById_RubriqueExists.executor": "Run",
+    "Gradle.RubriqueServiceTest.testGetAllStd.executor": "Run",
+    "Gradle.RubriqueServiceTest.testGetLastOrdre.executor": "Run",
+    "Gradle.RubriqueServiceTest.testGetRubQuest.executor": "Run",
+    "Gradle.RubriqueServiceTest.testIsCompose_False.executor": "Run",
+    "Gradle.RubriqueServiceTest.testIsCompose_True.executor": "Run",
+    "Gradle.RubriqueServiceTest.testSaveRubrique.executor": "Run",
+    "Gradle.RubriqueServiceTest.testUpdateRub.executor": "Run",
+    "Gradle.RubriqueServiceTest.testUpdateRub_RubriqueNotUsed.executor": "Run",
+    "Gradle.RubriqueServiceTest.testUpdateRub_RubriqueUsed.executor": "Run",
+    "Gradle.RubriqueServiceTest.testUpdateRub_WithNonExistingRubrique.executor": "Run",
+    "JUnit.RubriqueServiceTest,testSaveRubrique and 3 more.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -114,13 +195,13 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.back.csaback.Repositories" />
       <recent name="com.back.csaback.Services" />
+      <recent name="com.back.csaback.Repositories" />
       <recent name="com.back.csaback.Controllers" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.EvaluationControllerTest">
-    <configuration name="EvaluationControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.RubriqueServiceTest">
+    <configuration name="EvaluationServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -133,7 +214,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.back.csaback.Controllers.EvaluationControllerTest&quot;" />
+            <option value="&quot;com.back.csaback.Services.EvaluationServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -144,7 +225,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="QualificatifRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QualificatifServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -157,31 +238,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.back.csaback.Repositories.QualificatifRepositoryTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.back.csaback.Services.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated&quot;" />
+            <option value="&quot;com.back.csaback.Services.QualificatifServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -240,6 +297,30 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="RubriqueServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.back.csaback.Services.RubriqueServiceTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="csa-back.main" />
       <method v="2">
@@ -264,11 +345,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.EvaluationControllerTest" />
-        <item itemvalue="Gradle.QualificatifServiceTest.testUpdateQualificatif_ThrowErrorQualificatifAssociated" />
-        <item itemvalue="Gradle.QualificatifRepositoryTest" />
-        <item itemvalue="Gradle.QuestionStandardServiceTest" />
+        <item itemvalue="Gradle.RubriqueServiceTest" />
         <item itemvalue="Gradle.RubriqueQuestionServiceTest" />
+        <item itemvalue="Gradle.QuestionStandardServiceTest" />
+        <item itemvalue="Gradle.QualificatifServiceTest" />
+        <item itemvalue="Gradle.EvaluationServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -309,6 +390,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

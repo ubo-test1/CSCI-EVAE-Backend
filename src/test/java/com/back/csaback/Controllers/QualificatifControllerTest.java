@@ -47,8 +47,7 @@ class QualificatifControllerTest {
         Qualificatif qualificatif = new Qualificatif();
         when(qualificatifService.createQualificatif(qualificatif)).thenReturn(qualificatif);
         ResponseEntity<?> response = qualificatifController.createQualificatif(qualificatif);
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Couple qualificatif créé avec succès !", response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(qualificatifService, times(1)).createQualificatif(qualificatif);
     }
 

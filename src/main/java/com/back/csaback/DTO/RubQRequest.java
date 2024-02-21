@@ -13,6 +13,7 @@ public class RubQRequest {
     private Integer rubriqueId;
     private List<Integer> qList;
 
+
     @Override
     public String toString() {
         return "RubQRequest{" +

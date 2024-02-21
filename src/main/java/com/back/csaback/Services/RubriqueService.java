@@ -73,7 +73,7 @@ public class RubriqueService {
         }
     }
 
-    private boolean checkIfUsed(Rubrique r) {
+    public boolean checkIfUsed(Rubrique r) {
         System.out.println(r.getId());
         return !err.findAllByIdRubrique(r).isEmpty();
     }
@@ -132,7 +132,7 @@ public class RubriqueService {
         return rr.save(rubrique);
     }
 
-    private void assignQ(Integer id, Question q){
+    public void assignQ(Integer id, Question q){
         RubriqueQuestion rq = new RubriqueQuestion();
         RubriqueQuestionId rid = new RubriqueQuestionId();
         rid.setIdRubrique(id);
@@ -148,7 +148,7 @@ public class RubriqueService {
         rqr.save(rq);
     }
 
-    private Long getLastOrdre(Integer idRub){
+    public Long getLastOrdre(Integer idRub){
         return rqr.findMaxOrdreByRubriqueId(idRub);
     }
 
@@ -159,7 +159,7 @@ public class RubriqueService {
         }
     }
 
-    private Boolean checkQAssigned(Integer id, Question q){
+    Boolean checkQAssigned(Integer id, Question q){
         return rqr.findQuestionsByRubriqueId(id).contains(q);
     }
 }

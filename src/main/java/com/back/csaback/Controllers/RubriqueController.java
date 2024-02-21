@@ -90,6 +90,7 @@ public class RubriqueController {
     public ResponseEntity<?> updateStd(@RequestBody Rubrique r){
         try{
             Rubrique q = rr.findById(Integer.parseInt(""+r.getId())).get();
+           //Rubrique q = rr.findById(r.getId()).get();
             if(!r.getType().equals("RBS") && !r.getType().equals("RBP")) throw new IllegalArgumentException("Type invalide");
             q.setType(r.getType());
             if(r.getDesignation() != null) q.setDesignation(r.getDesignation());

@@ -10,6 +10,4 @@ public class CsaBackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CsaBackApplication.class, args); // Obtenez la session Hibernate actuelle
-
-
 	}}
