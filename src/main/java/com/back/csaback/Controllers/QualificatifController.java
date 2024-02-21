@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({"/qualificatif"})
+@CrossOrigin(origins = "http://localhost:3000")
 public class QualificatifController {
 
     @Autowired
