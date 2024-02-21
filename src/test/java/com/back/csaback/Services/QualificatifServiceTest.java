@@ -108,48 +108,45 @@ class QualificatifServiceTest {
         verify(qualificatifRepository, times(1)).delete(qualificatif);
     }
 
-    @Test
-    void testUpdateQualificatif_ThrowErrorQualificatifAssociated() {
-        // Création d'un qualificatif fictif avec un ID existant
-        Integer idQualificatif = 1;
-        Qualificatif existingQualificatif = new Qualificatif(idQualificatif, "Ancien Minimal", "Ancien Maximal");
 
-        // Simulation de la méthode findById du repository
-        when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(existingQualificatif));
-
-        // Création d'un nouveau qualificatif avec des valeurs modifiées
-        Qualificatif newQualificatif = new Qualificatif(idQualificatif, "Nouveau Minimal", "Nouveau Maximal");
-
-        // Simulation de la méthode existsByMinimalAndMaximal du repository (renvoie false car le nouveau qualificatif n'existe pas encore)
-        when(qualificatifRepository.existsByMinimalAndMaximal(newQualificatif.getMinimal(), newQualificatif.getMaximal())).thenReturn(false);
-
-        // Simulation de la méthode save du repository
-        when(qualificatifRepository.save(existingQualificatif)).thenReturn(existingQualificatif);
-
-        // Appel de la méthode à tester
-        Qualificatif updatedQualificatif = qualificatifService.updateQualificatif(newQualificatif);
-
-        // Vérification des résultats
-        assertNotNull(updatedQualificatif);
-        assertEquals(newQualificatif.getMinimal(), updatedQualificatif.getMinimal());
-        assertEquals(newQualificatif.getMaximal(), updatedQualificatif.getMaximal());
-
-        // Vérification des appels de méthodes sur les mocks
-        //verify(qualificatifRepository, times(1)).findById(idQualificatif);
-        verify(qualificatifRepository, times(1)).existsByMinimalAndMaximal(newQualificatif.getMinimal(), newQualificatif.getMaximal());
-        verify(qualificatifRepository, times(1)).save(existingQualificatif);
-    }
 
     @Test
-    void testUpdateQualificatif_ThrowQualificatifExistException() {
+    public void testUpdateQualificatif() {
         // Given
-        Integer idQualificatif = 1;
-        Qualificatif existingQualificatif = new Qualificatif(idQualificatif, "Minimal", "Maximal");
-        Qualificatif newQualificatif = new Qualificatif(2, "New Minimal", "New Maximal");
-        when(qualificatifRepository.findById(idQualificatif)).thenReturn(Optional.of(existingQualificatif));
-        when(qualificatifRepository.existsByMinimalAndMaximal(newQualificatif.getMinimal(), newQualificatif.getMaximal())).thenReturn(true);
+        Qualificatif qualificatif = new Qualificatif();
+        qualificatif.setId(1);
 
-        // When / Then
-        assertThrows(QualificatifExistException.class, () -> qualificatifService.updateQualificatif(newQualificatif));
+        // Mock du comportement du repository
+        when(qualificatifRepository.findById(qualificatif.getId())).thenReturn(Optional.of(qualificatif));
+        when(qualificatifRepository.save(qualificatif)).thenReturn(qualificatif);
+
+        // When
+        Qualificatif updatedQualificatif = qualificatifService.updateQualificatif(qualificatif);
+
+        // Then
+        assertNotNull(updatedQualificatif);
+        assertEquals(qualificatif.getId(), updatedQualificatif.getId());
+        verify(qualificatifRepository, times(1)).findById(qualificatif.getId());
+        verify(qualificatifRepository, times(1)).save(qualificatif);
     }
+
+
+    @Test
+    public void testUpdateQualificatifQualificatifNotFound() {
+        // Given
+        Qualificatif qualificatif = new Qualificatif();
+        qualificatif.setId(1);
+
+        // Mock du comportement du repository
+        when(qualificatifRepository.findById(qualificatif.getId())).thenReturn(Optional.empty());
+
+        // When
+        assertThrows(EntityNotFoundException.class, () -> qualificatifService.updateQualificatif(qualificatif));
+
+        // Then
+        verify(qualificatifRepository, times(1)).findById(qualificatif.getId());
+        verify(qualificatifRepository, never()).save(qualificatif);
+    }
+
+
 }

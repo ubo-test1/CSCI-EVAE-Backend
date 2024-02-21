@@ -65,8 +65,7 @@ public class EvaluationControllerTest {
         Integer id = 1;
         EvaluationDetails details = new EvaluationDetails();
         given(evaluationService.findById(id)).willReturn(new Evaluation());
-        given(evaluationService.ConsulterEvaluation(new Evaluation())).willReturn(details);
-
+        given(evaluationService.ConsulterEvaluation(evaluationService.findById(id))).willReturn(details);
         mockMvc.perform(get("/eva/consulterInfo/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

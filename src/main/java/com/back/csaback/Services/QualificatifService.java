@@ -82,7 +82,6 @@ public class QualificatifService {
     public Qualificatif updateQualificatif(Qualificatif q) {
         if(qualificatifRepository.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Qualificatif n'existe pas");
         if(this.isQualificatifAssociated(q.getId())) throw new ErrorQualificatifAssociated("Qualificatif associe a une question deja");
-
         return qualificatifRepository.save(q);
     }
 
