@@ -1,21 +1,22 @@
-# Utilisez une image de base qui inclut déjà Java et installez également findutils
-FROM openjdk:21
+# Stage 1: Build the application
+FROM gradle:8.5.0-jdk21-alpine
 
-# Installer xargs
-RUN apt-get update && apt-get install -y xargs
-
-
-# Définition du répertoire de travail dans l'image
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copie des fichiers de votre application
-COPY . .
+# Copy the Gradle build files
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradlew .
 
-# Exécution de la construction de votre application avec Gradle
-RUN ./gradlew build -Pwar -x test
+# Copy the source code
+COPY src src
 
-# Exposer le port de votre application si nécessaire
-EXPOSE 8080
+# Build the application
+RUN gradle build -Pwar -x test
 
-# Commande par défaut pour démarrer votre application (ajustez-la en fonction de votre application)
-CMD ["java", "-jar", "build/libs/your-application.jar"]
+# Expose the port that the application will run on
+EXPOSE 9091
+
+# Define the command to run your application
+CMD ["java", "-jar", "build/libs/csa-back-0.0.1-SNAPSHOT.war"]

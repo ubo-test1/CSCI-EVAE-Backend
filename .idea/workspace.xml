@@ -5,29 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad02aa8c-3576-4da9-a9a9-d9182722d01e" name="Changes" comment="kk">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/ElementConstitutifRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/FormationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/PromotionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/UniteEnseignementRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/EvaluationRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/EnseignantServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/EvaluationServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Controllers/RubriqueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/CsaBackApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/CsaBackApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubQRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/DTO/RubQRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Repositories/QuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/QualificatifService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/back/csaback/Services/RubriqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/EvaluationControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/QualificatifControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/RubriqueControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Controllers/RubriqueControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/CsaBackApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/CsaBackApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/RubriqueQuestionRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Repositories/RubriqueQuestionRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/QualificatifServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/back/csaback/Services/RubriqueServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
