@@ -31,6 +31,8 @@ public class QuestionStandardController {
 
     @Autowired
     QuestionStandardService questionStandardService;
+    
+    @PreAuthorize("hasRole('ADM')")
     @PostMapping("/create")
     public ResponseEntity<?> save(@Valid @RequestBody Question newQuestion, BindingResult bindingResult) {
         try{ if (bindingResult.hasErrors()) {
@@ -43,16 +45,21 @@ public class QuestionStandardController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
     }
+    
+    @PreAuthorize("hasRole('ADM')")
     @GetMapping("/all")
     public ResponseEntity<List<QuestionAssociated>> getAll() {
         List<QuestionAssociated> questions= questionStandardService.getAll();
             return  ResponseEntity.ok(questions);
     }
+
+    @PreAuthorize("hasRole('ADM')")
     @GetMapping("/test")
     public ResponseEntity<String> gettest() {
         return  ResponseEntity.ok("test bien passé");
     }
 
+    @PreAuthorize("hasRole('ADM')")
     @GetMapping("/find/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         try {
@@ -62,6 +69,8 @@ public class QuestionStandardController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
+
+    @PreAuthorize("hasRole('ADM')")
    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Integer id) {
         try {
@@ -77,6 +86,7 @@ public class QuestionStandardController {
     }
 
 
+    @PreAuthorize("hasRole('ADM')")
     @PutMapping("/update")
     public ResponseEntity<?> update( @Valid @RequestBody Question question, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
