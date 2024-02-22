@@ -27,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rub")
+@CrossOrigin
 public class RubriqueController {
 
     @Autowired

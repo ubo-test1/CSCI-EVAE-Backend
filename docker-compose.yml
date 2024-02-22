@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    image: axrafkrs/test1-backend:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  frontend:
+    image: axrafkrs/test1-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  database:
+    image: gvenzl/oracle-free
+    environment:
+      - ORACLE_PASSWORD=dosi
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./scripts:/docker-entrypoint-initdb.d  # Montez le répertoire des scripts dans le conteneur
+    command: [ "docker-entrypoint.sh", "oracle" ]    # Utilisez un point d'entrée personnalisé pour exécuter les scripts
+
+volumes:
+  oracle_data:

@@ -3,12 +3,14 @@ package com.back.csaback.Controllers;
 import com.back.csaback.Config.Services.MD5PasswordEncoder;
 import com.back.csaback.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("test")
+@CrossOrigin
 public class TestController {
     private MD5PasswordEncoder pe;
 
