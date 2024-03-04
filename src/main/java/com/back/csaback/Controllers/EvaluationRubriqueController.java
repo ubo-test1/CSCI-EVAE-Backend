@@ -43,7 +43,7 @@ public class EvaluationRubriqueController {
 *            "designation":"test" (optionel)
 *        }
  *        */
- @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+ @PreAuthorize("hasRole('ENS')")
  @PostMapping("/rsnc")
  public ResponseEntity<?> ajouter_rsnc(@RequestBody Map<String, String> requestBody){
 
@@ -105,7 +105,7 @@ public class EvaluationRubriqueController {
      * @param ordre
      * @return
      */
-    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+    @PreAuthorize("hasRole('ENS')")
     @PostMapping("/rsnc/{idRubEval}/{ordre}")
     public ResponseEntity<?> ordonner_rsnc(@PathVariable("idRubEval") Integer idRubEval,@PathVariable("ordre") Integer ordre) {
         RubriqueEvaluation rubriqueEvaluation;
@@ -122,7 +122,7 @@ public class EvaluationRubriqueController {
      *   exemple:
      *   localhost:8080/evaluations/rsnc/{idRubriqueEvaluation}
      */
-    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+    @PreAuthorize("hasRole('ENS')")
     @DeleteMapping("/rsnc/{id}")
     public ResponseEntity<?> supprimer_rsnc(@PathVariable("id") Integer id) {
         // Vérifier si la rubrique à supprimer existe
