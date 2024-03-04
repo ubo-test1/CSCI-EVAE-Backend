@@ -9,21 +9,17 @@ import com.back.csaback.Services.RubriqueQuestionService;
 import com.back.csaback.Services.RubriqueService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/evaluations")
 @CrossOrigin
 public class EvaluationRubriqueController {
-
-
-
-
 
     @Autowired
     private EvaluationService evaluationService;
@@ -38,14 +34,15 @@ public class EvaluationRubriqueController {
     private RubriqueQuestionService rubriqueQuestionService;
 
 
-/*
-        {
-            "evaluation":1,
-            "rubrique":1,
-            "ordre":5,
-            "designation":"test" (optionel)
-        }
- */
+/**
+*        exemple:
+*        {
+*            "evaluation":1,
+*            "rubrique":1,
+*            "ordre":5,
+*            "designation":"test" (optionel)
+*        }
+ *        */
  @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
  @PostMapping("/rsnc")
  public ResponseEntity<?> ajouter_rsnc(@RequestBody Map<String, String> requestBody){
@@ -101,13 +98,44 @@ public class EvaluationRubriqueController {
     }
 
 
-
-
+    /**
+     * exemple:
+     * localhost:8080/evaluations/rsnc/29/5
+     * @param idRubEval
+     * @param ordre
+     * @return
+     */
     @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
-    @GetMapping("test")
-    public String test(){
-        return "Evaluation Rubrique Controller is working correctly";
+    @PostMapping("/rsnc/{idRubEval}/{ordre}")
+    public ResponseEntity<?> ordonner_rsnc(@PathVariable("idRubEval") Integer idRubEval,@PathVariable("ordre") Integer ordre) {
+        RubriqueEvaluation rubriqueEvaluation;
+        if (ordre >99) return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).body("la valeur de l'ordre est superieur au prerequis");
+        try{
+            rubriqueEvaluation = evaluationRubriqueService.ordonnerRubriqueInEval(idRubEval,ordre);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evaluation inexistante");
+        }
+        return ResponseEntity.ok(rubriqueEvaluation);
     }
+
+    /**
+     *   exemple:
+     *   localhost:8080/evaluations/rsnc/{idRubriqueEvaluation}
+     */
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+    @DeleteMapping("/rsnc/{id}")
+    public ResponseEntity<?> supprimer_rsnc(@PathVariable("id") Integer id) {
+        // Vérifier si la rubrique à supprimer existe
+        try{
+            evaluationRubriqueService.detachRubriqueFromEval(id);
+            return ResponseEntity.ok().body("Rubrique no "+id+" détachée");
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La rubrique no "+id+" est introuvable.");
+        }
+    }
+
+
 }
 
 
