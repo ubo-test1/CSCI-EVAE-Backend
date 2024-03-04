@@ -14,12 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("eva")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class EvaluationController {
 
     @Autowired
     private EvaluationService es;
-    @PreAuthorize("hasRole('ADM')")
+
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("getAll")
     public ResponseEntity<List<EvaDTO>> getAll(){
         try{
@@ -36,7 +37,7 @@ public class EvaluationController {
         }
     }
 
-    @PreAuthorize("hasRole('ADM')")
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("consulterInfo/{id}")
     public ResponseEntity<EvaluationDetails> consulterInfo(@PathVariable("id") Integer id){
         try{
