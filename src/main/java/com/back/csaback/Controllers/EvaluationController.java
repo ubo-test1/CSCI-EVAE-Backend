@@ -1,14 +1,18 @@
 package com.back.csaback.Controllers;
 
 import com.back.csaback.DTO.EvaDTO;
+import com.back.csaback.Models.Etudiant;
 import com.back.csaback.Models.Evaluation;
 import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Services.EvaluationService;
+import com.back.csaback.Services.Tooltip;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,9 @@ public class EvaluationController {
 
     @Autowired
     private EvaluationService es;
+
+    @Autowired
+    private Tooltip ttip;
 
     @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("getAll")
@@ -54,4 +61,17 @@ public class EvaluationController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PreAuthorize("hasRole('ETU')")
+    @GetMapping("getByPro")
+    public ResponseEntity<?> getByPro(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
+        try {
+            Etudiant e = ttip.getEtudFromToken(auth);
+            return ResponseEntity.ok(es.findAllByPromo(e));
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }

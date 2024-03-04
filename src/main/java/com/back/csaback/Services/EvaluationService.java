@@ -1,8 +1,6 @@
 package com.back.csaback.Services;
 
-import com.back.csaback.Models.Evaluation;
-import com.back.csaback.Models.Rubrique;
-import com.back.csaback.Models.RubriqueEvaluation;
+import com.back.csaback.Models.*;
 import com.back.csaback.Repositories.EvaRubRepository;
 import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
@@ -81,6 +79,10 @@ public class EvaluationService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<Evaluation> findAllByPromo(Etudiant e){
+        return er.findAllByPromotion(e.getPromotion());
     }
 }
 

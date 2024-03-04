@@ -16,7 +16,7 @@ COPY src src
 RUN gradle build -Pwar -x test
 
 # Expose the port that the application will run on
-EXPOSE 9091
+EXPOSE 8081
 
 # Define the command to run your application
 CMD ["java", "-jar", "build/libs/csa-back-0.0.1-SNAPSHOT.war"]
