@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("eva")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class EvaluationController {
 
     @Autowired
