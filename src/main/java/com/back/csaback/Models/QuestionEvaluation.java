@@ -43,4 +43,15 @@ public class QuestionEvaluation {
     @Column(name = "INTITULE", length = 64)
     private String intitule;
 
+    @Override
+    public String toString() {
+        return "QuestionEvaluation{" +
+                "id=" + id +
+                ", idRubriqueEvaluation=" + idRubriqueEvaluation +
+                ", idQuestion=" + idQuestion +
+                ", idQualificatif=" + idQualificatif +
+                ", ordre=" + ordre +
+                ", intitule='" + intitule + '\'' +
+                '}';
+    }
 }
