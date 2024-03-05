@@ -83,7 +83,7 @@ public class EvaluationRubriqueService {
             throw new IllegalArgumentException("Target position is out of bounds");
         }
         list.remove(r);
-        int newPosition = Math.min(targetPosition, list.size()-1);
+        int newPosition = Math.min(targetPosition, list.size());
         list.add(newPosition, r);
 
         for(RubriqueEvaluation rubrique : list){

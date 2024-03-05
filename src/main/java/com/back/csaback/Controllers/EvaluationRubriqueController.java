@@ -118,7 +118,7 @@ public class EvaluationRubriqueController {
             rubriqueEvaluation = evaluationRubriqueService.ordonnerRubriqueInEval(id,ordre);
         }
         catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evaluation inexistante");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rubrique inexistante");
         }
         catch (IllegalStateException e){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'évaluation n'est plus en cours d'elaboration");
