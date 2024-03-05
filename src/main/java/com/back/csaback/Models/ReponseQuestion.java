@@ -29,4 +29,13 @@ public class ReponseQuestion {
     @Column(name = "POSITIONNEMENT")
     private Long positionnement;
 
+    @Override
+    public String toString() {
+        return "ReponseQuestion{" +
+                "id=" + id +
+                ", idReponseEvaluation=" + idReponseEvaluation +
+                ", idQuestionEvaluation=" + idQuestionEvaluation +
+                ", positionnement=" + positionnement +
+                '}';
+    }
 }
