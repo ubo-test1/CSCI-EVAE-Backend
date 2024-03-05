@@ -82,7 +82,7 @@ public class EvaluationService {
     }
 
     public List<Evaluation> findAllByPromo(Etudiant e){
-        return er.findAllByPromotion(e.getPromotion());
+        return er.findAllByPromotionAndNotEtatELA(e.getPromotion());
     }
 }
 

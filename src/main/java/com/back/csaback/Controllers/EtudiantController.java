@@ -1,6 +1,7 @@
 package com.back.csaback.Controllers;
 
 import com.back.csaback.Exceptions.ErrorDuplicateReponse;
+import com.back.csaback.Exceptions.ErrorEvaluationNoOuverte;
 import com.back.csaback.Exceptions.ErrorReponseExists;
 import com.back.csaback.Models.ReponseEvaluation;
 import com.back.csaback.Models.ReponseQuestion;
@@ -71,6 +72,7 @@ public class EtudiantController {
             int idEva = (int) (req.get("idEva"));
 
             if(!rer.findAllByNoEtudiantAndIdEvaluation(ttip.getEtudFromToken(auth), er.findById(idEva).get()).isEmpty()) throw new ErrorReponseExists("L'etudiant a deja soumis une reponse");
+            if(!er.findById(idEva).get().getEtat().equals("DIS")) throw new ErrorEvaluationNoOuverte("Evaluation non mise a disposition");
 
             ReponseEvaluation re = new ReponseEvaluation();
             re.setNoEtudiant(ttip.getEtudFromToken(auth));
@@ -107,4 +109,11 @@ public class EtudiantController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /*
+    @PreAuthorize("hasRole('ETU')")
+    @GetMapping("consulterReponses/{id}")
+    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
+
+    }*/
 }
