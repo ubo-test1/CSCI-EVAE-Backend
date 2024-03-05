@@ -19,12 +19,13 @@ public class QuestionEvaluation {
     @Column(name = "ID_QUESTION_EVALUATION", nullable = false)
     private Integer id;
 
-    @NotNull
+    @NotNull(message = "il faut preciser une rubrique")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_RUBRIQUE_EVALUATION", nullable = false)
     private RubriqueEvaluation idRubriqueEvaluation;
 
+    @NotNull(message = "il faut preciser une question")
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_QUESTION")
@@ -35,7 +36,7 @@ public class QuestionEvaluation {
     @JoinColumn(name = "ID_QUALIFICATIF")
     private Qualificatif idQualificatif;
 
-    @NotNull
+    @NotNull(message = "il faut preciser un ordre")
     @Column(name = "ORDRE", nullable = false)
     private Short ordre;
 
