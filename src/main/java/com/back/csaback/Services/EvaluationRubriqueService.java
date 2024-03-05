@@ -8,7 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EvaluationRubriqueService {
@@ -22,16 +22,22 @@ public class EvaluationRubriqueService {
     @Autowired
     private RubriqueService rubriqueService;
 
-
     public EvaluationRubriqueService(RubriqueEvaluationRepository rubriqueEvaluationRepository) {
         this.rubriqueEvaluationRepository = rubriqueEvaluationRepository;
     }
 
     public RubriqueEvaluation attachRubriqueToEval(Integer evaluationId, Integer rubriqueId, short ordre, String designation){
 
+        //RubriqueEvaluation r = getByIdRubriqueAndIdEval(rubriqueId,evaluationId);
+        //if(r!=null) return null;
+
         RubriqueEvaluation rubriqueEvaluation = new RubriqueEvaluation();
         Evaluation eval = evaluationService.findById(evaluationId);
         Rubrique rubrique = rubriqueService.findById(rubriqueId);
+
+        String etat = eval.getEtat();
+        if (!etat.equals("ELA")) throw new IllegalStateException();
+
 
         if(rubrique ==null || eval == null) throw new NullPointerException();
 
@@ -50,23 +56,52 @@ public class EvaluationRubriqueService {
     public void detachRubriqueFromEval(Integer idRubriqueEvaluation){
         Optional<RubriqueEvaluation> rubriqueEvaluation = rubriqueEvaluationRepository.findById(idRubriqueEvaluation.longValue());
         if(rubriqueEvaluation.isEmpty()) throw new EntityNotFoundException();
+        String etat = rubriqueEvaluation.get().getIdEvaluation().getEtat();
+        if (!etat.equals("ELA")) throw new IllegalStateException();
         rubriqueEvaluationRepository.deleteById(idRubriqueEvaluation.longValue());
     }
 
+
     public RubriqueEvaluation ordonnerRubriqueInEval(Integer idRubEval, Integer ordre) {
 
-        Optional<RubriqueEvaluation> rubEval = rubriqueEvaluationRepository.findById(idRubEval.longValue());
+        RubriqueEvaluation rubEval = getById(idRubEval);
+        if(rubEval == null) throw new EntityNotFoundException();
+        List<RubriqueEvaluation> rubriques = rubriqueEvaluationRepository.findByEvaluation(rubEval.getIdEvaluation());
+        rubriques.sort(Comparator.comparingInt(RubriqueEvaluation::getOrdre));
+        String etat = rubEval.getIdEvaluation().getEtat();
+        if (!etat.equals("ELA")) throw new IllegalStateException();
 
-        if(rubEval.isEmpty()) throw new EntityNotFoundException();
+        int target_order = ordre;
 
-        RubriqueEvaluation rubriqueEvaluation;
-        try{
-            rubriqueEvaluation = rubEval.get();
-            rubriqueEvaluation.setOrdre(ordre.shortValue());
-            rubriqueEvaluation = rubriqueEvaluationRepository.save(rubriqueEvaluation);
-        }catch (Exception e){
-            return null;
+        List<RubriqueEvaluation> newList = moveObjectToPosition(rubriques,rubEval,target_order-1);
+        rubriqueEvaluationRepository.saveAll(newList);
+        return rubEval;
+    }
+
+    public List<RubriqueEvaluation> moveObjectToPosition(List<RubriqueEvaluation> list,RubriqueEvaluation r,int targetPosition){
+        if (targetPosition < 0) {
+            throw new IllegalArgumentException("Target position is out of bounds");
         }
-        return rubriqueEvaluation;
+        list.remove(r);
+        int newPosition = Math.min(targetPosition, list.size()-1);
+        list.add(newPosition, r);
+
+        for(RubriqueEvaluation rubrique : list){
+            rubrique.setOrdre((short) (list.indexOf(rubrique)+1));
+        }
+        return list;
+    }
+    public List<RubriqueEvaluation> getAll(){
+        return rubriqueEvaluationRepository.findAll();
+    }
+
+    public RubriqueEvaluation getById(Integer id){
+        Optional<RubriqueEvaluation> r = rubriqueEvaluationRepository.findById(id.longValue());
+        return r.orElse(null);
+    }
+
+    public List<RubriqueEvaluation> getByRubriqueAndEval(Rubrique rubrique,Evaluation evaluation){
+        List<RubriqueEvaluation> r = rubriqueEvaluationRepository.findByIdRubriqueAndIdEval(rubrique,evaluation);
+        return r;
     }
 }
