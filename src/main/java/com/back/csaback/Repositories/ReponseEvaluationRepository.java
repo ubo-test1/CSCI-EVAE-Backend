@@ -1,4 +1,4 @@
-package com.back.csaback.Services;
+package com.back.csaback.Repositories;
 
 import com.back.csaback.Models.ReponseEvaluation;
 import org.springframework.data.jpa.repository.JpaRepository;

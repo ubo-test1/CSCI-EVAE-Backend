@@ -127,7 +127,9 @@ class QuestionStandardControllerTest {
 @Test
 void deleteById_Success() throws Exception {
     // Simuler une suppression réussie
-    mockMvc.perform(delete("/eva/qus/delete/{id}", 1L)
+    int idToDelete = 1;
+    doNothing().when(questionStandardService).delete(eq(idToDelete));
+    mockMvc.perform(delete("/eva/qus/delete/{id}", idToDelete)
                     .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 }

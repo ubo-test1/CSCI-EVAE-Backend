@@ -27,7 +27,6 @@ public class QuestionEvaluationService {
     QuestionEvaluationRepository questionEvaluationRepository;
     @Autowired
     RubriqueEvaluationRepository rubriqueEvaluationRepository;
-
     public QuestionEvaluation save(QuestionEvaluation newQuestionEvaluation) {
         if (questionEvaluationRepository.existsByIdQuestionAndIdRubriqueEvaluation(newQuestionEvaluation.getIdQuestion(),newQuestionEvaluation.getIdRubriqueEvaluation())) throw new ErrorQuestionAlreadyExist("la question déja existe !!");
         else   return questionEvaluationRepository.save(newQuestionEvaluation);
@@ -35,7 +34,7 @@ public class QuestionEvaluationService {
     public void delete(Integer id) {
         QuestionEvaluation questionToDelete =findById(id);
         if (questionToDelete != null) {
-            questionEvaluationRepository.delete(findById(id));
+            questionEvaluationRepository.delete(questionToDelete);
         } else {
             throw new IllegalArgumentException("La question avec l'ID " + id + " n'existe pas.");
         }
