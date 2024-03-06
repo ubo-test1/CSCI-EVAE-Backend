@@ -36,7 +36,7 @@ public class EvaluationController {
     @Autowired
     private PromotionService promotionService;
 
-    //@PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("getAll")
     public ResponseEntity<List<EvaDTO>> getAll(){
         try{
@@ -53,7 +53,7 @@ public class EvaluationController {
         }
     }
 
-    //@PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("consulterInfo/{id}")
     public ResponseEntity<EvaluationDetails> consulterInfo(@PathVariable("id") Integer id){
         try{
@@ -70,6 +70,7 @@ public class EvaluationController {
             return ResponseEntity.internalServerError().build();
         }
     }
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @PostMapping("/create")
     public ResponseEntity<?> createEvae(@RequestBody HashMap<String, Object> req) {
         try {
@@ -153,7 +154,7 @@ public class EvaluationController {
 
 
 
-
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @PutMapping("/update")
     public ResponseEntity<?> updateEvaluation(@RequestBody Evaluation evaluation) {
         try {
@@ -165,6 +166,7 @@ public class EvaluationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @DeleteMapping("/delete/{noEvaluation}")
     public ResponseEntity<?> deleteEvaluation(@PathVariable Integer noEvaluation) {
         try {
