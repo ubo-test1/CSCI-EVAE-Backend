@@ -60,14 +60,16 @@ public class EvaluationRubriqueService {
         Optional<RubriqueEvaluation> rubriqueEvaluation = rubriqueEvaluationRepository.findById(idRubriqueEvaluation.longValue());
         if(rubriqueEvaluation.isEmpty()) throw new EntityNotFoundException();
         List<RubriqueEvaluation> rubriques = rubriqueEvaluationRepository.findByEvaluation(rubriqueEvaluation.get().getIdEvaluation());
-
+        rubriques.sort(Comparator.comparingInt(RubriqueEvaluation::getOrdre));
+        String etat = rubriqueEvaluation.get().getIdEvaluation().getEtat();
+        if (!etat.equals("ELA")) throw new IllegalStateException();
         rubriques.remove(rubriqueEvaluation.get());
+        rubriqueEvaluationRepository.deleteById(idRubriqueEvaluation.longValue());
+
         for(RubriqueEvaluation rubrique : rubriques){
             rubrique.setOrdre((short) (rubriques.indexOf(rubrique)+1));
         }
-        String etat = rubriqueEvaluation.get().getIdEvaluation().getEtat();
-        if (!etat.equals("ELA")) throw new IllegalStateException();
-        rubriqueEvaluationRepository.deleteById(idRubriqueEvaluation.longValue());
+        rubriqueEvaluationRepository.saveAll(rubriques);
     }
 
 

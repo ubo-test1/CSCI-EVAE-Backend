@@ -177,6 +177,7 @@ public class EvaluationRubriqueController {
      * http://localhost:8080/evaluations/rsnc/29
      * @return
      */
+
     @PreAuthorize("hasRole('ENS')")
     @GetMapping("/rsnc/{id}")
     public ResponseEntity<RubriqueEvaluation> getById(@PathVariable("id") Integer id) {
