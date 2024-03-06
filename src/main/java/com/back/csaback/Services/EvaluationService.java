@@ -84,5 +84,10 @@ public class EvaluationService {
     public List<Evaluation> findAllByPromo(Etudiant e){
         return er.findAllByPromotionAndNotEtatELA(e.getPromotion());
     }
+
+    public Boolean isClosedRep(Integer e){
+        return !er.findById(e).get().getEtat().equals("DIS");
+    }
+
 }
 
