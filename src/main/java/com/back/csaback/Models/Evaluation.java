@@ -89,4 +89,8 @@ public class Evaluation {
         this.debutReponse = debutReponse;
         this.finReponse = finReponse;
     }
+
+    public Evaluation(Integer id) {
+        this.id = id;
+    }
 }
