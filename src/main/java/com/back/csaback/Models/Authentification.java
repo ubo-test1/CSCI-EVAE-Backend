@@ -40,7 +40,7 @@ public class Authentification {
     @JoinColumn(name = "NO_ENSEIGNANT")
     private Enseignant noEnseignant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "NO_ETUDIANT")
     private Etudiant noEtudiant;

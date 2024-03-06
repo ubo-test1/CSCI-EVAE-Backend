@@ -57,4 +57,15 @@ public class QuestionEvaluation {
 
     public QuestionEvaluation() {
     }
+    @Override
+    public String toString() {
+        return "QuestionEvaluation{" +
+                "id=" + id +
+                ", idRubriqueEvaluation=" + idRubriqueEvaluation +
+                ", idQuestion=" + idQuestion +
+                ", idQualificatif=" + idQualificatif +
+                ", ordre=" + ordre +
+                ", intitule='" + intitule + '\'' +
+                '}';
+    }
 }
