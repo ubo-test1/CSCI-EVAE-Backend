@@ -10,6 +10,8 @@ import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.QuestionEvaluationRepository;
 import com.back.csaback.Repositories.ReponseEvaluationRepository;
 import com.back.csaback.Repositories.ReponseQuestionRepository;
+import com.back.csaback.Services.EtudiantService;
+import com.back.csaback.Services.EvaluationService;
 import com.back.csaback.Services.Tooltip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +40,12 @@ public class EtudiantController {
 
     @Autowired
     private ReponseQuestionRepository rqr;
+
+    @Autowired
+    private EvaluationService es;
+
+    @Autowired
+    private EtudiantService ets;
 
     @PreAuthorize("hasRole('ETU')")
     @GetMapping("testEtu")
@@ -71,12 +79,12 @@ public class EtudiantController {
         try {
             int idEva = (int) (req.get("idEva"));
 
-            if(!rer.findAllByNoEtudiantAndIdEvaluation(ttip.getEtudFromToken(auth), er.findById(idEva).get()).isEmpty()) throw new ErrorReponseExists("L'etudiant a deja soumis une reponse");
-            if(!er.findById(idEva).get().getEtat().equals("DIS")) throw new ErrorEvaluationNoOuverte("Evaluation non mise a disposition");
+            if(ets.isDejaSoumis(ttip.getEtudFromToken(auth), idEva)) throw new ErrorReponseExists("L'etudiant a deja soumis une reponse");
+            if(es.isClosedRep(idEva)) throw new ErrorEvaluationNoOuverte("Evaluation non mise a disposition");
 
             ReponseEvaluation re = new ReponseEvaluation();
             re.setNoEtudiant(ttip.getEtudFromToken(auth));
-            re.setIdEvaluation(er.findById(idEva).get());
+            re.setIdEvaluation(es.findById(idEva));
             if(req.get("commentaire") != null){
                 re.setCommentaire(""+req.get("commentaire"));
             }
