@@ -36,12 +36,12 @@ public class EvaluationRubriqueController {
     private RubriqueQuestionService rubriqueQuestionService;
 /**
 *        exemple:
-*        {
-*            "evaluation":1,
-*            "rubrique":1,
-*            "ordre":5,
-*            "designation":"test" (optionel)
-*        }
+*
+ *  {
+ *	    "evaluation":1,
+ *	    "rubrique":3,
+ *	    "designation":"test1"
+*   }
  *        */
  @PreAuthorize("hasRole('ENS')")
  @PostMapping("/rsnc")
@@ -49,13 +49,11 @@ public class EvaluationRubriqueController {
 
         Integer evaluation;
         Integer rubrique;
-        Integer ordre;
         String designation = requestBody.get("designation");
 
         try {
             evaluation = Integer.parseInt(requestBody.get("evaluation"));
             rubrique = Integer.parseInt(requestBody.get("rubrique"));
-            ordre = Integer.parseInt(requestBody.get("ordre"));
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body("Veuillez saisir tous les champs necessaires au format correcte");
@@ -90,7 +88,7 @@ public class EvaluationRubriqueController {
 
         RubriqueEvaluation rubeval;
         try {
-            rubeval = evaluationRubriqueService.attachRubriqueToEval(evaluation,rubrique,ordre.shortValue(),designation);
+            rubeval = evaluationRubriqueService.attachRubriqueToEval(evaluation,rubrique,designation);
         }catch (IllegalStateException e){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'evaluation n'est pas en cours d'elaboration");
         }
@@ -102,14 +100,27 @@ public class EvaluationRubriqueController {
 
     /**
      * exemple:
-     * localhost:8080/evaluations/rsnc/ordonner?id=29&ordre=4
-     * @param id
-     * @param ordre
-     * @return
+     * localhost:8080/evaluations/rsnc/ordonner
+     *{
+	 *       "id": 61,
+	 *       "ordre": 2
+     *}
      */
     @PreAuthorize("hasRole('ENS')")
     @PostMapping("/rsnc/ordonner")
-    public ResponseEntity<?> ordonner_rsnc(@RequestParam("id") Integer id,@RequestParam("ordre") Integer ordre) {
+    public ResponseEntity<?> ordonner_rsnc(@RequestBody Map<String, String> requestBody) {
+
+        Integer id;
+        Integer ordre;
+
+        try {
+            id = Integer.parseInt(requestBody.get("id"));
+            ordre = Integer.parseInt(requestBody.get("ordre"));
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("Veuillez saisir tous les champs necessaires au format correcte");
+        }
+
 
         RubriqueEvaluation rubriqueEvaluation;
 
@@ -180,6 +191,18 @@ public class EvaluationRubriqueController {
         Rubrique rubrique = rubriqueService.findById(idrubrique);
         return ResponseEntity.ok(evaluationRubriqueService.getByRubriqueAndEval(rubrique,eval));
     }
+
+    /**
+     *   http://localhost:8080/evaluations/rsnc/findbyeval?ideval=1
+     */
+    @PreAuthorize("hasRole('ENS')")
+    @GetMapping("/rsnc/findbyeval")
+    public ResponseEntity<List<RubriqueEvaluation>> getByEval(@RequestParam("ideval") Integer ideval){
+
+        Evaluation eval = evaluationService.findById(ideval);
+        return ResponseEntity.ok(evaluationRubriqueService.getRubriqueByEval(eval));
+    }
+
 }
 
 

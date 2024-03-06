@@ -26,7 +26,7 @@ public class EvaluationRubriqueService {
         this.rubriqueEvaluationRepository = rubriqueEvaluationRepository;
     }
 
-    public RubriqueEvaluation attachRubriqueToEval(Integer evaluationId, Integer rubriqueId, short ordre, String designation){
+    public RubriqueEvaluation attachRubriqueToEval(Integer evaluationId, Integer rubriqueId, String designation){
 
         //RubriqueEvaluation r = getByIdRubriqueAndIdEval(rubriqueId,evaluationId);
         //if(r!=null) return null;
@@ -34,6 +34,9 @@ public class EvaluationRubriqueService {
         RubriqueEvaluation rubriqueEvaluation = new RubriqueEvaluation();
         Evaluation eval = evaluationService.findById(evaluationId);
         Rubrique rubrique = rubriqueService.findById(rubriqueId);
+
+        List<RubriqueEvaluation> list = getRubriqueByEval(eval);
+        int pos = list.size()+1;
 
         String etat = eval.getEtat();
         if (!etat.equals("ELA")) throw new IllegalStateException();
@@ -43,19 +46,25 @@ public class EvaluationRubriqueService {
 
         rubriqueEvaluation.setIdEvaluation(eval);
         rubriqueEvaluation.setIdRubrique(rubrique);
-        rubriqueEvaluation.setOrdre(ordre);
+        rubriqueEvaluation.setOrdre((short)pos);
         rubriqueEvaluation.setDesignation(designation);
 
         return rubriqueEvaluationRepository.save(rubriqueEvaluation);
     }
     public RubriqueEvaluation attachRubriqueToEval(Integer evaluationId, Integer rubriqueId, short ordre) {
-        return attachRubriqueToEval(evaluationId,rubriqueId, ordre,null);
+        return attachRubriqueToEval(evaluationId,rubriqueId,null);
     }
 
 
     public void detachRubriqueFromEval(Integer idRubriqueEvaluation){
         Optional<RubriqueEvaluation> rubriqueEvaluation = rubriqueEvaluationRepository.findById(idRubriqueEvaluation.longValue());
         if(rubriqueEvaluation.isEmpty()) throw new EntityNotFoundException();
+        List<RubriqueEvaluation> rubriques = rubriqueEvaluationRepository.findByEvaluation(rubriqueEvaluation.get().getIdEvaluation());
+
+        rubriques.remove(rubriqueEvaluation.get());
+        for(RubriqueEvaluation rubrique : rubriques){
+            rubrique.setOrdre((short) (rubriques.indexOf(rubrique)+1));
+        }
         String etat = rubriqueEvaluation.get().getIdEvaluation().getEtat();
         if (!etat.equals("ELA")) throw new IllegalStateException();
         rubriqueEvaluationRepository.deleteById(idRubriqueEvaluation.longValue());
@@ -79,9 +88,11 @@ public class EvaluationRubriqueService {
     }
 
     public List<RubriqueEvaluation> moveObjectToPosition(List<RubriqueEvaluation> list,RubriqueEvaluation r,int targetPosition){
+
         if (targetPosition < 0) {
             throw new IllegalArgumentException("Target position is out of bounds");
         }
+
         list.remove(r);
         int newPosition = Math.min(targetPosition, list.size());
         list.add(newPosition, r);
@@ -102,6 +113,11 @@ public class EvaluationRubriqueService {
 
     public List<RubriqueEvaluation> getByRubriqueAndEval(Rubrique rubrique,Evaluation evaluation){
         List<RubriqueEvaluation> r = rubriqueEvaluationRepository.findByIdRubriqueAndIdEval(rubrique,evaluation);
+        return r;
+    }
+
+        public List<RubriqueEvaluation> getRubriqueByEval(Evaluation evaluation){
+            List<RubriqueEvaluation> r = rubriqueEvaluationRepository.findByEvaluation(evaluation);
         return r;
     }
 }
