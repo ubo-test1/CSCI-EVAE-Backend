@@ -107,7 +107,7 @@ public class EvaluationRubriqueController {
      *}
      */
     @PreAuthorize("hasRole('ENS')")
-    @PostMapping("/rsnc/ordonner")
+    @PutMapping("/rsnc/ordonner")
     public ResponseEntity<?> ordonner_rsnc(@RequestBody Map<String, String> requestBody) {
 
         Integer id;
