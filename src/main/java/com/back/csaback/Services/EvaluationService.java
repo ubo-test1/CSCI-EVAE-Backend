@@ -1,6 +1,8 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.Exceptions.ErrorQualificatifAssociated;
 import com.back.csaback.Models.Evaluation;
+import com.back.csaback.Models.Qualificatif;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Models.RubriqueEvaluation;
 import com.back.csaback.Repositories.EvaRubRepository;
@@ -8,11 +10,13 @@ import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
 import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.DTO.RubriqueDetails;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EvaluationService {
@@ -74,13 +78,26 @@ public class EvaluationService {
         }
     }
 
-    public Evaluation findById(Integer id){
-        try{
-            return er.findById(id).get();
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
+    public Optional<Evaluation> findById(Integer id){
+
+            return er.findById(id);
+
+    }
+    public Evaluation createEvaluation(Evaluation evaluation){
+        return er.save(evaluation);
+    }
+    public Evaluation updateEvaluation(Evaluation q) throws Exception {
+        if(er.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Evaluation n'existe pas");
+        if(q.getEtat()=="CLO") throw new Exception("Cette evaluation est cloturée");
+        return er.save(q);
+    }
+    public void deleteEvaluation(Evaluation evaluation) throws Exception {
+                if(evaluation != null){
+                er.delete(evaluation);
+            }
+            else {
+                throw new IllegalArgumentException("L'evaluation avec l'ID " + evaluation + " n'existe pas.");
+            }
         }
     }
-}
 
