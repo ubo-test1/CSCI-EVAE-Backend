@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -46,6 +48,15 @@ public class QuestionEvaluation {
     @Column(name = "INTITULE", length = 64)
     private String intitule;
 
+    public QuestionEvaluation(Integer id, RubriqueEvaluation idRubriqueEvaluation, Question idQuestion, Short ordre) {
+        this.id = id;
+        this.idRubriqueEvaluation = idRubriqueEvaluation;
+        this.idQuestion = idQuestion;
+        this.ordre = ordre;
+    }
+
+    public QuestionEvaluation() {
+    }
     @Override
     public String toString() {
         return "QuestionEvaluation{" +
@@ -56,14 +67,6 @@ public class QuestionEvaluation {
                 ", ordre=" + ordre +
                 ", intitule='" + intitule + '\'' +
                 '}';
-    }
-    public QuestionEvaluation(Integer id, RubriqueEvaluation idRubriqueEvaluation, Question idQuestion, Short ordre) {
-        this.id = id;
-        this.idRubriqueEvaluation = idRubriqueEvaluation;
-        this.idQuestion = idQuestion;
-        this.ordre = ordre;
-    }
 
-    public QuestionEvaluation() {
     }
 }

@@ -5,17 +5,13 @@ import com.back.csaback.Repositories.*;
 import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.DTO.RubriqueDetails;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-
-import static org.springframework.util.ClassUtils.isPresent;
-
 @Service
 public class EvaluationService {
     @Autowired
@@ -100,6 +96,11 @@ public class EvaluationService {
     public List<Evaluation> findAllByPromo(Etudiant e){
         return er.findAllByPromotionAndNotEtatELA(e.getPromotion());
     }
+
+    public Boolean isClosedRep(Integer e){
+        return !er.findById(e).get().getEtat().equals("DIS");
+    }
+
     public Evaluation updateEvaluation(Evaluation q) throws Exception {
         if(er.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Evaluation n'existe pas");
         // if(q.getEtat()=="CLO") throw new Exception("Cette evaluation est cloturée");
@@ -124,7 +125,4 @@ public class EvaluationService {
     }
     Short AttribuerNoEnseignant(){if(er.findNoEvaluationMax()==null) return  1; else return  er.findNoEvaluationMax() ;}
 }
-
-
-
 

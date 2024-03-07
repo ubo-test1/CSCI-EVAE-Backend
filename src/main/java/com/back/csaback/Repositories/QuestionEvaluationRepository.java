@@ -3,7 +3,7 @@ package com.back.csaback.Repositories;
 
 import com.back.csaback.Models.Question;
 import com.back.csaback.Models.QuestionEvaluation;
-import com.back.csaback.Models.Rubrique;
+
 import com.back.csaback.Models.RubriqueEvaluation;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
