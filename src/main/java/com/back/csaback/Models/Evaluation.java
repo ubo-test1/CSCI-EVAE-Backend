@@ -81,7 +81,6 @@ public class Evaluation {
     @NotNull(message = "La date de fin de reponse est demandée ! ")
     @Column(name = "FIN_REPONSE", nullable = false)
     private LocalDate finReponse;
-
     public Evaluation() {
     }
 

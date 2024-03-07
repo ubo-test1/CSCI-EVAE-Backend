@@ -12,10 +12,8 @@ import java.util.List;
 @Repository
 public interface EvaluationRepository extends JpaRepository<Evaluation,Integer> {
     public List<Evaluation> findAllByPromotion(Promotion pro);
-
     @Query("SELECT e FROM Evaluation e WHERE e.promotion = :promotion AND e.etat <> 'ELA'")
     List<Evaluation> findAllByPromotionAndNotEtatELA(@Param("promotion") Promotion promotion);
-
     @Query(value = "SELECT MAX(noEvaluation) FROM Evaluation")
     Short findNoEvaluationMax();
 }

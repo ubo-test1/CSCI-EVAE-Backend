@@ -179,7 +179,6 @@ public class EvaluationController {
             return ResponseEntity.internalServerError().build();
         }
     }*/
-
     /**
      * {
      *         "uniteEnseignement": {

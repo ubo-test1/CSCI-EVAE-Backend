@@ -96,10 +96,10 @@ public class EvaluationService {
 
     }
 
+
     public List<Evaluation> findAllByPromo(Etudiant e){
         return er.findAllByPromotionAndNotEtatELA(e.getPromotion());
     }
-
     public Evaluation updateEvaluation(Evaluation q) throws Exception {
         if(er.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Evaluation n'existe pas");
         // if(q.getEtat()=="CLO") throw new Exception("Cette evaluation est cloturée");
@@ -114,7 +114,6 @@ public class EvaluationService {
             throw new IllegalArgumentException("L'evaluation avec l'ID " + evaluation + " n'existe pas.");
         }
     }
-
     public Evaluation createEvaluation(Evaluation evaluation){
         if(promotionRepository.findById(evaluation.getPromotion().getId()).isEmpty()) throw new EntityNotFoundException("La promotion choisie n'existe pas");
         if(uniteEnseignementRepository.findById(evaluation.getUniteEnseignement().getId()).isEmpty()) throw new EntityNotFoundException("L'unité enseignement choisie n'existe pas");
