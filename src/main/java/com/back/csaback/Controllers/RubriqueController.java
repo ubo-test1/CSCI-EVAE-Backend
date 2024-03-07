@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rub")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class RubriqueController {
 
     @Autowired

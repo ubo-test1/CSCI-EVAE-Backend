@@ -27,7 +27,7 @@ import static java.lang.Integer.parseInt;
 
 @RestController
 @RequestMapping("eva")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class EvaluationController {
 
     @Autowired

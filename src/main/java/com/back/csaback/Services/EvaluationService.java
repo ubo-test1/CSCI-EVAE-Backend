@@ -78,7 +78,6 @@ public class EvaluationService {
             return null;
         }
     }
-
     public Evaluation findById(Integer id){
         try{
             return er.findById(id).get();
@@ -116,9 +115,9 @@ public class EvaluationService {
         }
     }
     public Evaluation createEvaluation(Evaluation evaluation){
-        if(promotionRepository.findById(evaluation.getPromotion().getId()).isEmpty()) throw new EntityNotFoundException("La promotion choisie n'existe pas");
-        if(uniteEnseignementRepository.findById(evaluation.getUniteEnseignement().getId()).isEmpty()) throw new EntityNotFoundException("L'unité enseignement choisie n'existe pas");
-        if(enseignantRepository.findById(evaluation.getNoEnseignant().getId()).isEmpty()) throw new EntityNotFoundException("l'enseignant choisie n'existe pas");
+        if(promotionRepository.findById(evaluation.getPromotion().getId()).isEmpty() || evaluation.getPromotion().getId()==null) throw new EntityNotFoundException("La promotion choisie n'existe pas");
+        if(uniteEnseignementRepository.findById(evaluation.getUniteEnseignement().getId()).isEmpty()| evaluation.getPromotion().getId()==null) throw new EntityNotFoundException("L'unité enseignement choisie n'existe pas");
+        if(enseignantRepository.findById(evaluation.getNoEnseignant().getId()).isEmpty()| evaluation.getPromotion().getId()==null) throw new EntityNotFoundException("l'enseignant choisie n'existe pas");
         if (evaluation.getElementConstitutif()!=null && (elementConstitutifRepository.findById(evaluation.getElementConstitutif().getId()).isEmpty())) throw new EntityNotFoundException("l'element constitutif choisie n'existe pas");
         if(evaluation.getNoEvaluation()==null) evaluation.setNoEvaluation((short) (AttribuerNoEnseignant()+1));
         return er.save(evaluation);
