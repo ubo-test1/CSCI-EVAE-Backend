@@ -118,10 +118,15 @@ public class EtudiantController {
         }
     }
 
-    /*
     @PreAuthorize("hasRole('ETU')")
     @GetMapping("consulterReponses/{id}")
-    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
-
-    }*/
+    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @PathVariable("id") Integer idEva){
+        try{
+            ReponseEvaluation re = ets.getReponseEvaluation(ttip.getEtudFromToken(auth),idEva);
+            return ResponseEntity.ok(ets.getReponseQuestions(re));
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
