@@ -108,7 +108,7 @@ public class RubriqueController {
         }
     }
 
-    @PreAuthorize("hasRole('ADM')")
+    //@PreAuthorize("hasRole('ADM')")
     @GetMapping("consulter/{id}")
     public ResponseEntity<?> consulterStd(@PathVariable("id") Integer id){
         try{

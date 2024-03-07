@@ -85,7 +85,7 @@ class EvaluationServiceTest {
         Evaluation evaluation = new Evaluation();
         when(evaluationRepository.findById(id)).thenReturn(Optional.of(evaluation));
 
-        Evaluation result = evaluationService.findById(id);
+        Evaluation result = evaluationService.findByIdOpt(id).orElse(null);
 
         assertNotNull(result);
         assertEquals(evaluation, result);

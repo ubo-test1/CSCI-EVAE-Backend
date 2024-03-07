@@ -22,24 +22,32 @@ public class Evaluation {
     @Column(name = "ID_EVALUATION", nullable = false)
     private Integer id;
 
-    @NotNull
+    //@NotNull(message = "L'enseignant est demandé ! ")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "NO_ENSEIGNANT", nullable = false)
     private Enseignant noEnseignant;
 
-    @NotNull
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull(message = "L'unité enseignement est demandée ! ")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumns({
-            @JoinColumn(name = "CODE_FORMATION", referencedColumnName = "CODE_FORMATION", nullable = false),
-            @JoinColumn(name = "CODE_UE", referencedColumnName = "CODE_UE", nullable = false),
-            @JoinColumn(name = "CODE_EC", referencedColumnName = "CODE_EC", nullable = false)
+            @JoinColumn(name = "CODE_FORMATION", referencedColumnName = "CODE_FORMATION",nullable = false),
+            @JoinColumn(name = "CODE_UE", referencedColumnName = "CODE_UE" ,nullable = false),
+    })
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    private UniteEnseignement uniteEnseignement;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "CODE_FORMATION", referencedColumnName = "CODE_FORMATION")),
+            @JoinColumnOrFormula(formula=  @JoinFormula(value= "CODE_UE", referencedColumnName = "CODE_UE")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "CODE_EC", referencedColumnName = "CODE_EC", nullable = false))
     })
     @OnDelete(action = OnDeleteAction.RESTRICT)
     private ElementConstitutif elementConstitutif;
 
-    @NotNull
+
+    @NotNull(message = "une promotion est demandée !")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "CODE_FORMATION", referencedColumnName = "CODE_FORMATION")),
@@ -48,17 +56,17 @@ public class Evaluation {
     @OnDelete(action = OnDeleteAction.RESTRICT)
     private Promotion promotion;
 
-    @NotNull
+    //@NotNull
     @Column(name = "NO_EVALUATION", nullable = false)
     private Short noEvaluation;
 
     @Size(max = 16)
-    @NotNull
+    @NotNull(message = "la designation est demandée !")
     @Column(name = "DESIGNATION", nullable = false, length = 16)
     private String designation;
 
     @Size(max = 3)
-    @NotNull
+    @NotNull(message = "l'état est demandé !")
     @Column(name = "etat", length = 3, nullable = false, columnDefinition = "CHAR(3)")
     private String etat;
 
@@ -66,11 +74,11 @@ public class Evaluation {
     @Column(name = "PERIODE", length = 64)
     private String periode;
 
-    @NotNull
+    @NotNull(message = "Le debut de reponse est demandé !")
     @Column(name = "DEBUT_REPONSE", nullable = false)
     private LocalDate debutReponse;
 
-    @NotNull
+    @NotNull(message = "La date de fin de reponse est demandée ! ")
     @Column(name = "FIN_REPONSE", nullable = false)
     private LocalDate finReponse;
 
