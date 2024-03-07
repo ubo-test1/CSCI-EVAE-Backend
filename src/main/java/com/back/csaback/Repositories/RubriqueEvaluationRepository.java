@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface RubriqueEvaluationRepository extends JpaRepository<RubriqueEvaluation,Long> {
+public interface RubriqueEvaluationRepository extends JpaRepository<RubriqueEvaluation,Integer> {
     List<RubriqueEvaluation> findAllByIdRubrique(Rubrique idRubrique);
 
     @Query("SELECT re FROM RubriqueEvaluation re WHERE re.idEvaluation = :evaluation")
