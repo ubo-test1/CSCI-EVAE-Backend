@@ -13,10 +13,12 @@ import java.util.Optional;
 
 public interface RubriqueEvaluationRepository extends JpaRepository<RubriqueEvaluation,Integer> {
     List<RubriqueEvaluation> findAllByIdRubrique(Rubrique idRubrique);
+    List<RubriqueEvaluation> findAllByIdEvaluation(Evaluation evaluation);
 
     @Query("SELECT re FROM RubriqueEvaluation re WHERE re.idEvaluation = :evaluation")
     List<RubriqueEvaluation> findByEvaluation(@Param("evaluation") Evaluation eval);
     @Query("SELECT re FROM RubriqueEvaluation re WHERE re.idRubrique = :rubrique AND re.idEvaluation = :evaluation")
     List<RubriqueEvaluation> findByIdRubriqueAndIdEval(@Param("rubrique") Rubrique rubrique, @Param("evaluation") Evaluation evaluation);
+
 
 }

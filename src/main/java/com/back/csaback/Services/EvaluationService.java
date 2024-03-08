@@ -16,13 +16,10 @@ import java.util.Objects;
 public class EvaluationService {
     @Autowired
     private EvaluationRepository er;
-
     @Autowired
     private RubriqueRepository rr;
-
     @Autowired
     private EvaRubRepository err;
-
     @Autowired
     private RubriqueService rs;
     @Autowired
@@ -33,6 +30,16 @@ public class EvaluationService {
     private EnseignantRepository enseignantRepository;
     @Autowired
     ElementConstitutifRepository elementConstitutifRepository;
+    @Autowired
+    RubriqueEvaluationRepository rubriqueEvaluationRepository;
+    @Autowired
+    ReponseEvaluationRepository reponseEvaluationRepository;
+    @Autowired
+    QuestionEvaluationRepository questionEvaluationRepository;
+    @Autowired
+    private ReponseQuestionRepository reponseQuestionRepository;
+    @Autowired
+    private DroitRepository droitRepository;
     public List<Evaluation> getAll() {
         try {
             return er.findAll();
@@ -80,17 +87,16 @@ public class EvaluationService {
     }
     public Evaluation findById(Integer id){
         try{
-            return er.findById(id).get();
+            return er.findByCustomQuery(id).get();
         }catch(Exception e){
             e.printStackTrace();
             return null;
         }
     }
     public Optional<Evaluation> findByIdOpt(Integer id){
-        return er.findById(id);
+        return er.findByCustomQuery(id);
 
     }
-
 
     public List<Evaluation> findAllByPromo(Etudiant e){
         return er.findAllByPromotionAndNotEtatELA(e.getPromotion());
@@ -105,13 +111,19 @@ public class EvaluationService {
         // if(q.getEtat()=="CLO") throw new Exception("Cette evaluation est cloturée");
         return createEvaluation(q);
     }
-    public void deleteEvaluation(Evaluation evaluation) throws Exception {
+    public void deleteEvaluation(Integer id) throws Exception {
+        Evaluation evaluation= findById(id);
         if(evaluation != null){
             if(Objects.equals(evaluation.getEtat(), "CLO"))  throw new IllegalArgumentException("Vous ne pouvez pas supprimer l'évaluation car elle est cloturée");
+            reponseQuestionRepository.deleteAll(reponseQuestionRepository.findAllByIdReponseEvaluationIn(reponseEvaluationRepository.findAllByIdEvaluation(evaluation)));
+            questionEvaluationRepository.deleteAll(questionEvaluationRepository.findAllByIdRubriqueEvaluationIn(rubriqueEvaluationRepository.findAllByIdEvaluation(evaluation)));
+            reponseEvaluationRepository.deleteAll(reponseEvaluationRepository.findAllByIdEvaluation(evaluation));
+            rubriqueEvaluationRepository.deleteAll(rubriqueEvaluationRepository.findAllByIdEvaluation(evaluation));
+            droitRepository.deleteAll(droitRepository.findAllByIdEvaluation(evaluation));
             er.delete(evaluation);
         }
         else {
-            throw new IllegalArgumentException("L'evaluation avec l'ID " + evaluation + " n'existe pas.");
+            throw new IllegalArgumentException("L'evaluation avec l'ID " + evaluation + " n'existe pas ");
         }
     }
     public Evaluation createEvaluation(Evaluation evaluation){

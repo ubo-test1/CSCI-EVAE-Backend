@@ -109,7 +109,7 @@ public class EvaluationRubriqueService {
     }
 
     public RubriqueEvaluation getById(Integer id){
-        Optional<RubriqueEvaluation> r = rubriqueEvaluationRepository.findById(id.longValue());
+        Optional<RubriqueEvaluation> r = rubriqueEvaluationRepository.findById(id);
         return r.orElse(null);
     }
 

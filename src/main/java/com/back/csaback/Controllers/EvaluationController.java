@@ -284,17 +284,23 @@ public class EvaluationController {
         }
     }
     @PreAuthorize("hasRole('ENS')")
-    @DeleteMapping("/delete/{noEvaluation}")
-    public ResponseEntity<?> deleteEvaluation(@PathVariable Integer noEvaluation) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteEvaluation(@PathVariable Integer id) {
         try {
-            Evaluation evaluation=es.findByIdOpt(noEvaluation).orElse(null);
-            es.deleteEvaluation(evaluation);
+            /*Evaluation evaluation=es.findById(id);
+            System.out.println(evaluation.getDesignation());*/
+            es.deleteEvaluation(id);
             return ResponseEntity.ok("L'évaluation a été supprimée avec succès.");
-        } catch (IllegalArgumentException e) {
+        }catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur s'est produite lors de la suppression de l'évaluation.");
         }
     }
 
+    @PreAuthorize("hasRole('ENS')")
+    @DeleteMapping("/testfind/{id}")
+    public ResponseEntity<?> TestEvaluation(@PathVariable Integer id) {
+            return ResponseEntity.ok(es.findById(id));
+    }
 }

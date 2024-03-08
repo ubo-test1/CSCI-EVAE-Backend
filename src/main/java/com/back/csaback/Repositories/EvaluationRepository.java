@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EvaluationRepository extends JpaRepository<Evaluation,Integer> {
@@ -16,4 +17,7 @@ public interface EvaluationRepository extends JpaRepository<Evaluation,Integer> 
     List<Evaluation> findAllByPromotionAndNotEtatELA(@Param("promotion") Promotion promotion);
     @Query(value = "SELECT MAX(noEvaluation) FROM Evaluation")
     Short findNoEvaluationMax();
+    @Query("SELECT e FROM Evaluation e WHERE e.id = :id")
+    Optional<Evaluation> findByCustomQuery(@Param("id") Integer id);
+
 }
