@@ -117,10 +117,5 @@ public class EtudiantController {
         }
     }
 
-    /*
-    @PreAuthorize("hasRole('ETU')")
-    @GetMapping("consulterReponses/{id}")
-    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
 
-    }*/
 }
