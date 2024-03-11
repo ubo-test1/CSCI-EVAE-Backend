@@ -20,5 +20,6 @@ public interface RubriqueEvaluationRepository extends JpaRepository<RubriqueEval
     @Query("SELECT re FROM RubriqueEvaluation re WHERE re.idRubrique = :rubrique AND re.idEvaluation = :evaluation")
     List<RubriqueEvaluation> findByIdRubriqueAndIdEval(@Param("rubrique") Rubrique rubrique, @Param("evaluation") Evaluation evaluation);
 
-
+    @Query("SELECT MAX(re.ordre) FROM RubriqueEvaluation re WHERE re.idEvaluation.id = :evaluationId")
+    short findLastOrdreByEvaluationId(Integer evaluationId);
 }

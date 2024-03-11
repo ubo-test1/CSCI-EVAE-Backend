@@ -135,5 +135,15 @@ public class EvaluationService {
         return er.save(evaluation);
     }
     Short AttribuerNoEnseignant(){if(er.findNoEvaluationMax()==null) return  1; else return  er.findNoEvaluationMax() ;}
+
+    public boolean checkEvaOwnership(Enseignant e, Evaluation eva){
+        if(eva.getNoEnseignant().getId() == e.getId()) return true;
+        return false;
+    }
+
+    public boolean checkEvaOwnership(Enseignant e, RubriqueEvaluation re){
+        if(re.getIdEvaluation().getNoEnseignant().getId() == e.getId()) return true;
+        return false;
+    }
 }
 
