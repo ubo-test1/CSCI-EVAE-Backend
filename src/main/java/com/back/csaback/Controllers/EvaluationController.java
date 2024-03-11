@@ -303,39 +303,4 @@ public class EvaluationController {
     public ResponseEntity<?> TestEvaluation(@PathVariable Integer id) {
             return ResponseEntity.ok(es.findById(id));
     }
-
-    @PreAuthorize("hasRole('ENS')")
-    @PostMapping("addRub")
-    public ResponseEntity<?> ajouterRub(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth,@RequestBody HashMap<String,String> req){
-        try{
-            Evaluation e = es.findById(Integer.parseInt((req.get("eva"))));
-            if(!es.checkEvaOwnership(ttip.getUserFromToken(auth),e)) return ResponseEntity.badRequest().body("L'evaluation n'appartient pas a l'enseignant");
-            Rubrique r = rs.findById(Integer.parseInt(req.get("rub")));
-            RubriqueEvaluation re = new RubriqueEvaluation();
-            re.setIdEvaluation(e);
-            re.setIdRubrique(r);
-            re.setOrdre((short) (rs.getLastOrdreRE(e)+1));
-            re.setDesignation(r.getDesignation());
-            rs.migrateQuestions(rer.save(re),r);
-            return ResponseEntity.ok("Questions ajoute avec succes");
-        }catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @PreAuthorize("hasRole('ENS')")
-    @GetMapping("delRub/{id}")
-    public ResponseEntity<?> delRub(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @PathVariable("id") int id_rubEva){
-        try{
-            RubriqueEvaluation r = rer.findById(id_rubEva).get();
-            if(!es.checkEvaOwnership(ttip.getUserFromToken(auth),r)) return ResponseEntity.badRequest().body("L'evaluation n'appartient pas a l'enseignant");
-            rs.deleteQuestionsRub(r);
-            return ResponseEntity.ok("Supprime avec succes");
-        }catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
 }
