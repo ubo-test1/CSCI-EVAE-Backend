@@ -24,7 +24,7 @@ public class Enseignant {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ens_generator")
     @SequenceGenerator(name="ens_generator", sequenceName = "ENS_SEQ", allocationSize=1)
     @Column(name = "NO_ENSEIGNANT", nullable = false)
-    private Short id;
+    private Integer id;
 
     @Size(max = 5)
     @NotNull

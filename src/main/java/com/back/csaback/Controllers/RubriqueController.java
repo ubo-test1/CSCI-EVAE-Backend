@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rub")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class RubriqueController {
 
     @Autowired
@@ -108,7 +108,7 @@ public class RubriqueController {
         }
     }
 
-    @PreAuthorize("hasRole('ADM')")
+    //@PreAuthorize("hasRole('ADM')")
     @GetMapping("consulter/{id}")
     public ResponseEntity<?> consulterStd(@PathVariable("id") Integer id){
         try{

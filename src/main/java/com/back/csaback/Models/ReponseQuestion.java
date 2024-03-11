@@ -16,13 +16,15 @@ public class ReponseQuestion {
 
     @MapsId("idReponseEvaluation")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    //@OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ID_REPONSE_EVALUATION", nullable = false)
     private ReponseEvaluation idReponseEvaluation;
 
     @MapsId("idQuestionEvaluation")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    //@OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ID_QUESTION_EVALUATION", nullable = false)
     private QuestionEvaluation idQuestionEvaluation;
 

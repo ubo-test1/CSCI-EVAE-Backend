@@ -52,7 +52,6 @@ public class EtudiantController {
     public String oui(){
         return "oui";
     }
-
     /**
      * {
      *     "idEva" : 1,

@@ -23,7 +23,8 @@ public class ReponseEvaluation {
     @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    //@OnDelete(action = OnDeleteAction.RESTRICT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ID_EVALUATION", nullable = false)
     private Evaluation idEvaluation;
 

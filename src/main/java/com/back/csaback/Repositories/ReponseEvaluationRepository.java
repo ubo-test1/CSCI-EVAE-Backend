@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ReponseEvaluationRepository extends JpaRepository<ReponseEvaluation, Integer> {
     public List<ReponseEvaluation> findAllByNoEtudiant(Etudiant e);
     List<ReponseEvaluation> findAllByNoEtudiantAndIdEvaluation(Etudiant noEtudiant, Evaluation idEvaluation);
+
+    public List<ReponseEvaluation> findAllByIdEvaluation(Evaluation e);
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface EvaRubRepository extends JpaRepository<RubriqueEvaluation,Long> {
+public interface EvaRubRepository extends JpaRepository<RubriqueEvaluation,Integer> {
     List<RubriqueEvaluation> findAllByIdEvaluation(Evaluation idEvaluation);
     List<RubriqueEvaluation> findAllByIdRubrique(Rubrique idRubrique);
 }

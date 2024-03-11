@@ -25,7 +25,7 @@ import java.util.List;
  * @version V2
  * @since 19/02/2024
  */
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/eva/qus")
 public class QuestionStandardController {
