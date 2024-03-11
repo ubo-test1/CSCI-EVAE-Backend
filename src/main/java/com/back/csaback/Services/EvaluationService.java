@@ -64,6 +64,7 @@ public class EvaluationService {
             e.printStackTrace();
             return null;
         }
+
     }
     public EvaluationDetails ConsulterEvaluation(Evaluation evaluation){
         try{
@@ -144,6 +145,16 @@ public class EvaluationService {
     Short AttribuerNoEnseignant(){if(er.findNoEvaluationMax()==null) return  1; else return  er.findNoEvaluationMax() ;}
 
 
+
+    public boolean checkEvaOwnership(Enseignant e, Evaluation eva){
+        if(eva.getNoEnseignant().getId() == e.getId()) return true;
+        return false;
+    }
+
+    public boolean checkEvaOwnership(Enseignant e, RubriqueEvaluation re){
+        if(re.getIdEvaluation().getNoEnseignant().getId() == e.getId()) return true;
+        return false;
+    }
 }
 
 
