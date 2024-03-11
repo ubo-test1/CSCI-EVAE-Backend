@@ -1,5 +1,6 @@
 package com.back.csaback.Controllers;
 
+import com.back.csaback.DTO.RubriqueEvaluationDTO;
 import com.back.csaback.Exceptions.ErrorRubriqueEvaluationAlreadyExist;
 import com.back.csaback.Models.*;
 import com.back.csaback.Services.EvaluationRubriqueService;
@@ -25,6 +26,17 @@ import java.util.Map;
 public class EvaluationRubriqueController {
     @Autowired
     private EvaluationRubriqueService evaluationRubriqueService;
+
+ /*   {
+        "idRubrique": {
+        "id": 8
+    },
+        "idEvaluation": {
+        "id": 21
+    },
+        "ordre": 2,
+        "designation": "test"
+    }*/
     @PreAuthorize("hasRole('ENS')")
     @PostMapping("/add")
     public ResponseEntity<?> ajouter_rsnc(@Valid @RequestBody RubriqueEvaluation newRubriqueEvaluation, BindingResult bindingResult) {
@@ -46,32 +58,36 @@ public class EvaluationRubriqueController {
     public ResponseEntity<?> deleteById(@PathVariable Integer id) {
         try {
          evaluationRubriqueService.delete(id);
-            return ResponseEntity.ok("question supprimée");
+            return ResponseEntity.ok("rubrique supprimée");
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()) ;
         }
     }
     @PreAuthorize("hasRole('ENS')")
     @GetMapping("/all")
-    public ResponseEntity<?> getAll() {
-        List<RubriqueEvaluation> questions= evaluationRubriqueService.getAll();
-        return  ResponseEntity.ok(questions);
+    public ResponseEntity<List<RubriqueEvaluation>> getAll() {
+        List<RubriqueEvaluation> rubriques= evaluationRubriqueService.getAll();
+        System.out.println(rubriques.size());
+        System.out.println(rubriques.get(1).getOrdre());
+        System.out.println(rubriques.get(0).getIdRubrique().getId());
+
+        return  ResponseEntity.ok(rubriques);
     }
     @PreAuthorize("hasRole('ENS')")
     @PutMapping("/ordonner")
-    public ResponseEntity<?> ordonner(@Valid @RequestBody List<RubriqueEvaluation> rubriqueEvaluations, BindingResult bindingResult) {
-        for (RubriqueEvaluation rubEva : rubriqueEvaluations ){
-            if (bindingResult.hasFieldErrors("ordre")) {
-                return ResponseEntity.badRequest().body("Erreur de validation: " + bindingResult.getFieldError("ordre").getDefaultMessage());
-            }else {
+    public ResponseEntity<?> ordonner(@RequestBody List<RubriqueEvaluationDTO> rubriqueEvaluations) {
+        for (RubriqueEvaluationDTO rubEva : rubriqueEvaluations ){
                 try {
+                    if(rubEva.getId()==null) throw new IllegalArgumentException("id obligatoire !!");
+                    if(rubEva.getOrdre()==null) throw new IllegalArgumentException("ordre obligatoire !!");
                     RubriqueEvaluation rubriqueEvaluation=evaluationRubriqueService.findById(rubEva.getId());
                     rubriqueEvaluation.setOrdre(rubEva.getOrdre());
                     evaluationRubriqueService.update(rubriqueEvaluation);
                 }catch (EntityNotFoundException ex) {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+                }catch (IllegalArgumentException ex) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
                 }
-            }
         }
         return getAll();
     }
@@ -80,10 +96,18 @@ public class EvaluationRubriqueController {
     public ResponseEntity<String> getTest() {
         return  ResponseEntity.ok("test bien passé ");
     }
+    @PreAuthorize("hasRole('ENS')")
+    @GetMapping("/findByIdEvaluation/{id}")
+    public ResponseEntity<?> getAllByIdEvaluation(@PathVariable Integer id) {
+        try {
+            return  ResponseEntity.ok(evaluationRubriqueService.findAllByIdEvaluation(id));
+        }catch (EntityNotFoundException ex){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
 
-
+    }
 
 }
+
 
 
 /*

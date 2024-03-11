@@ -21,10 +21,10 @@ public class RubriqueEvaluation {
     private Integer id;
 
 
+    @JsonIgnore
     @NotNull(message = "il faut choisir une evaluation")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
-   // @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ID_EVALUATION", nullable = false)
     private Evaluation idEvaluation;
 

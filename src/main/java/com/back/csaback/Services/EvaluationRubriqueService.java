@@ -8,9 +8,11 @@ import com.back.csaback.Models.QuestionEvaluation;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Models.RubriqueEvaluation;
 import com.back.csaback.Repositories.EvaluationRepository;
+import com.back.csaback.Repositories.QuestionRepository;
 import com.back.csaback.Repositories.RubriqueEvaluationRepository;
 import com.back.csaback.Repositories.RubriqueRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,10 @@ public class EvaluationRubriqueService {
 
     @Autowired
     private RubriqueRepository rubriqueRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+
+
 
 
 
@@ -108,11 +114,6 @@ public class EvaluationRubriqueService {
     }*/
     public void delete(Integer id) {
         RubriqueEvaluation rubriqueToDelete =findById(id);
-       /* if (rubriqueToDelete != null) {
-            rubriqueEvaluationRepository.delete(rubriqueToDelete);
-        } else {
-            throw new IllegalArgumentException("La question avec l'ID " + id + " n'existe pas");
-        }*/
         rubriqueEvaluationRepository.delete(rubriqueToDelete);
 
     }
@@ -130,5 +131,11 @@ public class EvaluationRubriqueService {
     public RubriqueEvaluation update(RubriqueEvaluation rubriqueEvaluation) {
         //findById(questionEvaluation.getId());
         return rubriqueEvaluationRepository.save(rubriqueEvaluation);
+    }
+
+    public List<RubriqueEvaluation> findAllByIdEvaluation(Integer id){
+        Optional<Evaluation> evaluation= evaluationRepository.findByCustomQuery(id);
+        if(evaluation.isEmpty()) throw new EntityNotFoundException("Evaluation non trouvée !!");
+        return rubriqueEvaluationRepository.findAllByIdEvaluation(evaluation.get());
     }
 }
