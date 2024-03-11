@@ -1,5 +1,6 @@
 package com.back.csaback.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ public class ReponseQuestion {
     @EmbeddedId
     private ReponseQuestionId id;
 
+    @JsonIgnore
     @MapsId("idReponseEvaluation")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     //@OnDelete(action = OnDeleteAction.RESTRICT)

@@ -1,5 +1,6 @@
 package com.back.csaback.Controllers;
 
+import com.back.csaback.DTO.ConsulterReponseDTO;
 import com.back.csaback.Exceptions.ErrorDuplicateReponse;
 import com.back.csaback.Exceptions.ErrorEvaluationNoOuverte;
 import com.back.csaback.Exceptions.ErrorReponseExists;
@@ -117,5 +118,19 @@ public class EtudiantController {
         }
     }
 
-
+    @PreAuthorize("hasRole('ETU')")
+    @GetMapping("consulterReponses/{id}")
+    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @PathVariable("id") Integer idEva){
+        try{
+            ConsulterReponseDTO ret = new ConsulterReponseDTO();
+            ReponseEvaluation re = ets.getReponseEvaluation(ttip.getEtudFromToken(auth),idEva);
+            ret.setCommentaireEvaluation(re.getCommentaire());
+            ret.setQuestions(ets.getReponseQuestions(re));
+            return ResponseEntity.ok(ret);
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+        //return ResponseEntity.ok("ouui");
+    }
 }

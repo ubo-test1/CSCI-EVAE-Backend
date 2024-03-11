@@ -1,52 +1,105 @@
 package com.back.csaback.Controllers;
 
-import com.back.csaback.Models.Evaluation;
-import com.back.csaback.Models.Rubrique;
-import com.back.csaback.Models.RubriqueEvaluation;
+import com.back.csaback.Exceptions.ErrorRubriqueEvaluationAlreadyExist;
+import com.back.csaback.Models.*;
 import com.back.csaback.Services.EvaluationRubriqueService;
 import com.back.csaback.Services.EvaluationService;
 import com.back.csaback.Services.RubriqueQuestionService;
 import com.back.csaback.Services.RubriqueService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/evaluations")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/eva/rbs")
 public class EvaluationRubriqueController {
-
-    @Autowired
-    private EvaluationService evaluationService;
-
-    @Autowired
-    private RubriqueService rubriqueService;
-
     @Autowired
     private EvaluationRubriqueService evaluationRubriqueService;
+    @PreAuthorize("hasRole('ENS')")
+    @PostMapping("/add")
+    public ResponseEntity<?> ajouter_rsnc(@Valid @RequestBody RubriqueEvaluation newRubriqueEvaluation, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return ResponseEntity.badRequest().body("Erreur de validation : " + bindingResult.getFieldError().getDefaultMessage());
+            } else {
+                evaluationRubriqueService.save(newRubriqueEvaluation);
+                return ResponseEntity.status(201).body("rubrique créé avec succès");
+            }
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
+    }
 
-    @Autowired
-    private RubriqueQuestionService rubriqueQuestionService;
-/**
-*        exemple:
-*
- *  {
- *	    "evaluation":1,
- *	    "rubrique":3,
- *	    "designation":"test1"
-*   }
- *        */
- @PreAuthorize("hasRole('ENS')")
- @PostMapping("/rsnc")
- public ResponseEntity<?> ajouter_rsnc(@RequestBody Map<String, String> requestBody){
 
+    @PreAuthorize("hasRole('ENS')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Integer id) {
+        try {
+         evaluationRubriqueService.delete(id);
+            return ResponseEntity.ok("question supprimée");
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage()) ;
+        }
+    }
+    @PreAuthorize("hasRole('ENS')")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll() {
+        List<RubriqueEvaluation> questions= evaluationRubriqueService.getAll();
+        return  ResponseEntity.ok(questions);
+    }
+    @PreAuthorize("hasRole('ENS')")
+    @PutMapping("/ordonner")
+    public ResponseEntity<?> ordonner(@Valid @RequestBody List<RubriqueEvaluation> rubriqueEvaluations, BindingResult bindingResult) {
+        for (RubriqueEvaluation rubEva : rubriqueEvaluations ){
+            if (bindingResult.hasFieldErrors("ordre")) {
+                return ResponseEntity.badRequest().body("Erreur de validation: " + bindingResult.getFieldError("ordre").getDefaultMessage());
+            }else {
+                try {
+                    RubriqueEvaluation rubriqueEvaluation=evaluationRubriqueService.findById(rubEva.getId());
+                    rubriqueEvaluation.setOrdre(rubEva.getOrdre());
+                    evaluationRubriqueService.update(rubriqueEvaluation);
+                }catch (EntityNotFoundException ex) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+                }
+            }
+        }
+        return getAll();
+    }
+    @PreAuthorize("hasRole('ENS')")
+    @GetMapping("/test")
+    public ResponseEntity<String> getTest() {
+        return  ResponseEntity.ok("test bien passé ");
+    }
+
+
+
+}
+
+
+/*
+@PreAuthorize("hasRole('ENS')")
+    @PostMapping("/create")
+    public ResponseEntity<?> save(@Valid @RequestBody QuestionEvaluation newQuestion, BindingResult bindingResult) {
+        try{ if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Erreur de validation : " + bindingResult.getFieldError().getDefaultMessage());
+        }else {
+            questionEvaluationService.save(newQuestion);
+            return ResponseEntity.status(201).body("question créé avec succès");
+        }
+        }catch (ErrorQuestionAlreadyExist ex)  {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        }
+    }
         Integer evaluation;
         Integer rubrique;
         String designation = requestBody.get("designation");
@@ -94,19 +147,21 @@ public class EvaluationRubriqueController {
         }
         //attacher la rubrique a l'evaluation
             if(rubeval!= null) return ResponseEntity.ok(rubeval);
-            return ResponseEntity.badRequest().body("Erreur lors de l'attachement de la rubrique a l'evaluation");
-    }
+            return ResponseEntity.badRequest().body("Erreur lors de l'attachement de la rubrique a l'evaluation");*/
 
 
-    /**
-     * exemple:
-     * localhost:8080/evaluations/rsnc/ordonner
-     *{
-	 *       "id": 61,
-	 *       "ordre": 2
-     *}
-     */
-    @PreAuthorize("hasRole('ENS')")
+
+
+
+/**
+ * exemple:
+ * localhost:8080/evaluations/rsnc/ordonner
+ *{
+ *       "id": 61,
+ *       "ordre": 2
+ *}
+ */
+    /*@PreAuthorize("hasRole('ENS')")
     @PutMapping("/rsnc/ordonner")
     public ResponseEntity<?> ordonner_rsnc(@RequestBody Map<String, String> requestBody) {
 
@@ -140,10 +195,10 @@ public class EvaluationRubriqueController {
         return ResponseEntity.ok(rubriqueEvaluation);
     }
 
-    /**
-     *   exemple:
-     *   localhost:8080/evaluations/rsnc/{idRubriqueEvaluation}
-     */
+    *//**
+ *   exemple:
+ *   localhost:8080/evaluations/rsnc/{idRubriqueEvaluation}
+ *//*
     @PreAuthorize("hasRole('ENS')")
     @DeleteMapping("/rsnc/{id}")
     public ResponseEntity<?> supprimer_rsnc(@PathVariable("id") Integer id) {
@@ -160,11 +215,11 @@ public class EvaluationRubriqueController {
         }
     }
 
-    /**
-     * exemple:
-     * http://localhost:8080/evaluations/rsnc
-     * @return
-     */
+    *//**
+ * exemple:
+ * http://localhost:8080/evaluations/rsnc
+ * @return
+ *//*
     @PreAuthorize("hasRole('ENS')")
     @GetMapping("/rsnc")
     public ResponseEntity<List<RubriqueEvaluation>> listAll() {
@@ -172,11 +227,11 @@ public class EvaluationRubriqueController {
         return ResponseEntity.ok(evaluationRubriqueService.getAll());
     }
 
-    /**
-     * exemple:
-     * http://localhost:8080/evaluations/rsnc/29
-     * @return
-     */
+    *//**
+ * exemple:
+ * http://localhost:8080/evaluations/rsnc/29
+ * @return
+ *//*
 
     @PreAuthorize("hasRole('ENS')")
     @GetMapping("/rsnc/{id}")
@@ -193,17 +248,14 @@ public class EvaluationRubriqueController {
         return ResponseEntity.ok(evaluationRubriqueService.getByRubriqueAndEval(rubrique,eval));
     }
 
-    /**
-     *   http://localhost:8080/evaluations/rsnc/findbyeval?ideval=1
-     */
+    *//**
+ *   http://localhost:8080/evaluations/rsnc/findbyeval?ideval=1
+ *//*
     @PreAuthorize("hasRole('ENS')")
     @GetMapping("/rsnc/findbyeval")
     public ResponseEntity<List<RubriqueEvaluation>> getByEval(@RequestParam("ideval") Integer ideval){
 
         Evaluation eval = evaluationService.findById(ideval);
         return ResponseEntity.ok(evaluationRubriqueService.getRubriqueByEval(eval));
-    }
-
-}
-
+    }*/
 

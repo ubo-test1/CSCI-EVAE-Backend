@@ -1,7 +1,6 @@
 package com.back.csaback.Controllers;
 
 import com.back.csaback.DTO.EvaDTO;
-import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
 import com.back.csaback.Models.*;
 import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Repositories.EvaluationRepository;
@@ -15,16 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.tools.Tool;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.HashMap;
-
-import static java.lang.Integer.parseInt;
-
 @RestController
 @RequestMapping("eva")
 @CrossOrigin
@@ -90,13 +81,12 @@ public class EvaluationController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
     @PreAuthorize("hasRole('ETU')")
     @GetMapping("getByPro")
     public ResponseEntity<?> getByPro(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
         try {
             Etudiant e = ttip.getEtudFromToken(auth);
-            return ResponseEntity.ok(es.findAllByPromo(e));
+            return ResponseEntity.ok(es.getAllEvaluations(e));
         }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

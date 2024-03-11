@@ -1,9 +1,15 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.Exceptions.ErrorEvaluationNoOuverte;
+import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
+import com.back.csaback.Exceptions.ErrorRubriqueEvaluationAlreadyExist;
 import com.back.csaback.Models.Evaluation;
+import com.back.csaback.Models.QuestionEvaluation;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Models.RubriqueEvaluation;
+import com.back.csaback.Repositories.EvaluationRepository;
 import com.back.csaback.Repositories.RubriqueEvaluationRepository;
+import com.back.csaback.Repositories.RubriqueRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,45 +23,23 @@ public class EvaluationRubriqueService {
     private RubriqueEvaluationRepository rubriqueEvaluationRepository;
 
     @Autowired
-    private EvaluationService evaluationService;
+    private EvaluationRepository evaluationRepository;
 
     @Autowired
-    private RubriqueService rubriqueService;
+    private RubriqueRepository rubriqueRepository;
 
-    public EvaluationRubriqueService(RubriqueEvaluationRepository rubriqueEvaluationRepository) {
-        this.rubriqueEvaluationRepository = rubriqueEvaluationRepository;
+
+
+
+    public RubriqueEvaluation save(RubriqueEvaluation newRubriqueEvaluation) {
+        if(evaluationRepository.findByCustomQuery(newRubriqueEvaluation.getIdEvaluation().getId()).isEmpty() ) throw new EntityNotFoundException("L'evaluation choisie n'existe pas !");
+        if (!Evaluation_EncoursElaboration(newRubriqueEvaluation.getIdEvaluation().getId())) throw new ErrorEvaluationNoOuverte("l'evaluation n'est pas en cours d'elaboration");
+        if(rubriqueRepository.findById(newRubriqueEvaluation.getIdRubrique().getId()).isEmpty() ) throw new EntityNotFoundException("La rubrique choisie n'existe pas !");
+        if (rubriqueEvaluationRepository.existsRubriqueEvaluationByIdRubriqueAndIdEvaluation(newRubriqueEvaluation.getIdRubrique(),newRubriqueEvaluation.getIdEvaluation())) throw new ErrorRubriqueEvaluationAlreadyExist("La rubrique choisie existe deéja !!");
+
+        else   return rubriqueEvaluationRepository.save(newRubriqueEvaluation);
     }
-
-    public RubriqueEvaluation attachRubriqueToEval(Integer evaluationId, Integer rubriqueId, String designation){
-
-        //RubriqueEvaluation r = getByIdRubriqueAndIdEval(rubriqueId,evaluationId);
-        //if(r!=null) return null;
-
-        RubriqueEvaluation rubriqueEvaluation = new RubriqueEvaluation();
-        Evaluation eval = evaluationService.findById(evaluationId);
-        Rubrique rubrique = rubriqueService.findById(rubriqueId);
-
-        List<RubriqueEvaluation> list = getRubriqueByEval(eval);
-        int pos = list.size()+1;
-
-        String etat = eval.getEtat();
-        if (!etat.equals("ELA")) throw new IllegalStateException();
-
-
-        if(rubrique ==null || eval == null) throw new NullPointerException();
-
-        rubriqueEvaluation.setIdEvaluation(eval);
-        rubriqueEvaluation.setIdRubrique(rubrique);
-        rubriqueEvaluation.setOrdre((short)pos);
-        rubriqueEvaluation.setDesignation(designation);
-
-        return rubriqueEvaluationRepository.save(rubriqueEvaluation);
-    }
-    public RubriqueEvaluation attachRubriqueToEval(Integer evaluationId, Integer rubriqueId, short ordre) {
-        return attachRubriqueToEval(evaluationId,rubriqueId,null);
-    }
-
-
+    /*
     public void detachRubriqueFromEval(Integer idRubriqueEvaluation){
         Optional<RubriqueEvaluation> rubriqueEvaluation = rubriqueEvaluationRepository.findById(idRubriqueEvaluation);
         if(rubriqueEvaluation.isEmpty()) throw new EntityNotFoundException();
@@ -121,5 +105,30 @@ public class EvaluationRubriqueService {
         public List<RubriqueEvaluation> getRubriqueByEval(Evaluation evaluation){
             List<RubriqueEvaluation> r = rubriqueEvaluationRepository.findByEvaluation(evaluation);
         return r;
+    }*/
+    public void delete(Integer id) {
+        RubriqueEvaluation rubriqueToDelete =findById(id);
+       /* if (rubriqueToDelete != null) {
+            rubriqueEvaluationRepository.delete(rubriqueToDelete);
+        } else {
+            throw new IllegalArgumentException("La question avec l'ID " + id + " n'existe pas");
+        }*/
+        rubriqueEvaluationRepository.delete(rubriqueToDelete);
+
+    }
+
+    public boolean Evaluation_EncoursElaboration(Integer id){
+        return Objects.equals(evaluationRepository.findByCustomQuery(id).get().getEtat(), "ELA");
+    }
+    public RubriqueEvaluation findById(Integer id) {
+        return rubriqueEvaluationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("La rubrique evaluation avec l'ID " + id + " n'existe pas."));
+    }
+
+    public List<RubriqueEvaluation>  getAll(){return rubriqueEvaluationRepository.findAll(); }
+
+    public RubriqueEvaluation update(RubriqueEvaluation rubriqueEvaluation) {
+        //findById(questionEvaluation.getId());
+        return rubriqueEvaluationRepository.save(rubriqueEvaluation);
     }
 }

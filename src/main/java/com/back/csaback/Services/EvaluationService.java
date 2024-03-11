@@ -1,5 +1,6 @@
 package com.back.csaback.Services;
 
+import com.back.csaback.DTO.EvaEtudiantReponduDTO;
 import com.back.csaback.Models.*;
 import com.back.csaback.Repositories.*;
 import com.back.csaback.DTO.EvaluationDetails;
@@ -63,9 +64,7 @@ public class EvaluationService {
             e.printStackTrace();
             return null;
         }
-
     }
-
     public EvaluationDetails ConsulterEvaluation(Evaluation evaluation){
         try{
             EvaluationDetails ret = new EvaluationDetails();
@@ -101,6 +100,14 @@ public class EvaluationService {
     public List<Evaluation> findAllByPromo(Etudiant e){
         return er.findAllByPromotionAndNotEtatELA(e.getPromotion());
     }
+    public  List<EvaEtudiantReponduDTO> getAllEvaluations(Etudiant etudiant){
+        List<EvaEtudiantReponduDTO> evaEtudiantRepondusDTO = new ArrayList<>();
+        for (Evaluation eva:findAllByPromo(etudiant)){
+            if(reponseEvaluationRepository.existsByIdEvaluation(eva)) evaEtudiantRepondusDTO.add(new EvaEtudiantReponduDTO(true,eva));
+            else evaEtudiantRepondusDTO.add(new EvaEtudiantReponduDTO(false,eva));
+        }
+    return evaEtudiantRepondusDTO;
+    }
 
     public Boolean isClosedRep(Integer e){
         return !er.findById(e).get().getEtat().equals("DIS");
@@ -127,13 +134,16 @@ public class EvaluationService {
         }
     }
     public Evaluation createEvaluation(Evaluation evaluation){
-        if(promotionRepository.findById(evaluation.getPromotion().getId()).isEmpty() || evaluation.getPromotion().getId()==null) throw new EntityNotFoundException("La promotion choisie n'existe pas");
-        if(uniteEnseignementRepository.findById(evaluation.getUniteEnseignement().getId()).isEmpty()| evaluation.getPromotion().getId()==null) throw new EntityNotFoundException("L'unité enseignement choisie n'existe pas");
-        if(enseignantRepository.findById(evaluation.getNoEnseignant().getId()).isEmpty()| evaluation.getPromotion().getId()==null) throw new EntityNotFoundException("l'enseignant choisie n'existe pas");
-        if (evaluation.getElementConstitutif()!=null && (elementConstitutifRepository.findById(evaluation.getElementConstitutif().getId()).isEmpty())) throw new EntityNotFoundException("l'element constitutif choisie n'existe pas");
+        if(evaluation.getPromotion().getId()==null || promotionRepository.findById(evaluation.getPromotion().getId()).isEmpty() ) throw new EntityNotFoundException("La promotion choisie n'existe pas");
+        if(evaluation.getPromotion().getId()==null || uniteEnseignementRepository.findById(evaluation.getUniteEnseignement().getId()).isEmpty()) throw new EntityNotFoundException("L'unité enseignement choisie n'existe pas");
+        if(evaluation.getPromotion().getId()==null || enseignantRepository.findById(evaluation.getNoEnseignant().getId()).isEmpty()) throw new EntityNotFoundException("l'enseignant choisie n'existe pas");
+        if (evaluation.getElementConstitutif()!=null && (evaluation.getElementConstitutif().getId()==null || (!Objects.equals(evaluation.getUniteEnseignement().getId().getCodeFormation(), evaluation.getElementConstitutif().getId().getCodeFormation())) || (!Objects.equals(evaluation.getUniteEnseignement().getId().getCodeUe(), evaluation.getElementConstitutif().getId().getCodeUe()))|| elementConstitutifRepository.findById(evaluation.getElementConstitutif().getId()).isEmpty())) throw new EntityNotFoundException("l'element constitutif choisie n'existe pas");
         if(evaluation.getNoEvaluation()==null) evaluation.setNoEvaluation((short) (AttribuerNoEnseignant()+1));
         return er.save(evaluation);
     }
     Short AttribuerNoEnseignant(){if(er.findNoEvaluationMax()==null) return  1; else return  er.findNoEvaluationMax() ;}
+
+
 }
+
 

@@ -1,5 +1,6 @@
 package com.back.csaback.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,10 +20,11 @@ public class RubriqueEvaluation {
     @Column(name = "ID_RUBRIQUE_EVALUATION", nullable = false)
     private Integer id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    //@OnDelete(action = OnDeleteAction.RESTRICT)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
+    @NotNull(message = "il faut choisir une evaluation")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+   // @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ID_EVALUATION", nullable = false)
     private Evaluation idEvaluation;
 
@@ -31,7 +33,7 @@ public class RubriqueEvaluation {
     @JoinColumn(name = "ID_RUBRIQUE")
     private Rubrique idRubrique;
 
-    @NotNull
+    @NotNull(message = "il faut choisir un ordre")
     @Column(name = "ORDRE", nullable = false)
     private Short ordre;
 

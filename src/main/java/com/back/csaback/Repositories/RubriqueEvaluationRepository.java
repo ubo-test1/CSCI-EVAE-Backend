@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface RubriqueEvaluationRepository extends JpaRepository<RubriqueEvaluation,Integer> {
     List<RubriqueEvaluation> findAllByIdRubrique(Rubrique idRubrique);
     List<RubriqueEvaluation> findAllByIdEvaluation(Evaluation evaluation);
+    boolean existsRubriqueEvaluationByIdRubriqueAndIdEvaluation(Rubrique rubrique,Evaluation evaluation);
 
     @Query("SELECT re FROM RubriqueEvaluation re WHERE re.idEvaluation = :evaluation")
     List<RubriqueEvaluation> findByEvaluation(@Param("evaluation") Evaluation eval);
