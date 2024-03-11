@@ -126,9 +126,17 @@ public class EvaluationRubriqueController {
             return  ResponseEntity.ok(evaluationRubriqueService.findAllByIdEvaluation(id));
         }catch (EntityNotFoundException ex){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
-
     }
 
+    /**
+     * {
+     *     "eva" : 1,
+     *     "rub" : 2
+     * }
+     * @param auth
+     * @param req
+     * @return
+     */
     @PreAuthorize("hasRole('ENS')")
     @PostMapping("addRub")
     public ResponseEntity<?> ajouterRub(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @RequestBody HashMap<String,String> req){
