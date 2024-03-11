@@ -1,6 +1,7 @@
 package com.back.csaback.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "EVALUATION")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Evaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "eva_generator")
@@ -36,7 +38,6 @@ public class Evaluation {
     })
     @OnDelete(action = OnDeleteAction.RESTRICT)
     private UniteEnseignement uniteEnseignement;
-
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "CODE_FORMATION", referencedColumnName = "CODE_FORMATION")),

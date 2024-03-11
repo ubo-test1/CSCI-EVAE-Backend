@@ -18,17 +18,18 @@ public class RubriqueService {
 
     @Autowired
     private RubriqueRepository rr;
-
     @Autowired
     private RubQuesRepository rqr;
-
     @Autowired
     private EvaRubRepository err;
     @Autowired
     private EvaluationRepository eer;
-
+    @Autowired
+    private RubriqueEvaluationRepository rer;
     @Autowired
     private QuestionRepository qr;
+    @Autowired
+    private QuestionEvaluationRepository qer;
 
     public List<Question> getRubQuest(Rubrique r) {
         try {
@@ -159,7 +160,30 @@ public class RubriqueService {
         }
     }
 
-    Boolean checkQAssigned(Integer id, Question q){
+    public Boolean checkQAssigned(Integer id, Question q){
         return rqr.findQuestionsByRubriqueId(id).contains(q);
+    }
+
+    public short getLastOrdreRE(Evaluation e){
+        if(rer.findLastOrdreByEvaluationId(e.getId()) == 0) return 1;
+        return rer.findLastOrdreByEvaluationId(e.getId());
+    }
+
+    public void migrateQuestions(RubriqueEvaluation re, Rubrique r){
+        List<Question> lq = rqr.findQuestionsByRubriqueId(r.getId());
+        for(Question q : lq){
+            QuestionEvaluation temp = new QuestionEvaluation();
+            temp.setIdRubriqueEvaluation(re);
+            temp.setIdQuestion(q);
+            temp.setIdQualificatif(q.getIdQualificatif());
+            temp.setOrdre((short) (qer.findLatestOrdreByRubriqueEvaluationId(re.getIdRubrique().getId())+1));
+            temp.setIntitule(q.getIntitule());
+            qer.save(temp);
+        }
+    }
+
+    public void deleteQuestionsRub(RubriqueEvaluation re){
+        qer.deleteAllByIdRubriqueEvaluation(re.getId());
+        rer.delete(re);
     }
 }

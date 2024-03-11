@@ -5,6 +5,7 @@ import com.back.csaback.Models.Evaluation;
 import com.back.csaback.Models.ReponseEvaluation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.sound.midi.MidiEvent;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +14,6 @@ public interface ReponseEvaluationRepository extends JpaRepository<ReponseEvalua
     List<ReponseEvaluation> findAllByNoEtudiantAndIdEvaluation(Etudiant noEtudiant, Evaluation idEvaluation);
 
     public List<ReponseEvaluation> findAllByIdEvaluation(Evaluation e);
+    boolean existsByIdEvaluation(Evaluation evaluation);
+
 }

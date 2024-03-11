@@ -33,5 +33,13 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorModel> QualificatifExistExceptionHandler(QualificatifExistException exception){
         return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "try another couple qualificatif"));
     }
+    @ExceptionHandler(ErrorRubriqueEvaluationAlreadyExist.class)
+    public ResponseEntity<ErrorModel> QualificatifExistExceptionHandler(ErrorRubriqueEvaluationAlreadyExist exception){
+        return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "try another rubrique"));
+    }
+    @ExceptionHandler(ErrorEvaluationNoOuverte.class)
+    public ResponseEntity<ErrorModel> QualificatifExistExceptionHandler(ErrorEvaluationNoOuverte exception){
+        return ResponseEntity.status(422).body(new ErrorModel(422L, exception.getMessage(), "il faut choisir une autre evaluation avec une etat en cours oub changer l'etat de l'evaluation actuelle"));
+    }
 
 }

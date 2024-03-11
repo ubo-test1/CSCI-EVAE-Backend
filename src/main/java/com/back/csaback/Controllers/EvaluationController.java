@@ -1,10 +1,10 @@
 package com.back.csaback.Controllers;
 
 import com.back.csaback.DTO.EvaDTO;
-import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
 import com.back.csaback.Models.*;
 import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Repositories.EvaluationRepository;
+import com.back.csaback.Repositories.RubriqueEvaluationRepository;
 import com.back.csaback.Services.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.tools.Tool;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.HashMap;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
+import java.util.ArrayList;
+import java.util.List;
 @RestController
 @RequestMapping("eva")
 @CrossOrigin
@@ -38,12 +37,14 @@ public class EvaluationController {
     private ElementConstitutifService elementConstitutifService;
     @Autowired
     private PromotionService promotionService;
-
     @Autowired
     private EvaluationService es;
-
+    @Autowired
+    private RubriqueService rs;
     @Autowired
     private Tooltip ttip;
+    @Autowired
+    private RubriqueEvaluationRepository rer;
 
     @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("getAll")
@@ -90,13 +91,12 @@ public class EvaluationController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
     @PreAuthorize("hasRole('ETU')")
     @GetMapping("getByPro")
     public ResponseEntity<?> getByPro(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
         try {
             Etudiant e = ttip.getEtudFromToken(auth);
-            return ResponseEntity.ok(es.findAllByPromo(e));
+            return ResponseEntity.ok(es.getAllEvaluations(e));
         }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
