@@ -11,4 +11,5 @@ import java.util.List;
 public interface EvaRubRepository extends JpaRepository<RubriqueEvaluation,Integer> {
     List<RubriqueEvaluation> findAllByIdEvaluation(Evaluation idEvaluation);
     List<RubriqueEvaluation> findAllByIdRubrique(Rubrique idRubrique);
+    List<RubriqueEvaluation> findAllByIdEvaluationOrderByOrdre(Evaluation idEvaluation);
 }
