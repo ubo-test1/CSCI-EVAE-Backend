@@ -56,7 +56,10 @@ public class EvaluationService {
             List<RubriqueEvaluation> lre = err.findAllByIdEvaluation(eva);
 
             for(RubriqueEvaluation q : lre){
-                ret.add(q.getIdRubrique());
+                Rubrique temp = q.getIdRubrique();
+                temp.setOrdre(Long.valueOf(q.getOrdre()));
+                temp.setId(q.getId());
+                ret.add(temp);
             }
 
             return ret;

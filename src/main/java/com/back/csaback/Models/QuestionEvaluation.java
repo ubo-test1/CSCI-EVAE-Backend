@@ -23,8 +23,7 @@ public class QuestionEvaluation {
 
     @NotNull(message = "il faut preciser une rubrique")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    //@OnDelete(action = OnDeleteAction.RESTRICT)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "ID_RUBRIQUE_EVALUATION", nullable = false)
     private RubriqueEvaluation idRubriqueEvaluation;
 

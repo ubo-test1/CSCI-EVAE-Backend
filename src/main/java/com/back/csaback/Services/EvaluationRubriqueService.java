@@ -7,10 +7,7 @@ import com.back.csaback.Models.Evaluation;
 import com.back.csaback.Models.QuestionEvaluation;
 import com.back.csaback.Models.Rubrique;
 import com.back.csaback.Models.RubriqueEvaluation;
-import com.back.csaback.Repositories.EvaluationRepository;
-import com.back.csaback.Repositories.QuestionRepository;
-import com.back.csaback.Repositories.RubriqueEvaluationRepository;
-import com.back.csaback.Repositories.RubriqueRepository;
+import com.back.csaback.Repositories.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class EvaluationRubriqueService {
     private RubriqueRepository rubriqueRepository;
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private EvaRubRepository err;
 
 
 
@@ -137,5 +136,15 @@ public class EvaluationRubriqueService {
         Optional<Evaluation> evaluation= evaluationRepository.findByCustomQuery(id);
         if(evaluation.isEmpty()) throw new EntityNotFoundException("Evaluation non trouvée !!");
         return rubriqueEvaluationRepository.findAllByIdEvaluation(evaluation.get());
+    }
+
+    public void pruneOrdre(Evaluation e){
+        List<RubriqueEvaluation> lre = err.findAllByIdEvaluationOrderByOrdre(e);
+        int i = 1;
+        for(RubriqueEvaluation r : lre){
+            r.setOrdre((short) i);
+            i++;
+        }
+        err.saveAll(lre);
     }
 }

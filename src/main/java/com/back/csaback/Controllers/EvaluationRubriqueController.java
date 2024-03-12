@@ -3,11 +3,13 @@ package com.back.csaback.Controllers;
 import com.back.csaback.DTO.RubriqueEvaluationDTO;
 import com.back.csaback.Exceptions.ErrorRubriqueEvaluationAlreadyExist;
 import com.back.csaback.Models.*;
+import com.back.csaback.Repositories.QuestionEvaluationRepository;
 import com.back.csaback.Repositories.RubriqueEvaluationRepository;
 import com.back.csaback.Services.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -34,6 +36,8 @@ public class EvaluationRubriqueController {
     private RubriqueService rs;
     @Autowired
     private RubriqueEvaluationRepository rer;
+    @Autowired
+    private QuestionEvaluationRepository qer;
 
  /*   {
         "idRubrique": {
@@ -160,11 +164,17 @@ public class EvaluationRubriqueController {
     @PreAuthorize("hasRole('ENS')")
     @GetMapping("delRub/{id}")
     public ResponseEntity<?> delRub(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @PathVariable("id") int id_rubEva){
-        try{
+        try {
             RubriqueEvaluation r = rer.findById(id_rubEva).get();
-            if(!es.checkEvaOwnership(ttip.getUserFromToken(auth),r)) return ResponseEntity.badRequest().body("L'evaluation n'appartient pas a l'enseignant");
+            if (!es.checkEvaOwnership(ttip.getUserFromToken(auth), r))
+                return ResponseEntity.badRequest().body("L'evaluation n'appartient pas a l'enseignant");
+            qer.deleteAllByIdRubriqueEvaluation(r.getId());
             rs.deleteQuestionsRub(r);
+            evaluationRubriqueService.pruneOrdre(r.getIdEvaluation());
             return ResponseEntity.ok("Supprime avec succes");
+        }catch(DataIntegrityViolationException e){
+            e.printStackTrace();
+            return ResponseEntity.status(401).body("Rubrique liee, suppression impossible!");
         }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
