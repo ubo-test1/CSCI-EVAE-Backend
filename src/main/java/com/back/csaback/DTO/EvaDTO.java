@@ -26,6 +26,10 @@ public class EvaDTO {
 
     private LocalDate finReponse;
 
+    private String Code_UE;
+
+    private String Code_EC;
+
     public EvaDTO(){
 
     }
@@ -38,5 +42,8 @@ public class EvaDTO {
         this.periode = e.getPeriode();
         this.debutReponse = e.getDebutReponse();
         this.finReponse = e.getFinReponse();
+        if(e.getElementConstitutif()==null) this.Code_EC=null;
+        else this.Code_EC=e.getElementConstitutif().getId().getCodeEc();
+        this.Code_UE=e.getUniteEnseignement().getId().getCodeUe();
     }
 }

@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("eva")
 @CrossOrigin
 public class EvaluationController {
-
     @Autowired
     private EnseignantService enseignantService;
     @Autowired
