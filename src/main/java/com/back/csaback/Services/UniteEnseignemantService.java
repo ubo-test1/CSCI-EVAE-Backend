@@ -13,6 +13,7 @@ import java.util.List;
 public class UniteEnseignemantService {
     @Autowired
     UniteEnseignementRepository uniteEnseignementRepository;
+
     public List<UniteEnseignement> getAllByEnseignant(Enseignant e){
         return uniteEnseignementRepository.findUniteEnseignementsByNoEnseignant(e);
     }
