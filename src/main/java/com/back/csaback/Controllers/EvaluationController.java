@@ -1,6 +1,7 @@
 package com.back.csaback.Controllers;
 
 import com.back.csaback.DTO.EvaDTO;
+import com.back.csaback.DTO.EvaluationWorkflowDTO;
 import com.back.csaback.Models.*;
 import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Repositories.EvaluationRepository;
@@ -216,8 +217,6 @@ public class EvaluationController {
     }catch (EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()) ;
     }
-
-
  }
 
     /**
@@ -269,6 +268,29 @@ public class EvaluationController {
             }
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()) ;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+  /*  {
+        "id":444,
+            "etat":"CLO"
+    } */   @PreAuthorize("hasRole('ENS')")
+    @PutMapping("/updateWorkflow")
+    public ResponseEntity<?> updateEtat(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @RequestBody EvaluationWorkflowDTO evaluationWorkflowDTO) {
+        try {
+            if (evaluationWorkflowDTO.getEtat()==null) throw new IllegalArgumentException("etat obligatoire !!");
+            if (evaluationWorkflowDTO.getId()==null) throw new IllegalArgumentException("id obligatoire !!");
+            else{
+                Evaluation evaluation=es.findById(evaluationWorkflowDTO.getId());   if(evaluation==null) throw new EntityNotFoundException("cette evaluation n'existe pas");
+              evaluation.setEtat(evaluationWorkflowDTO.getEtat());
+                Evaluation updatedEvaluation = es.updateEvaluation(evaluation);
+                return ResponseEntity.ok(updatedEvaluation);
+            }
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()) ;
+        }catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
