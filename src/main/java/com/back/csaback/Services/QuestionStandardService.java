@@ -64,10 +64,11 @@ public class QuestionStandardService {
         }
     }
     public Question update(Question ques) {
-        findById(ques.getId());
+        Question question=findById(ques.getId());
         if (isQuestionAssociated(ques.getId())) {
             throw new ErrorQuestionAssociated("Cette question est déjà liée à une rubrique.");
-        } else {
+        }if((!Objects.equals(question.getIntitule().toLowerCase(), ques.getIntitule().toLowerCase())) && (questionRepository.existsByIntitule(ques.getIntitule()))) throw new IllegalArgumentException("Il existe deja une question avec l'intitulé ");
+        else {
             return questionRepository.save(ques);
         }
     }

@@ -1,5 +1,6 @@
 package com.back.csaback.Repositories;
 
+import com.back.csaback.Models.Enseignant;
 import com.back.csaback.Models.Evaluation;
 import com.back.csaback.Models.Promotion;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,7 @@ public interface EvaluationRepository extends JpaRepository<Evaluation,Integer> 
     Short findNoEvaluationMax();
     @Query("SELECT e FROM Evaluation e WHERE e.id = :id")
     Optional<Evaluation> findByCustomQuery(@Param("id") Integer id);
+
+    List<Evaluation> findAllByNoEnseignant(Enseignant noEnseignant);
 
 }

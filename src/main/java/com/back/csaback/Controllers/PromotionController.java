@@ -6,7 +6,9 @@ import com.back.csaback.Models.Evaluation;
 import com.back.csaback.Models.Promotion;
 import com.back.csaback.Services.EnseignantService;
 import com.back.csaback.Services.PromotionService;
+import com.back.csaback.Services.Tooltip;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +25,14 @@ public class PromotionController {
     PromotionService promotionService;
     @Autowired
     EnseignantService enseignantService;
+    @Autowired
+    Tooltip ttip;
 
     //@PreAuthorize("hasRole('ADM') or hasRole('ENS')")
-    @GetMapping("/getAll/{noEnseignant}")
-    public ResponseEntity<List<Promotion>> getAllbyEnseignant(@PathVariable Integer noEnseignant) {
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Promotion>> getAllbyEnseignant(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth) {
         try {
-            Enseignant enseignant = enseignantService.findById(noEnseignant).orElse(null);
+            Enseignant enseignant=ttip.getUserFromToken(auth);
             if (enseignant == null) {
                 return ResponseEntity.notFound().build();
             }
