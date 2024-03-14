@@ -20,7 +20,7 @@ public class ElementConstitutifService {
     public Optional<ElementConstitutif> findById(ElementConstitutifId id) {
         return elementConstitutifRepository.findById(id);
     }
-    public List<ElementConstitutif> getAllByEnseigant(UniteEnseignement ue){
-        return elementConstitutifRepository.findElementConstitutifsByUniteEnseignement(ue);
+    public List<ElementConstitutif> getAllByUeAndEnseigant(UniteEnseignement ue,Enseignant e){
+        return elementConstitutifRepository.findElementConstitutifsByUniteEnseignementAndNoEnseignant(ue,e);
     }
 }

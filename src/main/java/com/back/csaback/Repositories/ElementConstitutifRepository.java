@@ -12,5 +12,5 @@ import java.util.Optional;
 
 public interface ElementConstitutifRepository extends JpaRepository<ElementConstitutif, ElementConstitutifId> {
     Optional<ElementConstitutif> findById(ElementConstitutifId id);
-    List<ElementConstitutif> findElementConstitutifsByUniteEnseignement(UniteEnseignement uniteEnseignement);
+    List<ElementConstitutif> findElementConstitutifsByUniteEnseignementAndNoEnseignant(@NotNull UniteEnseignement uniteEnseignement, @NotNull Enseignant noEnseignant);
 }

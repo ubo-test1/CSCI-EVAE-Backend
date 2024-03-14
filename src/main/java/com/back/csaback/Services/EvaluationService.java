@@ -41,11 +41,11 @@ public class EvaluationService {
     private ReponseQuestionRepository reponseQuestionRepository;
     @Autowired
     private DroitRepository droitRepository;
-    public List<Evaluation> getAll() {
+    public List<Evaluation> getAll(Enseignant e){
         try {
-            return er.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+            return er.findAllByNoEnseignant( e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -114,7 +114,7 @@ public class EvaluationService {
     }
 
     public Evaluation updateEvaluation(Evaluation q) throws Exception {
-        if(er.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Evaluation n'existe pas");
+        if(findById(q.getId())==null) throw new EntityNotFoundException("Evaluation n'existe pas");
         // if(q.getEtat()=="CLO") throw new Exception("Cette evaluation est cloturée");
         return createEvaluation(q);
     }

@@ -38,11 +38,12 @@ public class EvaluationController {
 
     @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("getAll")
-    public ResponseEntity<List<EvaDTO>> getAll(){
+    public ResponseEntity<List<EvaDTO>> getAll(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
         try{
             List<EvaDTO> ret = new ArrayList<>();
             EvaDTO tmp;
-            for(Evaluation e : es.getAll()){
+            Enseignant en = ttip.getUserFromToken(auth);
+            for(Evaluation e : es.getAll(en)){
                 tmp = new EvaDTO(e);
                 ret.add(tmp);
             }
