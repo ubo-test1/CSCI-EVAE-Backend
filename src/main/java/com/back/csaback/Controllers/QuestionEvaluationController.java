@@ -1,8 +1,16 @@
 package com.back.csaback.Controllers;
 
 
+import com.back.csaback.DTO.EvaRubDetails;
+import com.back.csaback.DTO.EvaluationDetails;
 import com.back.csaback.Exceptions.ErrorQuestionAlreadyExist;
+import com.back.csaback.Models.Evaluation;
 import com.back.csaback.Models.QuestionEvaluation;
+import com.back.csaback.Models.RubriqueEvaluation;
+import com.back.csaback.Repositories.EvaRubRepository;
+import com.back.csaback.Repositories.QuestionEvaluationRepository;
+import com.back.csaback.Repositories.QuestionRepository;
+import com.back.csaback.Services.EvaluationService;
 import com.back.csaback.Services.QuestionEvaluationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -12,7 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 /**
  * Contrôleur REST responsable de la gestion des requêtes liées aux questions evaluation.
  * Ce contrôleur offre des endpoints pour la création, la récupération, l'ordonnancement'et la suppression de questions des evaluations,
@@ -27,6 +39,15 @@ import java.util.List;
 public class QuestionEvaluationController {
     @Autowired
     QuestionEvaluationService questionEvaluationService;
+
+    @Autowired
+    EvaluationService es;
+    @Autowired
+    private QuestionEvaluationRepository qer;
+    @Autowired
+    private QuestionRepository qr;
+    @Autowired
+    private EvaRubRepository err;
 
     /**
      *
@@ -115,6 +136,55 @@ public class QuestionEvaluationController {
             return ResponseEntity.ok(questionEvaluations);
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ENS') || hasRole('ADM')")
+    @GetMapping("consulterInfo/{id}")
+    public ResponseEntity<EvaRubDetails> consulterInfo(@PathVariable("id") Integer id){
+        try{
+            Evaluation e = es.findById(id);
+            if(e == null )throw new IllegalArgumentException("Evaluation introuvable");
+            EvaRubDetails ret = es.ConsulterEvaRub(e);
+            if(ret == null) throw new IllegalStateException("Erreur serveur");
+            return ResponseEntity.ok(ret);
+        }catch(IllegalArgumentException e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }catch(Exception ee){
+            ee.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * {
+     *     "id_rubEva": 1,
+     *     "qList": [
+     *          1,2,3..
+     *     ]
+     * }
+     * @param req
+     * @return
+     */
+    @PreAuthorize("hasRole('ENS') || hasRole('ETU')")
+    @PostMapping("add")
+    public ResponseEntity<?> add(@RequestBody HashMap<String, Object> req){
+        try{
+            int id = Integer.parseInt(""+req.get("id_rubEva"));
+            RubriqueEvaluation re = err.findById(id).get();
+            List<Integer> qList = (List<Integer>) req.get("qList");
+            for(int i : qList){
+                QuestionEvaluation tmp = new QuestionEvaluation();
+                tmp.setIdQuestion(qr.findById(i).get());
+                tmp.setIdRubriqueEvaluation(re);
+                tmp.setOrdre((short) (qer.findLatestOrdreByRubriqueEvaluationId(re.getId())+1));
+                qer.save(tmp);
+            }
+            return ResponseEntity.ok("Questions ajoutes avec succes");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
     }
 }

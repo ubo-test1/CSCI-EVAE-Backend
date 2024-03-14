@@ -1,10 +1,8 @@
 package com.back.csaback.Services;
 
-import com.back.csaback.DTO.EvaEtudiantReponduDTO;
+import com.back.csaback.DTO.*;
 import com.back.csaback.Models.*;
 import com.back.csaback.Repositories.*;
-import com.back.csaback.DTO.EvaluationDetails;
-import com.back.csaback.DTO.RubriqueDetails;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +39,8 @@ public class EvaluationService {
     private ReponseQuestionRepository reponseQuestionRepository;
     @Autowired
     private DroitRepository droitRepository;
+    @Autowired
+    private QuestionEvaluationRepository qer;
     public List<Evaluation> getAll() {
         try {
             return er.findAll();
@@ -157,6 +157,26 @@ public class EvaluationService {
     public boolean checkEvaOwnership(Enseignant e, RubriqueEvaluation re){
         if(re.getIdEvaluation().getNoEnseignant().getId() == e.getId()) return true;
         return false;
+    }
+
+    public EvaRubDetails ConsulterEvaRub(Evaluation evaluation){
+        try{
+            EvaRubDetails ret = new EvaRubDetails();
+            ret.setEvaluation(evaluation);
+            List<RubriqueEvaDetails> lrd = new ArrayList<>();
+            RubriqueEvaDetails tmp;
+            for(RubriqueEvaluation r : err.findAllByIdEvaluation(evaluation)){
+                tmp = new RubriqueEvaDetails();
+                tmp.setRubrique(r);
+                tmp.setQuestions(qer.findAllByidRubriqueEvaluation(r));
+                lrd.add(tmp);
+            }
+            ret.setRubriques(lrd);
+            return ret;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }
 
