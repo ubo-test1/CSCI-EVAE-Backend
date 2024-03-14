@@ -59,9 +59,6 @@ public class QualificatifService {
     public Qualificatif createQualificatif(Qualificatif qualificatif) {
         return qualificatifRepository.save(qualificatif);
     }
-
-
-
     public void deleteQualificatif(Integer qualificatifId) {
         if (isQualificatifAssociated(qualificatifId)) {
             throw new ErrorQualificatifAssociated("Le couple qualificatif est déjà utilisé dans une question et ne peut pas être supprimé.");
@@ -75,13 +72,10 @@ public class QualificatifService {
             }
         }
     }
-
-
-
-
     public Qualificatif updateQualificatif(Qualificatif q) {
-        if(qualificatifRepository.findById(q.getId()).isEmpty()) throw new EntityNotFoundException("Qualificatif n'existe pas");
+        Qualificatif qualificatif = findQualificationById(q.getId());
         if(this.isQualificatifAssociated(q.getId())) throw new ErrorQualificatifAssociated("Qualificatif associe a une question deja");
+        if(((!Objects.equals(qualificatif.getMaximal().toLowerCase(), q.getMaximal().toLowerCase())||(!Objects.equals(qualificatif.getMinimal().toLowerCase(), q.getMinimal().toLowerCase())) && (qualificatifRepository.existsByMinimalAndMaximal(q.getMinimal(),q.getMaximal()))))) throw new QualificatifExistException("Il existe deja un couple qualificatif avec ce maximale et  minimale ");
         return qualificatifRepository.save(q);
     }
 

@@ -107,16 +107,16 @@ public class QualificatifController {
                 Qualificatif updatedQualificatif= qualificatifService.updateQualificatif(qualificatif);
                 return ResponseEntity.ok(updatedQualificatif);
             } catch (ErrorQualificatifAssociated ex) {
-                ex.printStackTrace();
+
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
             } catch (IllegalArgumentException ex) {
-                ex.printStackTrace();
+
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }catch (EntityNotFoundException ex) {
-                ex.printStackTrace();
+
                 return ResponseEntity.notFound().build();
             }catch (QualificatifExistException ex) {
-                ex.printStackTrace();
+
                 return ResponseEntity.badRequest().body("Un autre couple qualificatif avec les mêmes valeurs minimal et maximal existe déjà.");
             }catch(Exception e){
                 e.printStackTrace();

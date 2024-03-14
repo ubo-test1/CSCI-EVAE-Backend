@@ -26,6 +26,14 @@ public class UniteEnseignementId implements Serializable {
     @Column(name = "CODE_UE", nullable = false, length = 8)
     private String codeUe;
 
+    public UniteEnseignementId(String codeFormation, String codeUe) {
+        this.codeFormation = codeFormation;
+        this.codeUe = codeUe;
+    }
+
+    public UniteEnseignementId() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

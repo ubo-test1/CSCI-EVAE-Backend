@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RubriqueService {
@@ -80,7 +81,14 @@ public class RubriqueService {
     }
 
     public Rubrique updateRub(Rubrique r) {
+        Rubrique rubrique = findById(Integer.parseInt(""+r.getId()));
+        if(!r.getType().equals("RBS") && !r.getType().equals("RBP")) throw new IllegalArgumentException("Type invalide");
+        System.out.println(((!Objects.equals(rubrique.getDesignation().toLowerCase(), r.getDesignation().toLowerCase()))));
         if (this.checkIfUsed(r)) throw new IllegalStateException("La rubrique est utilise dans une evaluation");
+        if((!Objects.equals(rubrique.getDesignation().toLowerCase(), r.getDesignation().toLowerCase())) && (rr.existsByDesignation(r.getDesignation()))) throw new IllegalArgumentException("Il existe deja une rubrique avec la designation");
+        rubrique.setType(r.getType());
+        if(r.getDesignation() != null) rubrique.setDesignation(r.getDesignation());
+        if(r.getOrdre() != null) rubrique.setOrdre(r.getOrdre());
         return rr.save(r);
     }
 
@@ -126,7 +134,7 @@ public class RubriqueService {
 
     public Rubrique findById(Integer id) {
         return rr.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("La question avec l'ID " + id + " n'existe pas."));
+                .orElseThrow(() -> new EntityNotFoundException("La rubrique avec l'ID " + id + " n'existe pas"));
     }
 
     public Rubrique saveRubrique(Rubrique rubrique) {
