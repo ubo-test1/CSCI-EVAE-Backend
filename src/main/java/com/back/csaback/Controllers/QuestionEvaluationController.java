@@ -139,7 +139,7 @@ public class QuestionEvaluationController {
         }
     }
 
-    @PreAuthorize("hasRole('ENS') || hasRole('ADM')")
+    @PreAuthorize("hasRole('ENS') || hasRole('ADM') || hasRole('ETU')")
     @GetMapping("consulterInfo/{id}")
     public ResponseEntity<EvaRubDetails> consulterInfo(@PathVariable("id") Integer id){
         try{
@@ -178,7 +178,11 @@ public class QuestionEvaluationController {
                 QuestionEvaluation tmp = new QuestionEvaluation();
                 tmp.setIdQuestion(qr.findById(i).get());
                 tmp.setIdRubriqueEvaluation(re);
-                tmp.setOrdre((short) (qer.findLatestOrdreByRubriqueEvaluationId(re.getId())+1));
+                if(qer.findLatestOrdreByRubriqueEvaluationId(re.getId())==null){
+                    tmp.setOrdre((short) 1);
+                }else{
+                    tmp.setOrdre((short) (qer.findLatestOrdreByRubriqueEvaluationId(re.getId())+1));
+                }
                 qer.save(tmp);
             }
             return ResponseEntity.ok("Questions ajoutes avec succes");
