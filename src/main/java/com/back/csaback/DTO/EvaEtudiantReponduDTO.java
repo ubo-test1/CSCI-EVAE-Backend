@@ -1,6 +1,7 @@
 package com.back.csaback.DTO;
 
 import com.back.csaback.Models.Evaluation;
+import com.back.csaback.Models.ReponseEvaluation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +14,5 @@ public class EvaEtudiantReponduDTO {
    }
    Boolean Repondu ;
    Evaluation evaluation;
+   ReponseEvaluation reponseEvaluation;
 }

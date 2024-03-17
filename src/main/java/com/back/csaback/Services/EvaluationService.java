@@ -43,6 +43,8 @@ public class EvaluationService {
     private DroitRepository droitRepository;
     @Autowired
     private QuestionEvaluationRepository qer;
+    @Autowired
+    private ReponseEvaluationRepository rer;
     public List<Evaluation> getAll(Enseignant e){
         try {
             return er.findAllByNoEnseignant( e);
@@ -109,7 +111,11 @@ public class EvaluationService {
     public  List<EvaEtudiantReponduDTO> getAllEvaluations(Etudiant etudiant){
         List<EvaEtudiantReponduDTO> evaEtudiantRepondusDTO = new ArrayList<>();
         for (Evaluation eva:findAllByPromo(etudiant)){
-            if(reponseEvaluationRepository.existsByIdEvaluation(eva)) evaEtudiantRepondusDTO.add(new EvaEtudiantReponduDTO(true,eva));
+            if(reponseEvaluationRepository.existsByIdEvaluation(eva)) {
+                EvaEtudiantReponduDTO temp = new EvaEtudiantReponduDTO(true,eva);
+                temp.setReponseEvaluation(rer.findAllByNoEtudiantAndIdEvaluation(etudiant,eva).get(0));
+                evaEtudiantRepondusDTO.add(temp);
+            }
             else evaEtudiantRepondusDTO.add(new EvaEtudiantReponduDTO(false,eva));
         }
     return evaEtudiantRepondusDTO;
