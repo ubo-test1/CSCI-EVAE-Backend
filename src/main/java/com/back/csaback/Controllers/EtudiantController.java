@@ -20,10 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("etu")
 public class EtudiantController {
 
@@ -54,21 +57,21 @@ public class EtudiantController {
         return "oui";
     }
     /**
-     * {
-     *     "idEva" : 1,
-     *     "commentaire" : "oui oui",
-     *     "rList":
-     *          [
-         *          {
-         *              "id_qev" : "1",
-         *              "pos" : "2"
-         *          },
-         *          {
-         *               "id_qev" : "2",
-         *               "pos" : "3"
-         *          }
-     *          ]
-     * }
+         * {
+         *     "idEva" : 1,
+         *     "commentaire" : "oui oui",
+         *     "rList":
+         *          [
+             *          {
+             *              "id_qev" : "1",
+             *              "pos" : "2"
+             *          },
+             *          {
+             *               "id_qev" : "2",
+             *               "pos" : "3"
+             *          }
+         *          ]
+         * }
      * @param auth
      * @param req
      * @return
@@ -77,7 +80,7 @@ public class EtudiantController {
     @PostMapping("repondre")
     public ResponseEntity<?> repondre(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @RequestBody HashMap<String, Object> req){
         try {
-            int idEva = (int) (req.get("idEva"));
+            int idEva = Integer.parseInt(""+req.get("idEva"));
 
             if(ets.isDejaSoumis(ttip.getEtudFromToken(auth), idEva)) throw new ErrorReponseExists("L'etudiant a deja soumis une reponse");
             if(es.isClosedRep(idEva)) throw new ErrorEvaluationNoOuverte("Evaluation non mise a disposition");
@@ -90,40 +93,52 @@ public class EtudiantController {
             }
             re = rer.save(re);
 
-            for (HashMap<String, String> l : (List<HashMap<String, String>>) req.get("rList")) {
-                ReponseQuestion temp = new ReponseQuestion();
-                temp.setIdReponseEvaluation(re);
-                temp.setIdQuestionEvaluation(qer.findById(Integer.parseInt(l.get("id_qev"))).get());
-                temp.setPositionnement(Long.parseLong(l.get("pos")));
-                ReponseQuestionId tempid = new ReponseQuestionId();
-                tempid.setIdQuestionEvaluation(temp.getIdQuestionEvaluation().getId());
-                tempid.setIdReponseEvaluation(re.getId());
-                if(rqr.findById(tempid).isPresent()) throw new ErrorDuplicateReponse("Reponse duplique  ");
-                temp.setId(tempid);
-                rqr.save(temp);
+            List<HashMap<String,String>> rlist = (List<HashMap<String, String>>) req.get("rList");
+
+            if(!rlist.isEmpty()){
+                for (HashMap<String, String> l : rlist) {
+                    ReponseQuestion temp = new ReponseQuestion();
+                    temp.setIdReponseEvaluation(re);
+                    temp.setIdQuestionEvaluation(qer.findById(Integer.parseInt(l.get("id_qev"))).get());
+                    temp.setPositionnement(Long.parseLong(l.get("pos")));
+                    ReponseQuestionId tempid = new ReponseQuestionId();
+                    tempid.setIdQuestionEvaluation(temp.getIdQuestionEvaluation().getId());
+                    tempid.setIdReponseEvaluation(re.getId());
+                    if(rqr.findById(tempid).isPresent()) throw new ErrorDuplicateReponse("Reponse duplique  ");
+                    temp.setId(tempid);
+                    rqr.save(temp);
+                }
             }
-            return ResponseEntity.ok("Reponse sauvegarde avec succes");
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Reponse sauvegarde avec succes");
+            return ResponseEntity.ok(response);
         }
         catch(ErrorDuplicateReponse e){
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
         catch(ErrorReponseExists e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "An internal error occurred");
+            return ResponseEntity.internalServerError().body(errorResponse);
         }
     }
 
     @PreAuthorize("hasRole('ETU')")
     @GetMapping("consulterReponses/{id}")
-    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @PathVariable("id") Integer idEva){
+    public ResponseEntity<?> consulter(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth, @PathVariable("id") Integer idRep){
         try{
             ConsulterReponseDTO ret = new ConsulterReponseDTO();
-            ReponseEvaluation re = ets.getReponseEvaluation(ttip.getEtudFromToken(auth),idEva);
+            ReponseEvaluation re = rer.findById(idRep).get();
+            ret.setEva(re.getIdEvaluation());
             ret.setCommentaireEvaluation(re.getCommentaire());
             ret.setQuestions(ets.getReponseQuestions(re));
             return ResponseEntity.ok(ret);
