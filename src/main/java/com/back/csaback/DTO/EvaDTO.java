@@ -1,6 +1,8 @@
 package com.back.csaback.DTO;
 
 import com.back.csaback.Models.Evaluation;
+import com.back.csaback.Models.Formation;
+import com.back.csaback.Models.Promotion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -30,6 +32,10 @@ public class EvaDTO {
 
     private String Code_EC;
 
+    private Promotion promotion;
+
+    private Formation codeFormation;
+
     public EvaDTO(){
 
     }
@@ -45,5 +51,7 @@ public class EvaDTO {
         if(e.getElementConstitutif()==null) this.Code_EC=null;
         else this.Code_EC=e.getElementConstitutif().getId().getCodeEc();
         this.Code_UE=e.getUniteEnseignement().getId().getCodeUe();
+        this.promotion=e.getPromotion();
+        this.codeFormation=e.getUniteEnseignement().getCodeFormation();
     }
 }

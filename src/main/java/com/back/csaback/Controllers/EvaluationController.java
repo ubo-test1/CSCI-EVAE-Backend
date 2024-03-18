@@ -75,7 +75,7 @@ public class EvaluationController {
         return  "teeeeeeeeeeeeeeeeeeeeeeeeeest";
     }
 
-    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS') or hasRole('ETU')")
     @GetMapping("consulterInfo/{id}")
     public ResponseEntity<EvaluationDetails> consulterInfo(@PathVariable("id") Integer id){
         try{
