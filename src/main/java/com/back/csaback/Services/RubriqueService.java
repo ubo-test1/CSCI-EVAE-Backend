@@ -173,7 +173,9 @@ public class RubriqueService {
     }
 
     public short getLastOrdreRE(Evaluation e){
-        if(rer.findLastOrdreByEvaluationId(e.getId()) == 0) return 1;
+        System.out.println("------------------------");
+        System.out.println(rer.findLastOrdreByEvaluationId(e.getId()));
+        if(rer.findLastOrdreByEvaluationId(e.getId())==null) return 1;
         return rer.findLastOrdreByEvaluationId(e.getId());
     }
 

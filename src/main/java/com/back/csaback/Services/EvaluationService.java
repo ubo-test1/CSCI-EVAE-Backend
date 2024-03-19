@@ -113,8 +113,10 @@ public class EvaluationService {
         for (Evaluation eva:findAllByPromo(etudiant)){
             if(reponseEvaluationRepository.existsByIdEvaluation(eva)) {
                 EvaEtudiantReponduDTO temp = new EvaEtudiantReponduDTO(true,eva);
-                temp.setReponseEvaluation(rer.findAllByNoEtudiantAndIdEvaluation(etudiant,eva).get(0));
-                evaEtudiantRepondusDTO.add(temp);
+                if (!rer.findAllByNoEtudiantAndIdEvaluation(etudiant,eva).isEmpty()){
+                    temp.setReponseEvaluation(rer.findAllByNoEtudiantAndIdEvaluation(etudiant,eva).get(0));
+                    evaEtudiantRepondusDTO.add(temp);
+                }
             }
             else evaEtudiantRepondusDTO.add(new EvaEtudiantReponduDTO(false,eva));
         }

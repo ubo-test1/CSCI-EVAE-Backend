@@ -121,7 +121,7 @@ public class RubriqueController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    @PreAuthorize("hasRole('ADM')")
+    @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("/allStd")
     public ResponseEntity<List<RubriqueAssociated>> getAll() {
         List<RubriqueAssociated> questions= rs.getAllStd();
