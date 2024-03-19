@@ -183,13 +183,13 @@ public class RubriqueService {
             QuestionEvaluation temp = new QuestionEvaluation();
             temp.setIdRubriqueEvaluation(re);
             temp.setIdQuestion(q);
-            temp.setIdQualificatif(q.getIdQualificatif());
+            //temp.setIdQualificatif(q.getIdQualificatif());
             if(qer.findLatestOrdreByRubriqueEvaluationId(re.getIdRubrique().getId()) == null){
                 temp.setOrdre((short) 1);
             }else{
                 temp.setOrdre((short) (qer.findLatestOrdreByRubriqueEvaluationId(re.getIdRubrique().getId())+1));
             }
-            temp.setIntitule(q.getIntitule());
+            //temp.setIntitule(q.getIntitule());
             qer.save(temp);
         }
     }
