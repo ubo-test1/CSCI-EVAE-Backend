@@ -37,6 +37,10 @@ public class EvaDTO {
 
     private Promotion promotion;
 
+    private Boolean hasRubrique;
+
+    private Boolean hasOrphanRubrique;
+
     public EvaDTO(){
 
     }
@@ -54,5 +58,7 @@ public class EvaDTO {
         this.Code_UE=e.getUniteEnseignement().getId().getCodeUe();
         this.codeFormation = e.getUniteEnseignement().getCodeFormation();
         this.promotion = e.getPromotion();
+        this.hasRubrique = false;
+        this.hasOrphanRubrique = false;
     }
 }
