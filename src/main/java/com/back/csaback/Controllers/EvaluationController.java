@@ -4,7 +4,9 @@ import com.back.csaback.DTO.EvaDTO;
 import com.back.csaback.DTO.EvaluationWorkflowDTO;
 import com.back.csaback.Models.*;
 import com.back.csaback.DTO.EvaluationDetails;
+import com.back.csaback.Repositories.EvaRubRepository;
 import com.back.csaback.Repositories.EvaluationRepository;
+import com.back.csaback.Repositories.QuestionEvaluationRepository;
 import com.back.csaback.Repositories.RubriqueEvaluationRepository;
 import com.back.csaback.Services.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -45,6 +47,10 @@ public class EvaluationController {
     private Tooltip ttip;
     @Autowired
     private RubriqueEvaluationRepository rer;
+    @Autowired
+    private EvaRubRepository err;
+    @Autowired
+    private QuestionEvaluationRepository qer;
 
     @PreAuthorize("hasRole('ADM') or hasRole('ENS')")
     @GetMapping("getAll")
@@ -55,6 +61,15 @@ public class EvaluationController {
             Enseignant en = ttip.getUserFromToken(auth);
             for(Evaluation e : es.getAll(en)){
                 tmp = new EvaDTO(e);
+                if(!rer.findAllByIdEvaluation(e).isEmpty()){
+                    tmp.setHasRubrique(true);
+                    for(RubriqueEvaluation re : rer.findAllByIdEvaluation(e)){
+                        if(qer.findAllByidRubriqueEvaluation(re).isEmpty()){
+                            tmp.setHasOrphanRubrique(true);
+                            break;
+                        }
+                    }
+                }
                 ret.add(tmp);
             }
             return ResponseEntity.ok(ret);
