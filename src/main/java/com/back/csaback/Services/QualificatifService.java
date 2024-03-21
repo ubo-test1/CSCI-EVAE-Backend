@@ -75,7 +75,7 @@ public class QualificatifService {
     public Qualificatif updateQualificatif(Qualificatif q) {
         Qualificatif qualificatif = findQualificationById(q.getId());
         if(this.isQualificatifAssociated(q.getId())) throw new ErrorQualificatifAssociated("Qualificatif associe a une question deja");
-        if(((!Objects.equals(qualificatif.getMaximal().toLowerCase(), q.getMaximal().toLowerCase())||(!Objects.equals(qualificatif.getMinimal().toLowerCase(), q.getMinimal().toLowerCase())) && (qualificatifRepository.existsByMinimalAndMaximal(q.getMinimal(),q.getMaximal()))))) throw new QualificatifExistException("Il existe deja un couple qualificatif avec ce maximale et  minimale ");
+        if(((!Objects.equals(qualificatif.getMaximal().toLowerCase(), q.getMaximal().toLowerCase()) && (!Objects.equals(qualificatif.getMinimal().toLowerCase(), q.getMinimal().toLowerCase())) && (qualificatifRepository.existsByMinimalAndMaximal(q.getMinimal(),q.getMaximal()))))) throw new QualificatifExistException("Il existe deja un couple qualificatif avec ce maximale et  minimale ");
         return qualificatifRepository.save(q);
     }
 
