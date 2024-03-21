@@ -8,6 +8,8 @@ import com.back.csaback.DTO.RubriqueDetails;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.Optional;
 
 import java.util.ArrayList;
@@ -120,6 +122,7 @@ public class EvaluationService {
             }
             else evaEtudiantRepondusDTO.add(new EvaEtudiantReponduDTO(false,eva));
         }
+        evaEtudiantRepondusDTO.removeIf(a -> a.getEvaluation().getDebutReponse().isAfter(LocalDate.now()));
     return evaEtudiantRepondusDTO;
     }
 
